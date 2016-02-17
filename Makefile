@@ -5,7 +5,7 @@
 NAME			:= rtv1
 
 # Git submodule to init
-SUBMODULES		:= 
+SUBMODULES		:= libft
 
 # Base flags
 BASE_FLAGS		= -Wall -Wextra
