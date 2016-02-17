@@ -1,1 +1,5 @@
 main module main:
+	private include ./
+
+	require mlx_win
+	require ft::printf
