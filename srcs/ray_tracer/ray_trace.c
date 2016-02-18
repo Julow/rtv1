@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/18 17:13:49 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/02/18 20:14:21 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 */
 bool			is_nearest_than(t_vec3 pos, t_vec3 a, t_vec3 b)
 {
+	a = VEC3_SUB(pos, a);
+	b = VEC3_SUB(pos, b);
+	if (ft_vec3dot(a, a) <= ft_vec3dot(b, b))
+		return (true);
 	return (false);
-	(void)pos;
-	(void)a;
-	(void)b;
 }
 
 t_obj const		*nearest_intersect(t_vertex *nearest_int,
@@ -32,6 +33,7 @@ t_obj const		*nearest_intersect(t_vertex *nearest_int,
 	t_obj const		*nearest;
 	t_vertex		intersect;
 
+	nearest = NULL;
 	i = 0;
 	while (i < scene->objs.length)
 	{

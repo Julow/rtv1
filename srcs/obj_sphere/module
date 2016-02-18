@@ -1,0 +1,8 @@
+module obj_sphere:
+	public include public/
+
+	put LINK_FLAGS -lm
+
+	public require obj
+	private require math_utils
+	private require ft::math
