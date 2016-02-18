@@ -1,0 +1,8 @@
+module ray_tracer:
+	public include public/
+	private include ./
+
+	public require ft::math
+	public require math_utils
+	public require scene
+	private require obj

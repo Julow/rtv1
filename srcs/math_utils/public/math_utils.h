@@ -1,19 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   math_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/17 13:45:23 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/18 15:46:12 by jaguillo         ###   ########.fr       */
+/*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
+/*   Updated: 2016/02/18 16:56:08 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef MATH_UTILS_H
+# define MATH_UTILS_H
 
-# include "ft/libft.h"
-# include "mlx_win.h"
+# include "ft/math.h"
+
+typedef struct s_vertex		t_vertex;
+
+/*
+** ========================================================================== **
+*/
+
+struct			s_vertex
+{
+	t_vec3			pos;
+	t_vec3			dir;
+};
 
 #endif

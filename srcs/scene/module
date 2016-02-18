@@ -1,0 +1,6 @@
+module scene:
+	public include public/
+
+	public require ft::vector
+	public require ft::math
+	public require obj

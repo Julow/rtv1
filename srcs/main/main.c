@@ -6,136 +6,43 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/17 18:43:37 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/02/18 17:09:37 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/ft_printf.h"
+#include "ft/ft_vector.h"
+#include "ft/libft.h"
+#include "ft/math.h"
 
+#include "camera.h"
 #include "main.h"
+#include "math_utils.h"
 #include "mlx_win.h"
+#include "scene.h"
 
 #include <mlx.h>
 #include <stdlib.h>
 
 /*
 ** ========================================================================== **
-** Transform
-*/
-
-typedef struct s_transform		t_transform;
-
-struct			s_transform
-{
-	t_vec3			pos;
-	t_vec3			rot;
-	t_vec3			shear;
-	t_vec3			scale;
-};
-
-/*
-** ========================================================================== **
-** Obj
-*/
-
-/*
-** ?enum obj_type
-** char const		*name;
-** bool			(*ray_collide)(t_ray const *ray);
-** float		(*ray_dist)(t_ray const *ray);
-** LIGHT(?name?, NULL, NULL)
-** SPHERE(?name?, NULL, NULL)
-** PLANE(?name?, NULL, NULL)
-*/
-
-struct			s_evalue_obj_type
-{
-	char const		*name;
-	bool			(*ray_collide)(t_ray const *ray);
-};
-
-typedef struct s_evalue_obj_type const*		t_obj_type;
-
-struct			s_enum_obj_type
-{
-	t_obj_type			LIGHT;
-	t_obj_type			SPHERE;
-	t_obj_type			PLANE;
-	int					length;
-	t_obj_type const	*values;
-};
-
-extern struct s_enum_obj_type const		g_obj_type;
-
-/*
-** ?end
-*/
-
-/*
-** ?enum-def obj_type
-*/
-
-struct s_enum_obj_type const	g_obj_type = {
-	&(struct s_evalue_obj_type){LIGHT, NULL},
-	&(struct s_evalue_obj_type){SPHERE, NULL},
-	&(struct s_evalue_obj_type){PLANE, NULL},
-	3,
-	(t_obj_type const*)&g_obj_type
-};
-
-/*
-** ?end
-*/
-
-typedef struct s_obj		t_obj;
-
-struct			s_obj
-{
-	t_obj_type		type;
-	t_transform		transform;
-	t_mat4			model;
-	t_mat4			model_inv;
-};
-
-/*
-** ========================================================================== **
-** Scene
-*/
-
-typedef struct s_scene		t_scene;
-
-struct			s_scene
-{
-	t_vector		objs;
-	t_vec3			sky_color;
-	t_vec3			sky_light;
-};
-
-/*
-** ========================================================================== **
-** Raytracer
-*/
-
-typedef struct s_ray		t_ray;
-typedef struct s_ray_res	t_ray_res;
-
-struct			s_ray
-{
-	t_mat4			matrix;
-};
-
-struct			s_ray_res
-{
-	t_vec3			color;
-	float			light;
-};
-
-t_ray_res		ray_trace(t_scene const *scene, t_ray const *ray);
-
-/*
-** ========================================================================== **
 ** Main
 */
+
+typedef struct s_main		t_main;
+
+# define WIN_WIDTH		800
+# define WIN_HEIGHT		450
+
+# define WIN_TITLE		"rtv1"
+
+struct			s_main
+{
+	void			*mlx;
+	t_mlx_win		win;
+	t_scene			scene;
+	t_camera		camera;
+};
 
 static void		main_destroy(t_main *main)
 {
@@ -150,6 +57,14 @@ static int		key_hook(int keycode, t_main *main)
 	return (0);
 }
 
+#define IMG_PIXEL(IMG,X,Y)	(IMG).data[(IMG).width * (Y) + (X)]
+
+static int		expose_hook(t_main *main)
+{
+	ft_mlx_update(&main->win);
+	return (0);
+}
+
 int				main(void)
 {
 	t_main			main;
@@ -157,8 +72,13 @@ int				main(void)
 	if ((main.mlx = mlx_init()) == NULL || !ft_mlx_open(&main.win, main.mlx,
 			VEC2U(WIN_WIDTH, WIN_HEIGHT), SUBC(WIN_TITLE)))
 		return (1);
+	main.scene = (t_scene){VECTOR(t_obj*), VEC3(0.2f, 0.2f, 1.f)};
+
 	mlx_key_hook(main.win.win_id, &key_hook, &main);
-	ft_mlx_update(&main.win);
+	mlx_expose_hook(main.win.win_id, &expose_hook, &main);
+
+	camera_render(&main.win.img, &main.camera, &main.scene);
+
 	mlx_loop(main.mlx);
 	ASSERT(false);
 	main_destroy(&main);

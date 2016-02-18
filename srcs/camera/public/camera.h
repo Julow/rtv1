@@ -1,19 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/17 13:45:23 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/18 15:46:12 by jaguillo         ###   ########.fr       */
+/*   Created: 2016/02/18 16:29:24 by jaguillo          #+#    #+#             */
+/*   Updated: 2016/02/18 16:32:36 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef CAMERA_H
+# define CAMERA_H
 
-# include "ft/libft.h"
-# include "mlx_win.h"
+# include "ft/img.h"
+# include "ft/math.h"
+
+# include "scene.h"
+
+typedef struct s_camera		t_camera;
+
+/*
+** ========================================================================== **
+** Camera
+*/
+
+struct			s_camera
+{
+	t_vec3			pos;
+	t_vec3			dir;
+	float			fov;
+	t_mat4			view;
+};
+
+void			camera_render(t_img *dst, t_camera const *camera,
+					t_scene const *scene);
 
 #endif

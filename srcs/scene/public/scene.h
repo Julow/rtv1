@@ -1,19 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/17 13:45:23 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/18 15:46:12 by jaguillo         ###   ########.fr       */
+/*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
+/*   Updated: 2016/02/18 16:34:11 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef SCENE_H
+# define SCENE_H
 
-# include "ft/libft.h"
-# include "mlx_win.h"
+# include "ft/ft_vector.h"
+# include "ft/math.h"
+
+# include "obj.h"
+
+typedef struct s_scene			t_scene;
+
+/*
+** ========================================================================== **
+** Scene
+*/
+
+struct			s_scene
+{
+	t_vector		objs;
+	t_vec3			sky_color;
+};
 
 #endif

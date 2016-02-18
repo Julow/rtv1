@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   obj_sphere.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/17 13:45:23 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/18 15:46:12 by jaguillo         ###   ########.fr       */
+/*   Created: 2016/02/18 16:37:41 by jaguillo          #+#    #+#             */
+/*   Updated: 2016/02/18 16:37:56 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef OBJ_SPHERE_H
+# define OBJ_SPHERE_H
 
-# include "ft/libft.h"
-# include "mlx_win.h"
+# include "obj.h"
+
+t_obj			*sphere_new(void);
 
 #endif

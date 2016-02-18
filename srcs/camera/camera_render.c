@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   camera_render.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/17 13:45:23 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/18 15:46:12 by jaguillo         ###   ########.fr       */
+/*   Created: 2016/02/18 16:31:49 by jaguillo          #+#    #+#             */
+/*   Updated: 2016/02/18 17:10:45 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "camera.h"
+#include "math_utils.h"
+#include "ray_tracer.h"
 
-# include "ft/libft.h"
-# include "mlx_win.h"
-
-#endif
+void			camera_render(t_img *dst, t_camera const *camera,
+					t_scene const *scene)
+{
+	(void)dst;
+	(void)camera;
+	(void)scene;
+}

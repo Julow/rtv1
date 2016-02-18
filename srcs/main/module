@@ -3,3 +3,11 @@ main module main:
 
 	require mlx_win
 	require ft::printf
+	require ft::base
+	require ft::math
+	require ft::vector
+	require obj
+	require scene
+	require math_utils
+	require ray_tracer
+	require camera
