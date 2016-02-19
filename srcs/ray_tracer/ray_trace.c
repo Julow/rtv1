@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/19 14:58:52 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/19 22:02:09 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,39 @@ float			ray_to_light(t_scene const *scene, t_vertex const *ray)
 	return (light_sum);
 }
 
+static t_vec3	trace_reflect(t_scene const *scene, t_vertex const *ray,
+					t_vertex const *intersect)
+{
+	t_vertex		reflected;
+
+	reflected.pos = intersect->pos;
+	reflected.dir = VEC3_ADD(ray->dir,
+		VEC3_MUL1(intersect->dir, -2 * VEC3_DOT(intersect->dir, ray->dir)));
+	return (ray_trace(scene, &reflected));
+}
+
+static t_vec3	trace_refract(t_scene const *scene, t_vertex const *ray,
+					t_vertex const *intersect)
+{
+	return (scene->sky_color);
+}
+
 t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray)
 {
 	t_vertex			intersect;
 	t_obj const			*obj;
-	float				light;
+	float				tmp;
+	t_vec3				color;
 
 	if ((obj = nearest_intersect(&intersect, scene, *ray)) == NULL)
 		return (scene->sky_color);
-	light = ray_to_light(scene, &intersect);
-	return (VEC3_MUL1(obj->color, MIN(light, 1.f)));
+	tmp = ray_to_light(scene, &intersect);
+	color = VEC3_MUL1(obj->material.color, MIN(tmp, 1.f));
+	if (obj->material.opacity < 0.99999f)
+		color = ft_vec3mix(color,
+			ft_vec3mix(trace_reflect(scene, ray, &intersect),
+				trace_refract(scene, ray, &intersect),
+				obj->material.reflection),
+			obj->material.opacity);
+	return (color);
 }

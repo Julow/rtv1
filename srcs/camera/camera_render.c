@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:31:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/19 00:41:36 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/19 21:05:13 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ void			camera_render(t_img *dst, t_camera const *camera,
 		, VEC3_MUL1(VEC3(1.f, 0.f, 0.f), dst->width / 2.f));
 	pt = VEC2U(0, 0);
 	ray = VERTEX(camera->pos, VEC3_0());
+	ray.dir.z = viewPlane.z;
 	while (pt.y < dst->height)
 	{
 		pt.x = 0;
 		while (pt.x < dst->width)
 		{
-			ray.dir = VEC3_SUB(VEC3_ADD(viewPlane, VEC3(pt.x, 0.f, 0.f)),
-				VEC3(0.f, pt.y, 0.f));
+			ray.dir.x = viewPlane.x + pt.x;
+			ray.dir.y = viewPlane.y - pt.y;
 			IMG_PIXEL(*dst, pt.x, pt.y) = color_fto24(ray_trace(scene, &ray));
 			pt.x++;
 		}

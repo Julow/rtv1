@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/19 15:06:55 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/19 21:59:00 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,30 +82,37 @@ int				main(void)
 	mlx_key_hook(main.win.win_id, &key_hook, &main);
 	mlx_expose_hook(main.win.win_id, &expose_hook, &main);
 
+	t_material		test = C(t_material, VEC3(1.f, 0.2f, 0.2f), 1.f, 0.f);
+
 	t_sphere		*sphere;
 	t_plane			*plane;
 
 	sphere = sphere_new();
-	sphere->obj.color = VEC3(1.f, 0.2f, 0.2f);
+	sphere->obj.material = test;
 	sphere->radius = 2.f;
 	ft_vpush(&main.scene.objs, V(&sphere), 1);
 
 	sphere = sphere_new();
-	sphere->obj.color = VEC3(0.2f, 1.f, 0.2f);
+	sphere->obj.material = test;
+	sphere->obj.material.color = VEC3(0.2f, 1.f, 0.2f);
 	sphere->radius = 2.f;
 	sphere->pos = VEC3(1.5f, 0.f, 0.f);
 	ft_vpush(&main.scene.objs, V(&sphere), 1);
 
 	sphere = sphere_new();
-	sphere->obj.color = VEC3(1.f, 1.f, 1.f);
+	sphere->obj.material = test;
+	sphere->obj.material.color = VEC3(1.f, 1.f, 1.f);
 	sphere->radius = 0.5f;
 	sphere->pos = VEC3(3.f, 3.f, -2.5f);
 	ft_vpush(&main.scene.objs, V(&sphere), 1);
 
 	plane = plane_new();
-	plane->obj.color = VEC3(0.3f, 0.5f, 0.7f);
+	plane->obj.material = test;
+	plane->obj.material.color = VEC3(0.3f, 0.5f, 0.7f);
+	plane->obj.material.opacity = 0.8f;
+	plane->obj.material.reflection = 1.f;
 	plane->norm = VEC3(0.f, 1.f, 0.f);
-	plane->offset = 5.f;
+	plane->offset = 3.f;
 	ft_vpush(&main.scene.objs, V(&plane), 1);
 
 	t_light			*light;
@@ -114,7 +121,9 @@ int				main(void)
 	light->light = 1.f;
 	light->pos = VEC3(10.f, 10.f, -8.f);
 
+	ft_cstart();
 	camera_render(&main.win.img, &main.camera, &main.scene);
+	ft_printf("Render time: %llu us%n", ft_cend());
 
 	mlx_loop(main.mlx);
 	ASSERT(false);

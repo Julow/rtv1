@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/19 15:09:21 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/19 21:47:50 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef struct s_obj			t_obj;
 typedef struct s_obj_class		t_obj_class;
+typedef struct s_material		t_material;
 
 /*
 ** ========================================================================== **
@@ -39,13 +40,24 @@ struct			s_obj_class
 };
 
 /*
+** Material
+*/
+struct			s_material
+{
+	t_vec3			color;
+	float			opacity;
+	float			reflection;
+};
+
+# define MATERIAL(R,G,B,...)	((t_material){.color=VEC3(R,G,B),##__VA_ARGS__})
+
+/*
 ** Object
 */
 struct			s_obj
 {
 	t_obj_class const	*type;
-	t_vec3				color;
-	float				refract_index;
+	t_material			material;
 };
 
 #endif
