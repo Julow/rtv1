@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/18 20:14:28 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/02/19 00:45:50 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,15 @@ static void		main_destroy(t_main *main)
 	exit(0);
 }
 
+// #define KEYCODE_ESC		53
+// #define KEYCODE_Q		12
+
+#define KEYCODE_ESC		65307
+#define KEYCODE_Q		113
+
 static int		key_hook(int keycode, t_main *main)
 {
-	if (keycode == 53 || keycode == 12)
+	if (keycode == KEYCODE_ESC || keycode == KEYCODE_Q)
 		main_destroy(main);
 	return (0);
 }
@@ -70,7 +76,7 @@ int				main(void)
 	if ((main.mlx = mlx_init()) == NULL || !ft_mlx_open(&main.win, main.mlx,
 			VEC2U(WIN_WIDTH, WIN_HEIGHT), SUBC(WIN_TITLE)))
 		return (1);
-	main.scene = (t_scene){VECTOR(t_obj*), VEC3(0.5f, 0.95f, 1.f)};
+	main.scene = (t_scene){VECTOR(t_obj*), VECTOR(t_light), VEC3(0.05f, 0.05f, 0.05f)};
 	main.camera = (t_camera){VEC3(0.f, 0.f, -5.f), VEC3(0.f, 0.f, 1.f), 100.f};
 
 	mlx_key_hook(main.win.win_id, &key_hook, &main);
@@ -88,6 +94,18 @@ int				main(void)
 	obj->radius = 2.f;
 	obj->pos = VEC3(1.5f, 0.f, 0.f);
 	ft_vpush(&main.scene.objs, V(&obj), 1);
+
+	obj = sphere_new();
+	obj->obj.color = VEC4(1.f, 1.f, 1.f, 1.f);
+	obj->radius = 0.5f;
+	obj->pos = VEC3(2.f, 2.f, -2.f);
+	ft_vpush(&main.scene.objs, V(&obj), 1);
+
+	t_light			*light;
+
+	light = ft_vpush(&main.scene.lights, NULL, 1);
+	light->light = 2.f;
+	light->pos = VEC3(2.5f, 3.f, -3.5f);
 
 	camera_render(&main.win.img, &main.camera, &main.scene);
 

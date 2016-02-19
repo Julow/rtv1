@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/18 16:34:11 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/02/18 23:13:45 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,24 @@
 # include "obj.h"
 
 typedef struct s_scene			t_scene;
+typedef struct s_light			t_light;
 
 /*
 ** ========================================================================== **
 ** Scene
 */
 
+struct			s_light
+{
+	t_vec3			pos;
+	float			light;
+	t_vec3			color;
+};
+
 struct			s_scene
 {
 	t_vector		objs;
+	t_vector		lights;
 	t_vec3			sky_color;
 };
 
