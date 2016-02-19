@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/18 19:56:54 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/02/19 15:09:21 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ struct			s_obj_class
 struct			s_obj
 {
 	t_obj_class const	*type;
-	t_vec4				color;
+	t_vec3				color;
 	float				refract_index;
 };
 

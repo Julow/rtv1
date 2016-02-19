@@ -1,4 +1,4 @@
-module obj_sphere:
+module obj_types:
 	public include public/
 
 	put LINK_FLAGS -lm

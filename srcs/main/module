@@ -7,7 +7,7 @@ main module main:
 	require ft::math
 	require ft::vector
 	require obj
-	require obj_sphere
+	require obj_types
 	require scene
 	require math_utils
 	require ray_tracer

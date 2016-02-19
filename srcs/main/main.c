@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/19 00:45:50 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/19 15:06:55 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "camera.h"
 #include "math_utils.h"
 #include "mlx_win.h"
-#include "obj_sphere.h"
+#include "obj_types.h"
 #include "scene.h"
 
 #include <mlx.h>
@@ -77,35 +77,42 @@ int				main(void)
 			VEC2U(WIN_WIDTH, WIN_HEIGHT), SUBC(WIN_TITLE)))
 		return (1);
 	main.scene = (t_scene){VECTOR(t_obj*), VECTOR(t_light), VEC3(0.05f, 0.05f, 0.05f)};
-	main.camera = (t_camera){VEC3(0.f, 0.f, -5.f), VEC3(0.f, 0.f, 1.f), 100.f};
+	main.camera = (t_camera){VEC3(0.f, 0.f, -50.f), VEC3(0.f, 0.f, 1.f), 1000.f};
 
 	mlx_key_hook(main.win.win_id, &key_hook, &main);
 	mlx_expose_hook(main.win.win_id, &expose_hook, &main);
 
-	t_sphere		*obj;
+	t_sphere		*sphere;
+	t_plane			*plane;
 
-	obj = sphere_new();
-	obj->obj.color = VEC4(1.f, 0.2f, 0.2f, 1.f);
-	obj->radius = 2.f;
-	ft_vpush(&main.scene.objs, V(&obj), 1);
+	sphere = sphere_new();
+	sphere->obj.color = VEC3(1.f, 0.2f, 0.2f);
+	sphere->radius = 2.f;
+	ft_vpush(&main.scene.objs, V(&sphere), 1);
 
-	obj = sphere_new();
-	obj->obj.color = VEC4(0.2f, 1.f, 0.2f, 1.f);
-	obj->radius = 2.f;
-	obj->pos = VEC3(1.5f, 0.f, 0.f);
-	ft_vpush(&main.scene.objs, V(&obj), 1);
+	sphere = sphere_new();
+	sphere->obj.color = VEC3(0.2f, 1.f, 0.2f);
+	sphere->radius = 2.f;
+	sphere->pos = VEC3(1.5f, 0.f, 0.f);
+	ft_vpush(&main.scene.objs, V(&sphere), 1);
 
-	obj = sphere_new();
-	obj->obj.color = VEC4(1.f, 1.f, 1.f, 1.f);
-	obj->radius = 0.5f;
-	obj->pos = VEC3(2.f, 2.f, -2.f);
-	ft_vpush(&main.scene.objs, V(&obj), 1);
+	sphere = sphere_new();
+	sphere->obj.color = VEC3(1.f, 1.f, 1.f);
+	sphere->radius = 0.5f;
+	sphere->pos = VEC3(3.f, 3.f, -2.5f);
+	ft_vpush(&main.scene.objs, V(&sphere), 1);
+
+	plane = plane_new();
+	plane->obj.color = VEC3(0.3f, 0.5f, 0.7f);
+	plane->norm = VEC3(0.f, 1.f, 0.f);
+	plane->offset = 5.f;
+	ft_vpush(&main.scene.objs, V(&plane), 1);
 
 	t_light			*light;
 
 	light = ft_vpush(&main.scene.lights, NULL, 1);
-	light->light = 2.f;
-	light->pos = VEC3(2.5f, 3.f, -3.5f);
+	light->light = 1.f;
+	light->pos = VEC3(10.f, 10.f, -8.f);
 
 	camera_render(&main.win.img, &main.camera, &main.scene);
 
