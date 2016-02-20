@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/18 23:13:45 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/20 01:14:34 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ struct			s_scene
 {
 	t_vector		objs;
 	t_vector		lights;
+	t_material		def_mtl;
 	t_vec3			sky_color;
 };
 

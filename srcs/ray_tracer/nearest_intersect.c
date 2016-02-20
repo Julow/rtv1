@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/19 11:32:20 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/19 22:43:12 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
 	t_obj const		*nearest;
 	t_vertex		intersect;
 
-	ray.pos = VEC3_ADD(ray.pos, VEC3_MUL1(ray.dir, 0.001f));
+	ray.pos = VEC3_ADD(ray.pos, VEC3_MUL1(ray.dir, 0.0001f));
 	nearest = NULL;
 	i = 0;
 	while (i < scene->objs.length)

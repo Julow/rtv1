@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:04:15 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/19 11:03:36 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/20 01:13:56 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 ** Throw a ray
 ** Return the color
 */
-t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray);
+t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
+					t_material const *material, uint32_t max_depth);
 
 /*
 ** Find the nearest intersect

@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:31:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/19 21:05:13 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/20 01:14:39 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static uint32_t	color_fto32(t_vec4 color)
 	);
 }
 
+#define MAX_RAY_DEPTH		10
+
 void			camera_render(t_img *dst, t_camera const *camera,
 					t_scene const *scene)
 {
@@ -58,7 +60,8 @@ void			camera_render(t_img *dst, t_camera const *camera,
 		{
 			ray.dir.x = viewPlane.x + pt.x;
 			ray.dir.y = viewPlane.y - pt.y;
-			IMG_PIXEL(*dst, pt.x, pt.y) = color_fto24(ray_trace(scene, &ray));
+			IMG_PIXEL(*dst, pt.x, pt.y) = color_fto24(
+					ray_trace(scene, &ray, &scene->def_mtl, MAX_RAY_DEPTH));
 			pt.x++;
 		}
 		pt.y++;
