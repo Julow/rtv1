@@ -1,0 +1,51 @@
+
+<!--
+	def:
+	<name>		any printable char
+	<vec3>		3 floats separated by ';', spaces are trim
+	<float>		float value, spaces are trim
+	<color>		color value: #RRGGBB, '#' is optionnal
+	unspecified default values are "0"
+-->
+
+<!--
+	Template
+	templates are just a collection of parameters
+	anything can inherit from a template:
+		inherit="template names separated by space"
+-->
+<template
+	name="<name>" // required
+	inherit="<template names>" // inherit from templates
+	// params
+/>
+
+<!-- scene -->
+<scene
+	name="<name>" // default "<No name>"
+	camera_pos="<vec3>"
+	camera_dir="<vec3>" // default "0;0;1"
+	sky_color="<vec3>"
+	refract_index="<float>" // default "1"
+>
+
+	<light
+		pos="<vec3>"
+		color="<color>" // default "#FFFFFF"
+		brightness="<float>" // default "1"
+	/>
+
+	<Sphere|Plane
+		color="<vec3>"
+		opacity="<float>" // default "1"
+		reflection="<float>"
+		refract_index="<float>" // default "1"
+		// Sphere only:
+		pos="<vec3>"
+		radius="<float>"
+		// Plane only:
+		norm="<vec3>"
+		offset="<float>"
+	/>
+
+</scene>

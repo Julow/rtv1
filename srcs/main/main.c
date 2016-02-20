@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/20 01:27:08 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/20 01:38:39 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 ** TODO: load scene from xml file
 ** TODO: specular
 ** TODO: cylinder/cone
+** TODO: refraction critical angle
 */
 
 typedef struct s_main		t_main;
