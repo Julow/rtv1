@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/20 01:38:39 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/20 23:21:03 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int				main(void)
 	if ((main.mlx = mlx_init()) == NULL || !ft_mlx_open(&main.win, main.mlx,
 			VEC2U(WIN_WIDTH, WIN_HEIGHT), SUBC(WIN_TITLE)))
 		return (1);
-	main.scene = (t_scene){VECTOR(t_obj*), VECTOR(t_light),
+	main.scene = (t_scene){DSTR0(), VECTOR(t_obj*), VECTOR(t_light),
 		C(t_material, VEC3(0.f, 0.f, 0.f), 0.f, 0.f, 1.f), VEC3(0.05f, 0.05f, 0.05f)};
 	main.camera = (t_camera){VEC3(0.f, 0.f, -40.f), VEC3(0.f, 0.f, 1.f), 1000.f};
 

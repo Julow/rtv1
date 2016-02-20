@@ -1,7 +1,6 @@
 module mlx_win:
 	public include public/
 
-	put LINK_FLAGS -lmlx -framework OpenGL -framework AppKit
-
+	private require mlx
 	public require ft::base
 	public require ft::img

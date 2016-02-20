@@ -1,0 +1,8 @@
+module scene_loader:
+	public include public/
+
+	public require scene
+	public require ft::base
+	public require ft::vector
+	private require ft::in
+	private require ft::xml

@@ -1,6 +1,7 @@
 main module main:
 	private include ./
 
+	require mlx
 	require mlx_win
 	require ft::printf
 	require ft::base

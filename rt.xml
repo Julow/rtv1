@@ -8,18 +8,6 @@
 	unspecified default values are "0"
 -->
 
-<!--
-	Template
-	templates are just a collection of parameters
-	anything can inherit from a template:
-		inherit="template names separated by space"
--->
-<template
-	name="<name>" // required
-	inherit="<template names>" // inherit from templates
-	// params
-/>
-
 <!-- scene -->
 <scene
 	name="<name>" // default "<No name>"

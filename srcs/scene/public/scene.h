@@ -6,13 +6,14 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/20 01:14:34 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/20 23:13:58 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
 
+# include "ft/ft_dstr.h"
 # include "ft/ft_vector.h"
 # include "ft/math.h"
 
@@ -35,6 +36,7 @@ struct			s_light
 
 struct			s_scene
 {
+	t_dstr			name;
 	t_vector		objs;
 	t_vector		lights;
 	t_material		def_mtl;
