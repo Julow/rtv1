@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/22 22:33:17 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/22 23:22:53 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ float			ray_to_light(t_scene const *scene, t_vertex const *ray)
 			|| (attenuation = 1.f - tmp / ATTENUATION_DIST) <= 0.f
 			|| (tmp = VEC3_DOT(ray->dir, VEC3_DIV1(light_dir, tmp))) < 0.f)
 			continue ;
-		light_sum += light->light * tmp * powf(attenuation, ATTENUATION_EXP);
+		light_sum += light->brightness * tmp
+			* powf(attenuation, ATTENUATION_EXP);
 	}
 	return (light_sum);
 }

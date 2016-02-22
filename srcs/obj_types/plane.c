@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 12:37:19 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/22 22:28:14 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 00:02:46 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include <math.h>
 
-static bool		plane_ray_intersect(t_vertex *intersect, t_plane const *obj,
+static bool		plane_ray_intersect(t_vertex *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
 	float			tmp;
@@ -33,15 +33,15 @@ static bool		plane_ray_intersect(t_vertex *intersect, t_plane const *obj,
 	return (true);
 }
 
-t_plane			*plane_new(void)
+t_obj			*plane_new(void)
 {
 	static t_obj_class const	plane_class = {
 		SUBC("plane"),
 		V(&plane_ray_intersect),
 	};
-	t_plane *const				plane = NEW(t_plane);
+	t_obj *const				plane = NEW(t_obj);
 
-	ft_bzero(plane, sizeof(t_plane));
-	plane->obj.type = &plane_class;
+	ft_bzero(plane, sizeof(t_obj));
+	plane->type = &plane_class;
 	return (plane);
 }

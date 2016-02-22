@@ -1,0 +1,20 @@
+<scene>
+
+	<sphere pos="0, -2.5, 0" scale="2, 2, 2" color="#FF3333" />
+	<sphere pos="1.5, -2.5, 0" scale="2, 2, 2" color="#33FF33" />
+
+	<sphere pos="3, 1, -2.5" scale="0.5, 0.5, 0.5" color="#FFFFFF" />
+
+	<plane pos="0, -5, 0" opacity="0.8" reflection="1" color="#333333" />
+
+	<plane
+		pos="0, -0.007, 0"
+		opacity="0.5"
+		reflection="0.2"
+		refract_index="1.33"
+		color="#407FA0"
+	/>
+
+	<light pos="10, 5, -3" brightness="1" />
+
+</scene>

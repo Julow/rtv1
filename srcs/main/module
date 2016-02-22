@@ -11,5 +11,5 @@ main module main:
 	require obj_types
 	require scene
 	require math_utils
-	require ray_tracer
+	require scene_loader
 	require camera

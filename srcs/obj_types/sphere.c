@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:38:51 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/22 22:31:19 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 00:02:54 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include <math.h>
 
-static bool		sphere_ray_intersect(t_vertex *intersect, t_sphere const *obj,
+static bool		sphere_ray_intersect(t_vertex *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
 	float			a;
@@ -38,15 +38,15 @@ static bool		sphere_ray_intersect(t_vertex *intersect, t_sphere const *obj,
 	return (true);
 }
 
-t_sphere			*sphere_new(void)
+t_obj			*sphere_new(void)
 {
 	static t_obj_class const	sphere_class = {
 		SUBC("sphere"),
 		V(&sphere_ray_intersect),
 	};
-	t_sphere *const				sphere = NEW(t_sphere);
+	t_obj *const				sphere = NEW(t_obj);
 
-	ft_bzero(sphere, sizeof(t_sphere));
-	sphere->obj.type = &sphere_class;
+	ft_bzero(sphere, sizeof(t_obj));
+	sphere->type = &sphere_class;
 	return (sphere);
 }

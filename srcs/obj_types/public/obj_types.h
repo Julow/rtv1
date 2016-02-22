@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:37:41 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/22 22:26:36 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 00:01:26 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,7 @@
 
 # include "obj.h"
 
-typedef struct s_sphere		t_sphere;
-typedef struct s_plane		t_plane;
-
-/*
-** ========================================================================== **
-** Sphere
-*/
-
-struct			s_sphere
-{
-	t_obj			obj;
-};
-
-t_sphere		*sphere_new(void);
-
-/*
-** ========================================================================== **
-** Plane
-*/
-
-struct			s_plane
-{
-	t_obj			obj;
-};
-
-t_plane			*plane_new(void);
+t_obj			*sphere_new(void);
+t_obj			*plane_new(void);
 
 #endif

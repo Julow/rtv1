@@ -2,3 +2,4 @@ module math_utils:
 	public include public/
 
 	public require ft::math
+	public require ft::base

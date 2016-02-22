@@ -6,16 +6,18 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/22 22:04:01 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/22 23:12:23 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MATH_UTILS_H
 # define MATH_UTILS_H
 
+# include "ft/libft.h"
 # include "ft/math.h"
 
 typedef struct s_vertex		t_vertex;
+typedef struct s_transform		t_transform;
 
 /*
 ** ========================================================================== **
@@ -54,5 +56,20 @@ t_vec3			ft_vec3mix(t_vec3 a, t_vec3 b, float mix);
 void			ft_mat4apply_vertex(t_mat4 const *m, t_vertex *v);
 void			ft_mat4apply_vec3(t_mat4 const *m, t_vec3 *v);
 void			ft_mat4apply_vec4(t_mat4 const *m, t_vec4 *v);
+
+/*
+** ========================================================================== **
+*/
+struct			s_transform
+{
+	t_vec3			pos;
+	t_vec3			rot;
+	t_vec3			shear;
+	t_vec3			scale;
+};
+
+# define TRANSFORM(P,R,H,S)		((t_transform){(P), (R), (H), (S)})
+
+void			transform_matrix(t_transform const *t, t_mat4 *m, t_mat4 *m_inv);
 
 #endif

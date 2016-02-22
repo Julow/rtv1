@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/20 23:13:58 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/22 23:21:45 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_light			t_light;
 struct			s_light
 {
 	t_vec3			pos;
-	float			light;
+	float			brightness;
 	t_vec3			color;
 };
 
