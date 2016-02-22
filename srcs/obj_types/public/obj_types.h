@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:37:41 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/19 14:03:21 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/22 22:26:36 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ typedef struct s_plane		t_plane;
 struct			s_sphere
 {
 	t_obj			obj;
-	t_vec3			pos;
-	float			radius;
 };
 
 t_sphere		*sphere_new(void);
@@ -40,8 +38,6 @@ t_sphere		*sphere_new(void);
 struct			s_plane
 {
 	t_obj			obj;
-	t_vec3			norm;
-	float			offset;
 };
 
 t_plane			*plane_new(void);

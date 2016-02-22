@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/20 01:21:57 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/22 22:33:17 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #define ATTENUATION_DIST		1000.f
 #define ATTENUATION_EXP			4
 
-static float	nearest_dist(t_scene const *scene, t_vertex const *ray)
+static float	nearest_dist2(t_scene const *scene, t_vertex const *ray)
 {
 	t_vertex		intersect;
 
 	if (nearest_intersect(&intersect, scene, *ray) == NULL)
 		return (HUGE_VAL);
-	return (ft_vec3dist(ray->pos, intersect.pos));
+	return (ft_vec3dist2(ray->pos, intersect.pos));
 }
 
 float			ray_to_light(t_scene const *scene, t_vertex const *ray)
@@ -41,7 +41,7 @@ float			ray_to_light(t_scene const *scene, t_vertex const *ray)
 		light = VECTOR_GET(scene->lights, i++);
 		light_dir = VEC3_SUB(light->pos, ray->pos);
 		tmp = ft_vec3length(light_dir);
-		if (tmp > nearest_dist(scene, &VERTEX(ray->pos, light_dir))
+		if ((tmp * tmp) > nearest_dist2(scene, &VERTEX(ray->pos, light_dir))
 			|| (attenuation = 1.f - tmp / ATTENUATION_DIST) <= 0.f
 			|| (tmp = VEC3_DOT(ray->dir, VEC3_DIV1(light_dir, tmp))) < 0.f)
 			continue ;
@@ -92,7 +92,7 @@ t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
 		return (scene->sky_color);
 	tmp = ray_to_light(scene, &intersect);
 	color = VEC3_MUL1(obj->material.color, MIN(tmp, 1.f));
-	if (obj->material.opacity < 0.99999f)
+	if (obj->material.opacity < 0.999f)
 		color = ft_vec3mix(color,
 			ft_vec3mix(trace_reflect(scene, ray, material, &intersect, max_depth - 1),
 				trace_refract(scene, ray, material, &obj->material, &intersect, max_depth - 1),

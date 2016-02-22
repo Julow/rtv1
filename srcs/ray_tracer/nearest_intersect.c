@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/19 22:43:12 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/22 22:16:35 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
 	uint32_t		i;
 	t_obj const		*nearest;
 	t_vertex		intersect;
+	t_vertex		tmp;
 
 	ray.pos = VEC3_ADD(ray.pos, VEC3_MUL1(ray.dir, 0.0001f));
 	nearest = NULL;
@@ -39,11 +40,17 @@ t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
 	while (i < scene->objs.length)
 	{
 		obj = VGET(t_obj const*, scene->objs, i++);
-		if (obj->type->ray_intersect(&intersect, obj, &ray) && (nearest == NULL
-				|| is_nearest_than(&ray.pos, intersect.pos, dst->pos)))
+		tmp = ray;
+		ft_mat4apply_vertex(&obj->m_inv, &tmp);
+		if (obj->type->ray_intersect(&intersect, obj, &tmp))
 		{
-			nearest = obj;
-			*dst = intersect;
+			ft_mat4apply_vertex(&obj->m, &intersect);
+			if (nearest == NULL
+				|| is_nearest_than(&ray.pos, intersect.pos, dst->pos))
+			{
+				nearest = obj;
+				*dst = intersect;
+			}
 		}
 	}
 	return (nearest);

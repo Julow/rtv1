@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 12:37:19 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/19 15:08:34 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/22 22:28:14 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static bool		plane_ray_intersect(t_vertex *intersect, t_plane const *obj,
 {
 	float			tmp;
 
-	tmp = VEC3_DOT(obj->norm, ray->dir);
+	tmp = ray->dir.y;
 	if (tmp >= 0.f)
 		return (false);
-	tmp = -(VEC3_DOT(obj->norm, ray->pos) + obj->offset) / tmp;
+	tmp = -ray->pos.y / tmp;
 	if (tmp < 0)
 		return (false);
 	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, tmp));
-	intersect->dir = obj->norm;
+	intersect->dir = VEC3(0.f, 1.f, 0.f);
 	return (true);
 }
 

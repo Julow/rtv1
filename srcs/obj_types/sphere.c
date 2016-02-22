@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:38:51 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/19 17:29:11 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/22 22:31:19 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,19 @@ static bool		sphere_ray_intersect(t_vertex *intersect, t_sphere const *obj,
 {
 	float			a;
 	float			b;
-	float			c;
 	float			d;
 	float			tmp;
-	t_vec3			ray_rel = VEC3_SUB(ray->pos, obj->pos);
 
 	a = VEC3_DOT(ray->dir, ray->dir);
-	b = VEC3_DOT(ray_rel, ray->dir) * 2;
-	c = VEC3_DOT(ray_rel, ray_rel) - (obj->radius * obj->radius);
-	d = b * b - (4 * a * c);
+	b = VEC3_DOT(ray->pos, ray->dir) * 2;
+	d = b * b - (4 * a * (VEC3_DOT(ray->pos, ray->pos) - 1.f));
 	if (d == 0.f)
 		tmp = -b / (2.f * a);
 	else if (d < 0.f || ((tmp = (-b - sqrt(d)) / (2.f * a)) < 0.f
 			&& (tmp = (-b + sqrt(d)) / (2.f * a)) < 0.f))
 		return (false);
 	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, tmp));
-	intersect->dir = VEC3_DIV1(VEC3_SUB(intersect->pos, obj->pos), obj->radius);
+	intersect->dir = intersect->pos;
 	return (true);
 }
 

@@ -6,13 +6,16 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/20 22:26:14 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/21 23:33:43 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INTERNAL_H
 # define INTERNAL_H
 
+# include "ft/libft.h"
+
+# include "scene.h"
 # include "scene_loader.h"
 
 typedef struct s_param_def	t_param_def;

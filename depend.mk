@@ -60,6 +60,7 @@ O_FILES += $(O_DIR)/srcs/camera/camera_render.o \
 	$(O_DIR)/libft/ft_printf/ft_vprintf.o $(O_DIR)/libft/ft_vector/ft_vclear.o \
 	$(O_DIR)/libft/ft_vector/ft_vpush.o $(O_DIR)/libft/ft_vector/ft_vreserve.o \
 	$(O_DIR)/libft/ft_vector/ft_vspan.o $(O_DIR)/srcs/main/main.o \
+	$(O_DIR)/srcs/math_utils/ft_mat4apply.o \
 	$(O_DIR)/srcs/math_utils/ft_vec3dist.o \
 	$(O_DIR)/srcs/math_utils/ft_vec3mix.o $(O_DIR)/srcs/mlx_win/ft_mlx_close.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_open.o $(O_DIR)/srcs/mlx_win/ft_mlx_update.o \
@@ -67,10 +68,10 @@ O_FILES += $(O_DIR)/srcs/camera/camera_render.o \
 	$(O_DIR)/srcs/ray_tracer/nearest_intersect.o \
 	$(O_DIR)/srcs/ray_tracer/ray_trace.o
 PUBLIC_LINKS += $(O_DIR)/_public/camera.h $(O_DIR)/_public/ft/ft_colors.h \
-	$(O_DIR)/_public/ft/ft_wchar.h $(O_DIR)/_public/ft/libft.h \
+	$(O_DIR)/_public/ft/libft.h $(O_DIR)/_public/ft/ft_wchar.h \
 	$(O_DIR)/_public/ft/ft_dstr.h $(O_DIR)/_public/ft/img.h \
-	$(O_DIR)/_public/ft/math.h $(O_DIR)/_public/ft/ft_str_out.h \
-	$(O_DIR)/_public/ft/ft_out.h $(O_DIR)/_public/ft/ft_printf.h \
+	$(O_DIR)/_public/ft/math.h $(O_DIR)/_public/ft/ft_out.h \
+	$(O_DIR)/_public/ft/ft_str_out.h $(O_DIR)/_public/ft/ft_printf.h \
 	$(O_DIR)/_public/ft/ft_vprintf.h $(O_DIR)/_public/ft/ft_vector.h \
 	$(O_DIR)/_public/math_utils.h $(O_DIR)/_public/mlx_win.h \
 	$(O_DIR)/_public/obj.h $(O_DIR)/_public/obj_types.h \
@@ -331,6 +332,8 @@ $(O_DIR)/srcs/main/main.o: srcs/main/main.c libft/ft_base/public/libft.h \
 $(O_DIR)/srcs/main/main.o: INCLUDE_FLAGS += -Isrcs/main
 
 # module math_utils
+$(O_DIR)/srcs/math_utils/ft_mat4apply.o: srcs/math_utils/ft_mat4apply.c \
+	libft/ft_math/public/math.h srcs/math_utils/public/math_utils.h
 $(O_DIR)/srcs/math_utils/ft_vec3dist.o: srcs/math_utils/ft_vec3dist.c \
 	libft/ft_math/public/math.h srcs/math_utils/public/math_utils.h
 $(O_DIR)/srcs/math_utils/ft_vec3mix.o: srcs/math_utils/ft_vec3mix.c \

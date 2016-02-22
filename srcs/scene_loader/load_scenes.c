@@ -6,12 +6,14 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/20 23:49:46 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/21 23:34:09 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/ft_file_in.h"
 #include "internal.h"
+
+#include <stddef.h>
 
 #define PARAM(NAME,F,S,VAR)		{SUBC(NAME),V(&parse_##F),offsetof(S,VAR)}
 
