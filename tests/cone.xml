@@ -1,0 +1,5 @@
+<scene>
+	<cone rot="1.57, 0, 0" color="#d6c43d" />
+	<plane pos="0, -5, 0" color="#2637c9" />
+	<light pos="5, 0, -10" brightness="1" />
+</scene>

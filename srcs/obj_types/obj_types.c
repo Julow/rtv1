@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 18:01:47 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/23 18:17:37 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 19:42:12 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static t_obj_class const	g_obj_types[] = {
 	{SUBC("sphere"), &sphere_ray_intersect},
 	{SUBC("plane"), &plane_ray_intersect},
 	{SUBC("cylinder"), &cylinder_ray_intersect},
+	{SUBC("cone"), &cone_ray_intersect},
 };
 
 t_obj_class const	*get_obj_class(t_sub name)

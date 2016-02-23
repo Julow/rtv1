@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/23 19:40:27 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 21:46:14 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@
 ** Main
 ** -
 ** TODO: specular
-** TODO: cone
 ** TODO: refraction critical angle
+** TODO: color_utils module
+** TODO: merge camera and scene modules
 */
 
 typedef struct s_main		t_main;

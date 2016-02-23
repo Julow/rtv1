@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 23:13:37 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/23 00:56:53 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 21:42:22 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ bool		parse_vec3(t_sub value, t_vec3 *dst)
 		&& parse_float(f, &dst->z)
 		&& !ft_subnext_c(value, &f, ','))
 		return (true);
-	if (parse_float(f, &dst->x))
+	if (parse_float(value, &dst->x))
 	{
 		dst->y = dst->x;
 		dst->z = dst->x;

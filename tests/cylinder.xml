@@ -1,0 +1,4 @@
+<scene>
+	<cylinder rot="1.57,0,0" color="#1f9900" />
+	<light pos="10, 0, -10" brightness="0.5" />
+</scene>

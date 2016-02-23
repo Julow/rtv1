@@ -69,9 +69,9 @@ O_FILES += $(O_DIR)/srcs/camera/camera_render.o \
 	$(O_DIR)/srcs/math_utils/ft_vec3mix.o \
 	$(O_DIR)/srcs/math_utils/transform_matrix.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_close.o $(O_DIR)/srcs/mlx_win/ft_mlx_open.o \
-	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o $(O_DIR)/srcs/obj_types/cylinder.o \
-	$(O_DIR)/srcs/obj_types/obj_types.o $(O_DIR)/srcs/obj_types/plane.o \
-	$(O_DIR)/srcs/obj_types/sphere.o \
+	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o $(O_DIR)/srcs/obj_types/cone.o \
+	$(O_DIR)/srcs/obj_types/cylinder.o $(O_DIR)/srcs/obj_types/obj_types.o \
+	$(O_DIR)/srcs/obj_types/plane.o $(O_DIR)/srcs/obj_types/sphere.o \
 	$(O_DIR)/srcs/ray_tracer/nearest_intersect.o \
 	$(O_DIR)/srcs/ray_tracer/ray_trace.o \
 	$(O_DIR)/srcs/scene_loader/load_scenes.o \
@@ -425,6 +425,10 @@ $(O_DIR)/srcs/mlx_win/ft_mlx_update.o: srcs/mlx_win/ft_mlx_update.c \
 # module obj
 
 # module obj_types
+$(O_DIR)/srcs/obj_types/cone.o: srcs/obj_types/cone.c \
+	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
 $(O_DIR)/srcs/obj_types/cylinder.o: srcs/obj_types/cylinder.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
@@ -442,9 +446,9 @@ $(O_DIR)/srcs/obj_types/sphere.o: srcs/obj_types/sphere.c \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
 
-$(O_DIR)/srcs/obj_types/cylinder.o $(O_DIR)/srcs/obj_types/obj_types.o \
-$(O_DIR)/srcs/obj_types/plane.o $(O_DIR)/srcs/obj_types/sphere.o: \
-	INCLUDE_FLAGS += -Isrcs/obj_types
+$(O_DIR)/srcs/obj_types/cone.o $(O_DIR)/srcs/obj_types/cylinder.o \
+$(O_DIR)/srcs/obj_types/obj_types.o $(O_DIR)/srcs/obj_types/plane.o \
+$(O_DIR)/srcs/obj_types/sphere.o: INCLUDE_FLAGS += -Isrcs/obj_types
 
 # module ray_tracer
 $(O_DIR)/srcs/ray_tracer/nearest_intersect.o: \
