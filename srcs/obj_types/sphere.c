@@ -6,18 +6,18 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:38:51 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/23 00:02:54 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 18:14:50 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/math.h"
 
+#include "internal.h"
 #include "math_utils.h"
-#include "obj_types.h"
 
 #include <math.h>
 
-static bool		sphere_ray_intersect(t_vertex *intersect, t_obj const *obj,
+bool			sphere_ray_intersect(t_vertex *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
 	float			a;
@@ -36,17 +36,4 @@ static bool		sphere_ray_intersect(t_vertex *intersect, t_obj const *obj,
 	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, tmp));
 	intersect->dir = intersect->pos;
 	return (true);
-}
-
-t_obj			*sphere_new(void)
-{
-	static t_obj_class const	sphere_class = {
-		SUBC("sphere"),
-		V(&sphere_ray_intersect),
-	};
-	t_obj *const				sphere = NEW(t_obj);
-
-	ft_bzero(sphere, sizeof(t_obj));
-	sphere->type = &sphere_class;
-	return (sphere);
 }

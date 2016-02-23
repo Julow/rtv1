@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/22 23:12:23 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 17:53:31 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,15 @@ struct			s_vertex
 ** ========================================================================== **
 */
 
+# define VEC2_DOT(A, B)		(((A).x*(B).x)+((A).y*(B).y))
 # define VEC3_DOT(A, B)		(((A).x*(B).x)+((A).y*(B).y)+((A).z*(B).z))
-
 # define VEC4_DOT(A, B)		((A).x*(B).x+(A).y*(B).y+(A).z*(B).z+(A).w*(B).w)
 
 # define VEC3_1(A)			(VEC3(A, A, A))
+
+# define VEC3_X(V,X)		(VEC3((X), (V).y, (V).z))
+# define VEC3_Y(V,Y)		(VEC3((V).x, (Y), (V).z))
+# define VEC3_Z(V,Z)		(VEC3((V).x, (V).y, (Z)))
 
 float			ft_vec3length(t_vec3 v);
 

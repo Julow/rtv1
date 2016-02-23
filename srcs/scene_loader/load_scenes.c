@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/23 00:57:48 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 18:18:56 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,12 @@ static bool	parse_scene_light(t_xml_parser *xml, t_light *light)
 	return (true);
 }
 
-static bool	parse_scene_obj(t_xml_parser *xml, t_obj **obj)
+static bool	parse_scene_obj(t_xml_parser *xml, t_obj *obj)
 {
-	t_parse_obj	p;
-	t_obj		*(*f)(void);
+	t_parse_obj					p;
+	t_obj_class const *const	c = get_obj_class(ft_xml_name(xml));
 
-	if (SUB_EQU(ft_xml_name(xml), SUBC("sphere")))
-		f = &sphere_new;
-	else if (SUB_EQU(ft_xml_name(xml), SUBC("plane")))
-		f = &plane_new;
-	else
+	if (c == NULL)
 		return (false); // TODO: ft_xml_error
 	p.material = C(t_material, VEC3_0(), 1.f, 0.f, 1.f);
 	p.transform = TRANSFORM(VEC3_0(), VEC3_0(), VEC3_0(), VEC3_1(1.f));
@@ -81,15 +77,9 @@ static bool	parse_scene_obj(t_xml_parser *xml, t_obj **obj)
 				ft_xml_name(xml), ft_xml_value(xml)))
 			return (false); // TODO: ft_xml_error
 	}
-	ft_printf("-----%n");
-	ft_printf("POS %f %f %f%n", p.transform.pos.x, p.transform.pos.y, p.transform.pos.z);
-	ft_printf("ROT %f %f %f%n", p.transform.rot.x, p.transform.rot.y, p.transform.rot.z);
-	ft_printf("SHEAR %f %f %f%n", p.transform.shear.x, p.transform.shear.y, p.transform.shear.z);
-	ft_printf("SCALE %f %f %f%n", p.transform.scale.x, p.transform.scale.y, p.transform.scale.z);
-	ft_printf("COLOR %f %f %f%n", p.material.color.x, p.material.color.y, p.material.color.z);
-	*obj = f();
-	(*obj)->material = p.material;
-	transform_matrix(&p.transform, &(*obj)->m, &(*obj)->m_inv);
+	obj->type = c;
+	obj->material = p.material;
+	transform_matrix(&p.transform, &obj->m, &obj->m_inv);
 	return (true);
 }
 
@@ -97,7 +87,7 @@ static bool	parse_scene(t_xml_parser *xml, t_scene *scene)
 {
 	bool		err;
 
-	*scene = (t_scene){DSTR0(), VECTOR(t_obj*), VECTOR(t_light),
+	*scene = (t_scene){DSTR0(), VECTOR(t_obj), VECTOR(t_light),
 		{VEC3(0.f, 0.f, 0.f), 1.f, 0.f, 1.f}, VEC3(0.f, 0.f, 0.f)};
 	while (ft_xml_next(xml))
 	{

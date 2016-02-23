@@ -7,3 +7,4 @@ module scene_loader:
 	public require ft::vector
 	private require ft::in
 	private require ft::xml
+	private require obj_types

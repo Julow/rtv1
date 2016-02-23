@@ -69,7 +69,8 @@ O_FILES += $(O_DIR)/srcs/camera/camera_render.o \
 	$(O_DIR)/srcs/math_utils/ft_vec3mix.o \
 	$(O_DIR)/srcs/math_utils/transform_matrix.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_close.o $(O_DIR)/srcs/mlx_win/ft_mlx_open.o \
-	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o $(O_DIR)/srcs/obj_types/plane.o \
+	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o $(O_DIR)/srcs/obj_types/cylinder.o \
+	$(O_DIR)/srcs/obj_types/obj_types.o $(O_DIR)/srcs/obj_types/plane.o \
 	$(O_DIR)/srcs/obj_types/sphere.o \
 	$(O_DIR)/srcs/ray_tracer/nearest_intersect.o \
 	$(O_DIR)/srcs/ray_tracer/ray_trace.o \
@@ -365,13 +366,14 @@ $(O_DIR)/libft/ft_xml/ft_xml.o $(O_DIR)/libft/ft_xml/xml_tokens.o \
 $(O_DIR)/libft/ft_xml/xml_utils.o: INCLUDE_FLAGS += -Ilibft/ft_xml
 
 # module main
-$(O_DIR)/srcs/main/main.o: srcs/main/main.c libft/ft_base/public/libft.h \
-	libft/ft_dstr/public/ft_dstr.h libft/ft_img/public/img.h \
-	libft/ft_math/public/math.h libft/ft_out/public/ft_out.h \
-	libft/ft_printf/public/ft_printf.h libft/ft_vector/public/ft_vector.h \
-	srcs/camera/public/camera.h srcs/math_utils/public/math_utils.h \
-	srcs/mlx_win/public/mlx_win.h srcs/obj/public/obj.h \
-	srcs/obj_types/public/obj_types.h srcs/scene/public/scene.h
+$(O_DIR)/srcs/main/main.o: srcs/main/main.c libft/ft_base/public/ft_colors.h \
+	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
+	libft/ft_img/public/img.h libft/ft_math/public/math.h \
+	libft/ft_out/public/ft_out.h libft/ft_printf/public/ft_printf.h \
+	libft/ft_vector/public/ft_vector.h srcs/camera/public/camera.h \
+	srcs/math_utils/public/math_utils.h srcs/mlx_win/public/mlx_win.h \
+	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
+	srcs/scene/public/scene.h srcs/scene_loader/public/scene_loader.h
 
 $(O_DIR)/srcs/main/main.o: INCLUDE_FLAGS += -Isrcs/main
 
@@ -423,14 +425,26 @@ $(O_DIR)/srcs/mlx_win/ft_mlx_update.o: srcs/mlx_win/ft_mlx_update.c \
 # module obj
 
 # module obj_types
+$(O_DIR)/srcs/obj_types/cylinder.o: srcs/obj_types/cylinder.c \
+	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
+$(O_DIR)/srcs/obj_types/obj_types.o: srcs/obj_types/obj_types.c \
+	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/obj_types/public/obj_types.h
 $(O_DIR)/srcs/obj_types/plane.o: srcs/obj_types/plane.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
-	srcs/obj_types/public/obj_types.h
+	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
 $(O_DIR)/srcs/obj_types/sphere.o: srcs/obj_types/sphere.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
-	srcs/obj_types/public/obj_types.h
+	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
+
+$(O_DIR)/srcs/obj_types/cylinder.o $(O_DIR)/srcs/obj_types/obj_types.o \
+$(O_DIR)/srcs/obj_types/plane.o $(O_DIR)/srcs/obj_types/sphere.o: \
+	INCLUDE_FLAGS += -Isrcs/obj_types
 
 # module ray_tracer
 $(O_DIR)/srcs/ray_tracer/nearest_intersect.o: \
@@ -457,8 +471,9 @@ $(O_DIR)/srcs/scene_loader/load_scenes.o: srcs/scene_loader/load_scenes.c \
 	libft/ft_in/public/ft_file_in.h libft/ft_in/public/ft_in.h \
 	libft/ft_math/public/math.h libft/ft_vector/public/ft_vector.h \
 	libft/ft_xml/public/ft_xml.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/scene/public/scene.h \
-	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h
+	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
+	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
+	srcs/scene_loader/public/scene_loader.h
 $(O_DIR)/srcs/scene_loader/parse_param.o: srcs/scene_loader/parse_param.c \
 	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
 	libft/ft_math/public/math.h libft/ft_vector/public/ft_vector.h \

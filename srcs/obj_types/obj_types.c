@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   plane.c                                            :+:      :+:    :+:   */
+/*   obj_types.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/19 12:37:19 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/23 18:14:54 by juloo            ###   ########.fr       */
+/*   Created: 2016/02/23 18:01:47 by juloo             #+#    #+#             */
+/*   Updated: 2016/02/23 18:17:37 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft/math.h"
-
 #include "internal.h"
-#include "math_utils.h"
+#include "obj_types.h"
 
-#include <math.h>
+static t_obj_class const	g_obj_types[] = {
+	{SUBC("sphere"), &sphere_ray_intersect},
+	{SUBC("plane"), &plane_ray_intersect},
+	{SUBC("cylinder"), &cylinder_ray_intersect},
+};
 
-bool			plane_ray_intersect(t_vertex *intersect, t_obj const *obj,
-					t_vertex const *ray)
+t_obj_class const	*get_obj_class(t_sub name)
 {
-	float			tmp;
+	uint32_t			i;
 
-	tmp = ray->dir.y;
-	if (tmp >= 0.f)
-		return (false);
-	tmp = -ray->pos.y / tmp;
-	if (tmp < 0)
-		return (false);
-	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, tmp));
-	intersect->dir = VEC3(0.f, 1.f, 0.f);
-	return (true);
+	i = 0;
+	while (i < ARRAY_LEN(g_obj_types))
+	{
+		if (SUB_EQU(name, g_obj_types[i].name))
+			return (g_obj_types + i);
+		i++;
+	}
+	return (NULL);
 }

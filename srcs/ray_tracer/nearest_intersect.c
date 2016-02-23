@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/22 22:16:35 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 18:19:55 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
 	i = 0;
 	while (i < scene->objs.length)
 	{
-		obj = VGET(t_obj const*, scene->objs, i++);
+		obj = VECTOR_GET(scene->objs, i++);
 		tmp = ray;
 		ft_mat4apply_vertex(&obj->m_inv, &tmp);
 		if (obj->type->ray_intersect(&intersect, obj, &tmp))

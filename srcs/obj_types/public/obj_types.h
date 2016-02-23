@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:37:41 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/23 00:01:26 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 18:14:25 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 
 # include "obj.h"
 
-t_obj			*sphere_new(void);
-t_obj			*plane_new(void);
+/*
+** Return the obj class named 'name'
+** Return NULL if not found
+*/
+t_obj_class const	*get_obj_class(t_sub name);
 
 #endif
