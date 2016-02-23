@@ -432,7 +432,7 @@ $(O_DIR)/srcs/obj_types/cylinder.o: srcs/obj_types/cylinder.c \
 $(O_DIR)/srcs/obj_types/obj_types.o: srcs/obj_types/obj_types.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
-	srcs/obj_types/public/obj_types.h
+	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
 $(O_DIR)/srcs/obj_types/plane.o: srcs/obj_types/plane.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
@@ -467,13 +467,13 @@ $(O_DIR)/srcs/ray_tracer/ray_trace.o: INCLUDE_FLAGS += -Isrcs/ray_tracer
 
 # module scene_loader
 $(O_DIR)/srcs/scene_loader/load_scenes.o: srcs/scene_loader/load_scenes.c \
-	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
-	libft/ft_in/public/ft_file_in.h libft/ft_in/public/ft_in.h \
-	libft/ft_math/public/math.h libft/ft_vector/public/ft_vector.h \
-	libft/ft_xml/public/ft_xml.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
-	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
-	srcs/scene_loader/public/scene_loader.h
+	libft/ft_base/public/ft_colors.h libft/ft_base/public/libft.h \
+	libft/ft_dstr/public/ft_dstr.h libft/ft_in/public/ft_file_in.h \
+	libft/ft_in/public/ft_in.h libft/ft_math/public/math.h \
+	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/obj_types/public/obj_types.h srcs/scene/public/scene.h \
+	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h
 $(O_DIR)/srcs/scene_loader/parse_param.o: srcs/scene_loader/parse_param.c \
 	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
 	libft/ft_math/public/math.h libft/ft_vector/public/ft_vector.h \

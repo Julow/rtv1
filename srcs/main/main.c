@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/23 00:57:14 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 19:40:27 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@
 ** ========================================================================== **
 ** Main
 ** -
-** TODO: vector<t_obj*> -> vector<t_obj>
 ** TODO: specular
-** TODO: cylinder/cone
+** TODO: cone
 ** TODO: refraction critical angle
 */
 

@@ -10,7 +10,7 @@
 
 <!-- scene -->
 <scene
-	name="<name>" // default "<No name>"
+	name="<name>" // default ""
 	camera_pos="<vec3>"
 	camera_dir="<vec3>" // default "0;0;1"
 	sky_color="<vec3>"

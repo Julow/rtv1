@@ -6,10 +6,11 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/23 18:18:56 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/23 19:11:01 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/ft_colors.h"
 #include "ft/ft_file_in.h"
 #include "ft/ft_xml.h"
 
@@ -47,15 +48,14 @@ static bool	parse_scene_light(t_xml_parser *xml, t_light *light)
 	*light = (t_light){VEC3(0.f, 0.f, 0.f), 1.f, VEC3(0.f, 0.f, 0.f)};
 	while (ft_xml_next(xml))
 	{
-		if (xml->token == XML_TOKEN_END)
-			break ;
-		else if (xml->token != XML_TOKEN_PARAM)
-			return (false); // TODO: ft_xml_error
+		if (xml->token == XML_TOKEN_START)
+			return (ft_xml_error(xml, SUBC("Can't have child")));
+		ASSERT(xml->token == XML_TOKEN_PARAM);
 		if (!parse_param(&g_light_params, light,
 				ft_xml_name(xml), ft_xml_value(xml)))
-			return (false); // TODO: ft_xml_error
+			return (ft_xml_error(xml, SUBC("Invalid value")));
 	}
-	return (true);
+	return (BOOL_OF(xml->token == XML_TOKEN_END));
 }
 
 static bool	parse_scene_obj(t_xml_parser *xml, t_obj *obj)
@@ -64,19 +64,20 @@ static bool	parse_scene_obj(t_xml_parser *xml, t_obj *obj)
 	t_obj_class const *const	c = get_obj_class(ft_xml_name(xml));
 
 	if (c == NULL)
-		return (false); // TODO: ft_xml_error
+		return (ft_xml_error(xml, SUBC("Unknown obj type")));
 	p.material = C(t_material, VEC3_0(), 1.f, 0.f, 1.f);
 	p.transform = TRANSFORM(VEC3_0(), VEC3_0(), VEC3_0(), VEC3_1(1.f));
 	while (ft_xml_next(xml))
 	{
-		if (xml->token == XML_TOKEN_END)
-			break ;
-		else if (xml->token != XML_TOKEN_PARAM)
-			return (false); // TODO: ft_xml_error
+		if (xml->token == XML_TOKEN_START)
+			return (ft_xml_error(xml, SUBC("Can't have child")));
+		ASSERT(xml->token == XML_TOKEN_PARAM);
 		if (!parse_param(&g_obj_params, &p,
 				ft_xml_name(xml), ft_xml_value(xml)))
-			return (false); // TODO: ft_xml_error
+			return (ft_xml_error(xml, SUBC("Invalid value")));
 	}
+	if (xml->token != XML_TOKEN_END)
+		return (false);
 	obj->type = c;
 	obj->material = p.material;
 	transform_matrix(&p.transform, &obj->m, &obj->m_inv);
@@ -92,12 +93,14 @@ static bool	parse_scene(t_xml_parser *xml, t_scene *scene)
 	while (ft_xml_next(xml))
 	{
 		if (xml->token == XML_TOKEN_PARAM)
-			err = parse_param(&g_scene_params, scene,
-				ft_xml_name(xml), ft_xml_value(xml)); // TODO: || ft_xml_error
+			err = parse_param(&g_scene_params, scene, ft_xml_name(xml),
+				ft_xml_value(xml)) || ft_xml_error(xml, SUBC("Invalid value"));
 		else if (xml->token == XML_TOKEN_START)
 			err = (ft_subequ(ft_xml_name(xml), SUBC("light")))
 				? parse_scene_light(xml, ft_vpush(&scene->lights, NULL, 1))
 				: parse_scene_obj(xml, ft_vpush(&scene->objs, NULL, 1));
+		else
+			err = ASSERT(false);
 		if (!err)
 		{
 			ft_dstrclear(&scene->name);
@@ -106,24 +109,18 @@ static bool	parse_scene(t_xml_parser *xml, t_scene *scene)
 			return (false);
 		}
 	}
-	return (true);
+	return (BOOL_OF(xml->token == XML_TOKEN_END));
 }
 
 static bool	parse_scenes(t_xml_parser *xml, t_vector *dst)
 {
-	bool		err;
-
 	while (ft_xml_next(xml))
-	{
 		if (xml->token != XML_TOKEN_START)
-			err = false; // TODO: ft_xml_error
-		else if (ft_subequ(ft_xml_name(xml), SUBC("scene")))
-			err = parse_scene(xml, ft_vpush(dst, NULL, 1));
-		else
-			err = false; // TODO: ft_xml_error
-		if (!err)
+			return (ASSERT(false));
+		else if (!ft_subequ(ft_xml_name(xml), SUBC("scene")))
+			return (ft_xml_error(xml, SUBC("Invalid markup")));
+		else if (!parse_scene(xml, ft_vpush(dst, NULL, 1)))
 			return (false);
-	}
 	return (BOOL_OF(xml->token != XML_TOKEN_ERROR));
 }
 
@@ -135,12 +132,13 @@ bool		load_scenes(char const *file, t_vector *dst)
 
 	if ((in = ft_in_open(file)) == NULL)
 	{
-		ft_printf("%s: Invalid file%n", file);
+		ft_dprintf(2, C_RED "[Error]" C_RESET " %s: Invalid file%n", file);
 		return (false);
 	}
 	xml_parser = XML_PARSER(V(in));
 	if (!(ret = parse_scenes(&xml_parser, dst)))
-		ft_printf("%s:%u: %ts%n", file, xml_parser.line, ft_xml_value(&xml_parser));
+		ft_dprintf(2, C_RED "[Error]" C_RESET " %s:%u: %ts%n",
+			file, xml_parser.line, ft_xml_value(&xml_parser));
 	ft_in_close(in);
 	return (ret);
 }
