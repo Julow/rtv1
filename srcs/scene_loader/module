@@ -6,5 +6,7 @@ module scene_loader:
 	public require ft::base
 	public require ft::vector
 	private require ft::in
+	private require ft::printf
 	private require ft::xml
 	private require obj_types
+	private require color_utils

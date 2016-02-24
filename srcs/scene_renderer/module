@@ -1,8 +1,9 @@
-module camera:
+module scene_renderer:
 	public include public/
 
-	public require ft::math
 	public require ft::img
 	public require scene
+	private require ft::math
 	private require ray_tracer
 	private require math_utils
+	private require color_utils

@@ -6,20 +6,12 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 23:13:37 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/23 21:42:22 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/24 19:28:48 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "color_utils.h"
 #include "internal.h"
-
-static t_vec3	color_24tof(uint32_t color)
-{
-	return (VEC3(
-		((float)((color >> 16) & 0xFF)) / 256.f,
-		((float)((color >> 8) & 0xFF)) / 256.f,
-		((float)((color >> 0) & 0xFF)) / 256.f
-	));
-}
 
 t_sub		ft_subtrim_is(t_sub sub, t_is is)
 {

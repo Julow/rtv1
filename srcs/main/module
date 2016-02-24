@@ -12,4 +12,4 @@ main module main:
 	require scene
 	require math_utils
 	require scene_loader
-	require camera
+	require scene_renderer

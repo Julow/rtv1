@@ -1,57 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera_render.c                                    :+:      :+:    :+:   */
+/*   scene_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:31:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/20 01:14:39 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/24 19:31:10 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/math.h"
 
-#include "camera.h"
+#include "color_utils.h"
 #include "math_utils.h"
 #include "ray_tracer.h"
-
-static uint32_t	color_fto24(t_vec3 color)
-{
-	return (
-		  (((uint8_t)(color.x * 255.f)) << 16)
-		| (((uint8_t)(color.y * 255.f)) << 8)
-		| (((uint8_t)(color.z * 255.f)) << 0)
-	);
-}
-
-static uint32_t	color_fto32(t_vec4 color)
-{
-	return (
-		  (((uint8_t)(color.w * 255.f)) << 24)
-		| (((uint8_t)(color.x * 255.f)) << 16)
-		| (((uint8_t)(color.y * 255.f)) << 8)
-		| (((uint8_t)(color.z * 255.f)) << 0)
-	);
-}
+#include "scene_render.h"
 
 #define MAX_RAY_DEPTH		10
 
-void			camera_render(t_img *dst, t_camera const *camera,
-					t_scene const *scene)
+void			scene_render(t_img *dst, t_scene const *scene, uint32_t camera)
 {
+	t_camera const	*cam = VECTOR_GET(scene->cameras, camera);
 	t_vec3			viewPlane;
 	t_vec2u			pt;
 	t_vertex		ray;
 
-	viewPlane = VEC3_SUB(VEC3_ADD(camera->pos,
+	viewPlane = VEC3_SUB(VEC3_ADD(cam->pos,
 			VEC3_ADD(
-				VEC3_MUL1(camera->dir, camera->plane_dist),
+				VEC3_MUL1(cam->dir, cam->view_dist),
 				VEC3_MUL1(VEC3(0.f, 1.f, 0.f), dst->height / 2.f)
 			))
 		, VEC3_MUL1(VEC3(1.f, 0.f, 0.f), dst->width / 2.f));
 	pt = VEC2U(0, 0);
-	ray = VERTEX(camera->pos, VEC3_0());
+	ray = VERTEX(cam->pos, VEC3_0());
 	ray.dir.z = viewPlane.z;
 	while (pt.y < dst->height)
 	{

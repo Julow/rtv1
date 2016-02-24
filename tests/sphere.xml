@@ -1,4 +1,5 @@
 <scene>
 	<sphere color="#990000" />
 	<light pos="10, 0, -10" />
+	<camera pos="0, 0, -10" />
 </scene>
