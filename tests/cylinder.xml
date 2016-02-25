@@ -1,10 +1,10 @@
 <scene>
 	<cylinder rot="1.57,0,0" color="#1f9900" />
-	<light pos="10, 0, -10" brightness="0.5" />
+	<light pos="15, 5, -5" brightness="1" />
 
-	<camera pos="0, 0, -10" />
-	<camera pos="10, 0, 0" dir="-1, 0, 0" />
-	<camera pos="0, 0, 10" dir="0, 0, -1" />
-	<camera pos="-10, 0, 0" dir="1, 0, 0" />
+	<camera pos="0, 0, -2" />
+	<camera pos="2, 0, 0" dir="-1, 0, 0" />
+	<camera pos="0, 0, 2" dir="0, 0, -1" />
+	<camera pos="-2, 0, 0" dir="1, 0, 0" />
 
 </scene>

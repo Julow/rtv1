@@ -1,0 +1,15 @@
+<scene>
+
+	<plane pos="0, -2, 0" color="#9999FF" />
+
+	<light pos="0, 0, 0" brightness="0.5" />
+	<light pos="10, 0, 0" brightness="0.5" />
+	<light pos="50, 0, 50" brightness="0.5" />
+	<light pos="-20, 0, 20" brightness="0.5" />
+	<light pos="-15, 0, -30" brightness="0.5" />
+	<light pos="30, 0, -5" brightness="0.5" />
+	<light pos="-100, 0, 100" brightness="5" />
+
+	<camera pos="0, 50, -50" dir="0, -1, 1" />
+
+</scene>

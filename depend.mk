@@ -475,6 +475,7 @@ $(O_DIR)/srcs/scene_loader/load_scenes.o: srcs/scene_loader/load_scenes.c \
 	libft/ft_base/public/ft_colors.h libft/ft_base/public/libft.h \
 	libft/ft_dstr/public/ft_dstr.h libft/ft_in/public/ft_file_in.h \
 	libft/ft_in/public/ft_in.h libft/ft_math/public/math.h \
+	libft/ft_out/public/ft_out.h libft/ft_printf/public/ft_printf.h \
 	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/scene/public/scene.h srcs/scene_loader/internal.h \

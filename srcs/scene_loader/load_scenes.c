@@ -6,12 +6,13 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/24 19:41:36 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/25 19:53:04 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/ft_colors.h"
 #include "ft/ft_file_in.h"
+#include "ft/ft_printf.h"
 
 #include "internal.h"
 #include "scene.h"

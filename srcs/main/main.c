@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/24 19:47:17 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/25 19:49:01 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 ** -
 ** TODO: specular
 ** TODO: refraction critical angle
+** TODO: ambient brightness
+** TODO: light color
 */
 
 typedef struct s_main		t_main;

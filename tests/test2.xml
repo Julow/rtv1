@@ -1,0 +1,12 @@
+<scene>
+
+	<plane pos="0, -5, 0" opacity="0.5" reflection="1" color="#DDDDDD" />
+	<plane pos="0, 5, 0" rot="0, 0, 3.14" opacity="0.5" reflection="1" color="#DDDDDD" />
+
+	<sphere pos="0, 0, 30" color="#FF2222" />
+
+	<light pos="10, 4, 20" />
+
+	<camera pos="0, 0, 0" />
+
+</scene>

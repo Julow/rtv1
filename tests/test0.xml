@@ -11,6 +11,9 @@
 
 	<light pos="10, 0, -10" />
 
-	<camera pos="0, 0, -40" />
+	<camera pos="0, 0, -10" />
+	<camera pos="0, 20, -10" dir="0, -1, 1" />
+	<camera pos="30, 150, 0" dir="0, -1, 0.00001" />
+	<camera pos="0, 0, 18" dir="0, 0, -1" />
 
 </scene>

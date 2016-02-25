@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/22 23:22:53 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/25 19:44:39 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,11 @@ t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
 	float				tmp;
 	t_vec3				color;
 
-	if (max_depth == 0)
-		return (VEC3(0, 0, 0));
 	if ((obj = nearest_intersect(&intersect, scene, *ray)) == NULL)
 		return (scene->sky_color);
 	tmp = ray_to_light(scene, &intersect);
 	color = VEC3_MUL1(obj->material.color, MIN(tmp, 1.f));
-	if (obj->material.opacity < 0.999f)
+	if (obj->material.opacity < 0.999f && max_depth > 0)
 		color = ft_vec3mix(color,
 			ft_vec3mix(trace_reflect(scene, ray, material, &intersect, max_depth - 1),
 				trace_refract(scene, ray, material, &obj->material, &intersect, max_depth - 1),
