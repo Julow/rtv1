@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/24 19:45:32 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/28 01:43:42 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static t_vector const	g_obj_params = VECTOR(t_param_def,
 	PARAM("opacity", float, t_parse_obj, material.opacity),
 	PARAM("reflection", float, t_parse_obj, material.reflection),
 	PARAM("refract_index", float, t_parse_obj, material.refract_index),
+	PARAM("specular_color", color, t_parse_obj, material.specular_color),
+	PARAM("specular_exp", float, t_parse_obj, material.specular_exp),
 	PARAM("pos", vec3, t_parse_obj, transform.pos),
 	PARAM("rot", vec3, t_parse_obj, transform.rot),
 	PARAM("shear", vec3, t_parse_obj, transform.shear),

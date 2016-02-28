@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 11:52:08 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/22 22:02:57 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/28 01:37:52 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ void			ft_mat4apply_vec3(t_mat4 const *m, t_vec3 *v)
 
 void			ft_mat4apply_vertex(t_mat4 const *m, t_vertex *v)
 {
-	t_vec3			a;
 	t_vec3			b;
 
-	a = VERTEX_A(*v);
-	b = VERTEX_B(*v);
-	ft_mat4apply_vec3(m, &a);
+	b = VEC3_ADD(v->pos, v->dir);
+	ft_mat4apply_vec3(m, &v->pos);
 	ft_mat4apply_vec3(m, &b);
-	*v = VERTEX_AB(a, b);
+	v->dir = ft_vec3norm(VEC3_SUB(b, v->pos));
 }

@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/22 22:38:45 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/27 20:53:36 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ struct			s_material
 	float			opacity;
 	float			reflection;
 	float			refract_index;
+	t_vec3			specular_color;
+	float			specular_exp;
 };
 
 # define MATERIAL(R,G,B,...)	((t_material){.color=VEC3(R,G,B),##__VA_ARGS__})

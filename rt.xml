@@ -30,6 +30,8 @@
 		opacity="<float>" // default "1"
 		reflection="<float>"
 		refract_index="<float>" // default "1"
+		specular_color="<color>" // default "#7F7F7F"
+		specular_exp="<float>" // default "128"
 	/>
 
 	<camera

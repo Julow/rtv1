@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/25 19:49:01 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/28 01:46:32 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 ** ========================================================================== **
 ** Main
 ** -
-** TODO: specular
 ** TODO: refraction critical angle
 ** TODO: ambient brightness
-** TODO: light color
+** TODO: gamma
+** TODO: check ft_mat4apply_vertex
 */
 
 typedef struct s_main		t_main;
