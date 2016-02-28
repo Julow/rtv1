@@ -85,11 +85,11 @@ PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
 	$(O_DIR)/_public/ft/math.h $(O_DIR)/_public/ft/ft_out.h \
 	$(O_DIR)/_public/ft/ft_str_out.h $(O_DIR)/_public/ft/ft_printf.h \
 	$(O_DIR)/_public/ft/ft_vprintf.h $(O_DIR)/_public/ft/ft_vector.h \
-	$(O_DIR)/_public/ft/ft_xml.h $(O_DIR)/_public/math_utils.h \
-	$(O_DIR)/_public/mlx_win.h $(O_DIR)/_public/obj.h \
-	$(O_DIR)/_public/obj_types.h $(O_DIR)/_public/ray_tracer.h \
-	$(O_DIR)/_public/scene.h $(O_DIR)/_public/scene_loader.h \
-	$(O_DIR)/_public/scene_render.h
+	$(O_DIR)/_public/ft/ft_xml.h $(O_DIR)/_public/math_complex.h \
+	$(O_DIR)/_public/math_utils.h $(O_DIR)/_public/mlx_win.h \
+	$(O_DIR)/_public/obj.h $(O_DIR)/_public/obj_types.h \
+	$(O_DIR)/_public/ray_tracer.h $(O_DIR)/_public/scene.h \
+	$(O_DIR)/_public/scene_loader.h $(O_DIR)/_public/scene_render.h
 
 # module color_utils
 $(O_DIR)/srcs/color_utils/color_utils.o: srcs/color_utils/color_utils.c \
@@ -527,6 +527,7 @@ $(O_DIR)/_public/ft/ft_xml.h: libft/ft_xml/public/ft_xml.h
 $(O_DIR)/_public/ft/img.h: libft/ft_img/public/img.h
 $(O_DIR)/_public/ft/libft.h: libft/ft_base/public/libft.h
 $(O_DIR)/_public/ft/math.h: libft/ft_math/public/math.h
+$(O_DIR)/_public/math_complex.h: srcs/math_utils/public/math_complex.h
 $(O_DIR)/_public/math_utils.h: srcs/math_utils/public/math_utils.h
 $(O_DIR)/_public/mlx_win.h: srcs/mlx_win/public/mlx_win.h
 $(O_DIR)/_public/obj.h: srcs/obj/public/obj.h
