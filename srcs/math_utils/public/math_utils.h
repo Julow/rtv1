@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/28 18:00:15 by juloo            ###   ########.fr       */
+/*   Updated: 2016/02/29 22:37:40 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "ft/libft.h"
 # include "ft/math.h"
 
-typedef struct s_vertex		t_vertex;
+typedef struct s_vertex			t_vertex;
 typedef struct s_transform		t_transform;
 
 /*
@@ -39,6 +39,10 @@ struct			s_vertex
 /*
 ** ========================================================================== **
 */
+
+# define VEC3_CROSS(A, B)	(VEC3 _VEC3_CROSS((A), (B)))
+
+# define _VEC3_CROSS(A, B)	(A.y*B.z-A.z*B.y,A.z*B.x-A.x*B.z,A.x*B.y-A.y*B.x)
 
 # define VEC4_DOT(A, B)		((A).x*(B).x+(A).y*(B).y+(A).z*(B).z+(A).w*(B).w)
 
