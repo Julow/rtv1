@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/28 22:32:35 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/01 13:50:48 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/01 18:54:45 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_quaternions	t_quaternions;
 ** ft_quaternions_norm		Normalize a t_quaternions
 ** ft_quaternions_inv		Return the inverse of a t_quaternions
 ** ft_quaternions_apply		Apply a t_quaternions to a t_vec3
+** ft_quaternions_reverse	Apply the inverse of a t_quaternions to a t_vec3
 ** ft_quaternions_rot		Return the quaternions of a rotation
 */
 
@@ -69,6 +70,7 @@ void			ft_quaternions_norm(t_quaternions *q);
 t_quaternions	ft_quaternions_inv(t_quaternions const *q);
 
 void			ft_quaternions_apply(t_quaternions const *q, t_vec3 *p);
+void			ft_quaternions_reverse(t_quaternions const *q, t_vec3 *p);
 
 t_quaternions	ft_quaternions_rot(t_vec3 rot);
 
