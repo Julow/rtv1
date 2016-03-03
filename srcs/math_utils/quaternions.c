@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/29 19:43:29 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/03 20:52:05 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/03 21:12:03 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,17 @@ void			ft_quaternions_reverse(t_quaternions const *q, t_vec3 *p)
 		);
 
 	*p = QUATERNIONS_MUL(tmp, *q).v;
+}
+
+void			ft_quaternions_apply2(t_quaternions const *q,
+					t_quaternions const *inv, t_vec3 *p)
+{
+	t_quaternions const	tmp = QUATERNIONS(
+			-VEC3_DOT(q->v, *p),
+			VEC3_ADD(VEC3_MUL1(*p, q->s), VEC3_CROSS(q->v, *p))
+		);
+
+	*p = QUATERNIONS_MUL(tmp, *inv).v;
 }
 
 t_quaternions	ft_quaternions_rot(t_vec3 rot)

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/03 20:40:57 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/03 21:16:43 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ bool		parse_scene_obj(t_xml_parser *xml, t_obj *obj)
 	transform_matrix(&p.transform, &obj->m, &obj->m_inv);
 #ifdef USE_QUATERNIONS
 	obj->rot = ft_quaternions_rot(p.transform.rot);
+	obj->rot_inv = ft_quaternions_inv(&obj->rot);
 #else
 	p.transform.pos = VEC3_0();
 	p.transform.shear = VEC3_0();

@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/03 20:41:06 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/04 00:28:46 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ struct			s_obj
 	t_mat4				m_inv;
 # ifdef USE_QUATERNIONS
 	t_quaternions		rot;
+	t_quaternions		rot_inv;
 # else
 	t_mat4				rot_m;
 	t_mat4				rot_m_inv;

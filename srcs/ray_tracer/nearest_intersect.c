@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/03 20:40:06 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/04 00:28:43 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static void		obj_apply_transform(t_obj const *obj, t_vertex *v)
 {
 	ft_mat4apply_vec3(&obj->m, &v->pos);
 #ifdef USE_QUATERNIONS
-	ft_quaternions_apply(&obj->rot, &v->dir);
+	// ft_quaternions_apply(&obj->rot, &v->dir);
+	ft_quaternions_apply2(&obj->rot, &obj->rot_inv, &v->dir);
 #else
 	ft_mat4apply_vec3(&obj->rot_m, &v->dir);
 #endif
@@ -39,7 +40,8 @@ static void		obj_reverse_transform(t_obj const *obj, t_vertex *v)
 {
 	ft_mat4apply_vec3(&obj->m_inv, &v->pos);
 #ifdef USE_QUATERNIONS
-	ft_quaternions_reverse(&obj->rot, &v->dir);
+	// ft_quaternions_reverse(&obj->rot, &v->dir);
+	ft_quaternions_apply2(&obj->rot_inv, &obj->rot, &v->dir);
 #else
 	ft_mat4apply_vec3(&obj->rot_m_inv, &v->dir);
 #endif
