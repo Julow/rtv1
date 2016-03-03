@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/28 00:06:43 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/03 20:40:06 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,26 @@ static bool		is_nearest_than(t_vec3 const *pos, t_vec3 a, t_vec3 b)
 	return (false);
 }
 
+static void		obj_apply_transform(t_obj const *obj, t_vertex *v)
+{
+	ft_mat4apply_vec3(&obj->m, &v->pos);
+#ifdef USE_QUATERNIONS
+	ft_quaternions_apply(&obj->rot, &v->dir);
+#else
+	ft_mat4apply_vec3(&obj->rot_m, &v->dir);
+#endif
+}
+
+static void		obj_reverse_transform(t_obj const *obj, t_vertex *v)
+{
+	ft_mat4apply_vec3(&obj->m_inv, &v->pos);
+#ifdef USE_QUATERNIONS
+	ft_quaternions_reverse(&obj->rot, &v->dir);
+#else
+	ft_mat4apply_vec3(&obj->rot_m_inv, &v->dir);
+#endif
+}
+
 t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
 					t_vertex ray)
 {
@@ -41,10 +61,10 @@ t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
 	{
 		obj = VECTOR_GET(scene->objs, i++);
 		tmp = ray;
-		ft_mat4apply_vertex(&obj->m_inv, &tmp);
+		obj_reverse_transform(obj, &tmp);
 		if (obj->type->ray_intersect(&intersect, obj, &tmp))
 		{
-			ft_mat4apply_vertex(&obj->m, &intersect);
+			obj_apply_transform(obj, &intersect);
 			if (nearest == NULL
 				|| is_nearest_than(&ray.pos, intersect.pos, dst->pos))
 			{

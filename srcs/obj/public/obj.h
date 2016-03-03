@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/27 20:53:36 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/03 20:41:06 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,15 @@
 # include "ft/libft.h"
 # include "ft/math.h"
 
+# define USE_QUATERNIONS
+
 # include "math_utils.h"
+
+# ifdef USE_QUATERNIONS
+
+#  include "math_quaternions.h"
+
+# endif
 
 typedef struct s_obj			t_obj;
 typedef struct s_obj_class		t_obj_class;
@@ -63,6 +71,12 @@ struct			s_obj
 	t_material			material;
 	t_mat4				m;
 	t_mat4				m_inv;
+# ifdef USE_QUATERNIONS
+	t_quaternions		rot;
+# else
+	t_mat4				rot_m;
+	t_mat4				rot_m_inv;
+# endif
 };
 
 #endif

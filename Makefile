@@ -70,6 +70,10 @@ $(O_DIR)/%.o: %.cpp
 	$(CXX) $(CPP_FLAGS) -c $< -o $@ && $(PRINT_OK)
 	$(eval LINKER = $(CXX))
 
+# Compile to .s
+%.s: %.c
+	$(CC) $(C_FLAGS) -S $< -o $@ && $(PRINT_LINK)
+
 # Init submodules
 $(SUBMODULE_RULES):
 	git submodule init $(@:.git=)

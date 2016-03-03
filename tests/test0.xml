@@ -3,7 +3,7 @@
 	<plane pos="0, -10, 0" color="#777777" />
 	<plane pos="0, 0, 20" rot="-1.57, 0, 0" color="#006eff" />
 
-	<sphere scale="3" color="#990000" />
+	<sphere pos="0, 5, 0" scale="3" color="#990000" />
 
 	<cone pos="0, 0, 10" rot="1.57, 0.8, 0.7" color="#d6c43d" />
 

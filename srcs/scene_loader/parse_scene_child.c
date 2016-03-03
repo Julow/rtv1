@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/28 01:43:42 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/03 20:40:57 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 #include "scene.h"
 
 #include <stddef.h>
+
+#ifdef USE_QUATERNIONS
+
+# include "math_quaternions.h"
+
+#endif
 
 static t_vector const	g_light_params = VECTOR(t_param_def,
 	PARAM("pos", vec3, t_light, pos),
@@ -38,7 +44,6 @@ static t_vector const	g_obj_params = VECTOR(t_param_def,
 	PARAM("specular_exp", float, t_parse_obj, material.specular_exp),
 	PARAM("pos", vec3, t_parse_obj, transform.pos),
 	PARAM("rot", vec3, t_parse_obj, transform.rot),
-	PARAM("shear", vec3, t_parse_obj, transform.shear),
 	PARAM("scale", vec3, t_parse_obj, transform.scale),
 );
 
@@ -96,5 +101,13 @@ bool		parse_scene_obj(t_xml_parser *xml, t_obj *obj)
 	obj->type = c;
 	obj->material = p.material;
 	transform_matrix(&p.transform, &obj->m, &obj->m_inv);
+#ifdef USE_QUATERNIONS
+	obj->rot = ft_quaternions_rot(p.transform.rot);
+#else
+	p.transform.pos = VEC3_0();
+	p.transform.shear = VEC3_0();
+	p.transform.scale = VEC3_1(1.f);
+	transform_matrix(&p.transform, &obj->rot_m, &obj->rot_m_inv);
+#endif
 	return (true);
 }

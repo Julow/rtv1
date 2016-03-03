@@ -67,6 +67,7 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_utils.o \
 	$(O_DIR)/srcs/main/main.o $(O_DIR)/srcs/math_utils/ft_mat4apply.o \
 	$(O_DIR)/srcs/math_utils/ft_vec3dist.o \
 	$(O_DIR)/srcs/math_utils/ft_vec3mix.o \
+	$(O_DIR)/srcs/math_utils/quaternions.o \
 	$(O_DIR)/srcs/math_utils/transform_matrix.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_close.o $(O_DIR)/srcs/mlx_win/ft_mlx_open.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o $(O_DIR)/srcs/obj_types/cone.o \
@@ -86,10 +87,11 @@ PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
 	$(O_DIR)/_public/ft/ft_str_out.h $(O_DIR)/_public/ft/ft_printf.h \
 	$(O_DIR)/_public/ft/ft_vprintf.h $(O_DIR)/_public/ft/ft_vector.h \
 	$(O_DIR)/_public/ft/ft_xml.h $(O_DIR)/_public/math_complex.h \
-	$(O_DIR)/_public/math_utils.h $(O_DIR)/_public/mlx_win.h \
-	$(O_DIR)/_public/obj.h $(O_DIR)/_public/obj_types.h \
-	$(O_DIR)/_public/ray_tracer.h $(O_DIR)/_public/scene.h \
-	$(O_DIR)/_public/scene_loader.h $(O_DIR)/_public/scene_render.h
+	$(O_DIR)/_public/math_quaternions.h $(O_DIR)/_public/math_utils.h \
+	$(O_DIR)/_public/mlx_win.h $(O_DIR)/_public/obj.h \
+	$(O_DIR)/_public/obj_types.h $(O_DIR)/_public/ray_tracer.h \
+	$(O_DIR)/_public/scene.h $(O_DIR)/_public/scene_loader.h \
+	$(O_DIR)/_public/scene_render.h
 
 # module color_utils
 $(O_DIR)/srcs/color_utils/color_utils.o: srcs/color_utils/color_utils.c \
@@ -370,10 +372,11 @@ $(O_DIR)/srcs/main/main.o: srcs/main/main.c libft/ft_base/public/ft_colors.h \
 	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
 	libft/ft_img/public/img.h libft/ft_math/public/math.h \
 	libft/ft_out/public/ft_out.h libft/ft_printf/public/ft_printf.h \
-	libft/ft_vector/public/ft_vector.h srcs/math_utils/public/math_utils.h \
-	srcs/mlx_win/public/mlx_win.h srcs/obj/public/obj.h \
-	srcs/obj_types/public/obj_types.h srcs/scene/public/scene.h \
-	srcs/scene_loader/public/scene_loader.h \
+	libft/ft_vector/public/ft_vector.h \
+	srcs/math_utils/public/math_quaternions.h \
+	srcs/math_utils/public/math_utils.h srcs/mlx_win/public/mlx_win.h \
+	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
+	srcs/scene/public/scene.h srcs/scene_loader/public/scene_loader.h \
 	srcs/scene_renderer/public/scene_render.h
 
 $(O_DIR)/srcs/main/main.o: INCLUDE_FLAGS += -Isrcs/main
@@ -387,6 +390,10 @@ $(O_DIR)/srcs/math_utils/ft_vec3dist.o: srcs/math_utils/ft_vec3dist.c \
 	srcs/math_utils/public/math_utils.h
 $(O_DIR)/srcs/math_utils/ft_vec3mix.o: srcs/math_utils/ft_vec3mix.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
+	srcs/math_utils/public/math_utils.h
+$(O_DIR)/srcs/math_utils/quaternions.o: srcs/math_utils/quaternions.c \
+	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
+	srcs/math_utils/public/math_quaternions.h \
 	srcs/math_utils/public/math_utils.h
 $(O_DIR)/srcs/math_utils/transform_matrix.o: \
 	srcs/math_utils/transform_matrix.c libft/ft_base/public/libft.h \
@@ -428,22 +435,27 @@ $(O_DIR)/srcs/mlx_win/ft_mlx_update.o: srcs/mlx_win/ft_mlx_update.c \
 # module obj_types
 $(O_DIR)/srcs/obj_types/cone.o: srcs/obj_types/cone.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
+	srcs/math_utils/public/math_quaternions.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
 $(O_DIR)/srcs/obj_types/cylinder.o: srcs/obj_types/cylinder.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
+	srcs/math_utils/public/math_quaternions.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
 $(O_DIR)/srcs/obj_types/obj_types.o: srcs/obj_types/obj_types.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
+	srcs/math_utils/public/math_quaternions.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
 $(O_DIR)/srcs/obj_types/plane.o: srcs/obj_types/plane.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
+	srcs/math_utils/public/math_quaternions.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
 $(O_DIR)/srcs/obj_types/sphere.o: srcs/obj_types/sphere.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math.h \
+	srcs/math_utils/public/math_quaternions.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/obj_types/internal.h srcs/obj_types/public/obj_types.h
 
@@ -455,12 +467,15 @@ $(O_DIR)/srcs/obj_types/sphere.o: INCLUDE_FLAGS += -Isrcs/obj_types
 $(O_DIR)/srcs/ray_tracer/nearest_intersect.o: \
 	srcs/ray_tracer/nearest_intersect.c libft/ft_base/public/libft.h \
 	libft/ft_dstr/public/ft_dstr.h libft/ft_math/public/math.h \
-	libft/ft_vector/public/ft_vector.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/ray_tracer/internal.h \
-	srcs/ray_tracer/public/ray_tracer.h srcs/scene/public/scene.h
+	libft/ft_vector/public/ft_vector.h \
+	srcs/math_utils/public/math_quaternions.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/ray_tracer/internal.h srcs/ray_tracer/public/ray_tracer.h \
+	srcs/scene/public/scene.h
 $(O_DIR)/srcs/ray_tracer/ray_trace.o: srcs/ray_tracer/ray_trace.c \
 	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
 	libft/ft_math/public/math.h libft/ft_vector/public/ft_vector.h \
+	srcs/math_utils/public/math_quaternions.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/ray_tracer/internal.h srcs/ray_tracer/public/ray_tracer.h \
 	srcs/scene/public/scene.h
@@ -477,6 +492,7 @@ $(O_DIR)/srcs/scene_loader/load_scenes.o: srcs/scene_loader/load_scenes.c \
 	libft/ft_in/public/ft_in.h libft/ft_math/public/math.h \
 	libft/ft_out/public/ft_out.h libft/ft_printf/public/ft_printf.h \
 	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
+	srcs/math_utils/public/math_quaternions.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
 	srcs/scene_loader/public/scene_loader.h
@@ -484,18 +500,20 @@ $(O_DIR)/srcs/scene_loader/parse_param.o: srcs/scene_loader/parse_param.c \
 	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
 	libft/ft_in/public/ft_in.h libft/ft_math/public/math.h \
 	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
-	srcs/color_utils/public/color_utils.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/scene/public/scene.h \
-	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h
+	srcs/color_utils/public/color_utils.h \
+	srcs/math_utils/public/math_quaternions.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
+	srcs/scene_loader/public/scene_loader.h
 $(O_DIR)/srcs/scene_loader/parse_scene_child.o: \
 	srcs/scene_loader/parse_scene_child.c libft/ft_base/public/libft.h \
 	libft/ft_dstr/public/ft_dstr.h libft/ft_in/public/ft_in.h \
 	libft/ft_math/public/math.h libft/ft_out/public/ft_out.h \
 	libft/ft_printf/public/ft_printf.h libft/ft_vector/public/ft_vector.h \
-	libft/ft_xml/public/ft_xml.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
-	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
-	srcs/scene_loader/public/scene_loader.h
+	libft/ft_xml/public/ft_xml.h srcs/math_utils/public/math_quaternions.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/obj_types/public/obj_types.h srcs/scene/public/scene.h \
+	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h
 
 $(O_DIR)/srcs/scene_loader/load_scenes.o \
 $(O_DIR)/srcs/scene_loader/parse_param.o \
@@ -507,9 +525,11 @@ $(O_DIR)/srcs/scene_renderer/scene_render.o: \
 	srcs/scene_renderer/scene_render.c libft/ft_base/public/libft.h \
 	libft/ft_dstr/public/ft_dstr.h libft/ft_img/public/img.h \
 	libft/ft_math/public/math.h libft/ft_vector/public/ft_vector.h \
-	srcs/color_utils/public/color_utils.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/ray_tracer/public/ray_tracer.h \
-	srcs/scene/public/scene.h srcs/scene_renderer/public/scene_render.h
+	srcs/color_utils/public/color_utils.h \
+	srcs/math_utils/public/math_quaternions.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/ray_tracer/public/ray_tracer.h srcs/scene/public/scene.h \
+	srcs/scene_renderer/public/scene_render.h
 
 # public links
 $(O_DIR)/_public/color_utils.h: srcs/color_utils/public/color_utils.h
@@ -528,6 +548,7 @@ $(O_DIR)/_public/ft/img.h: libft/ft_img/public/img.h
 $(O_DIR)/_public/ft/libft.h: libft/ft_base/public/libft.h
 $(O_DIR)/_public/ft/math.h: libft/ft_math/public/math.h
 $(O_DIR)/_public/math_complex.h: srcs/math_utils/public/math_complex.h
+$(O_DIR)/_public/math_quaternions.h: srcs/math_utils/public/math_quaternions.h
 $(O_DIR)/_public/math_utils.h: srcs/math_utils/public/math_utils.h
 $(O_DIR)/_public/mlx_win.h: srcs/mlx_win/public/mlx_win.h
 $(O_DIR)/_public/obj.h: srcs/obj/public/obj.h
