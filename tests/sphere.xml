@@ -1,8 +1,16 @@
 <scene>
-	<sphere color="#990000" />
+
+	<plane pos="0, 0, 5" rot="-1.57, 0, 0" color="#3355FF" />
+
+	<sphere opacity="0" reflection="0" />
+	<!-- <sphere opacity="0" reflection="0" refract_index="1.33" /> -->
+	<!-- <sphere color="#FFFFFF" opacity="0" reflection="0" refract_index="5" /> -->
+
 	<light pos="10, 0, -5" brightness="1" />
+
+	<camera pos="0, 0, -2" dir="0, 0, 1" />
 	<camera pos="2, 0, 0" dir="-1, 0, 0" />
 	<camera pos="0, 0, 2" dir="0, 0, -1" />
 	<camera pos="-2, 0, 0" dir="1, 0, 0" />
-	<camera pos="0, 0, -2" dir="0, 0, 1" />
+
 </scene>

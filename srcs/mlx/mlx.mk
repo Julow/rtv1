@@ -4,6 +4,8 @@ ifeq ($(shell uname),Darwin)
 
 LINK_FLAGS += -framework OpenGL -framework AppKit
 
+C_FLAGS += -DMAC_OS_MODE=1
+
 else
 
 LINK_FLAGS += -lX11 -lXext -L$(MLX_PATH)

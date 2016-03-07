@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/28 01:46:32 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/07 14:35:03 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 ** ========================================================================== **
 ** Main
 ** -
-** TODO: refraction critical angle
 ** TODO: ambient brightness
 ** TODO: gamma
-** TODO: check ft_mat4apply_vertex
+** TODO: finite cone/cylinder/plane
+** TODO: fix cone/cylinder intersect with inner ray
 */
 
 typedef struct s_main		t_main;
@@ -59,15 +59,25 @@ static void		main_destroy(t_main *main)
 	exit(0);
 }
 
-// #define KEYCODE_ESC		53
-// #define KEYCODE_Q		12
+#ifdef MAC_OS_MODE
 
-#define KEYCODE_ESC		65307
-#define KEYCODE_Q		113
-#define KEYCODE_RIGHT	65363
-#define KEYCODE_LEFT	65361
-#define KEYCODE_UP		65362
-#define KEYCODE_DOWN	65364
+# define KEYCODE_ESC	53
+# define KEYCODE_Q		12
+# define KEYCODE_RIGHT	124
+# define KEYCODE_LEFT	123
+# define KEYCODE_UP		126
+# define KEYCODE_DOWN	125
+
+#else
+
+# define KEYCODE_ESC	65307
+# define KEYCODE_Q		113
+# define KEYCODE_RIGHT	65363
+# define KEYCODE_LEFT	65361
+# define KEYCODE_UP		65362
+# define KEYCODE_DOWN	65364
+
+#endif
 
 static void		render_scene(t_main *main, uint32_t scene, uint32_t camera)
 {

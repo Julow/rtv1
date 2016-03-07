@@ -80,7 +80,7 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_utils.o \
 	$(O_DIR)/srcs/scene_loader/parse_scene_child.o \
 	$(O_DIR)/srcs/scene_renderer/scene_render.o
 PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
-	$(O_DIR)/_public/ft/libft.h $(O_DIR)/_public/ft/ft_wchar.h \
+	$(O_DIR)/_public/ft/ft_wchar.h $(O_DIR)/_public/ft/libft.h \
 	$(O_DIR)/_public/ft/ft_dstr.h $(O_DIR)/_public/ft/img.h \
 	$(O_DIR)/_public/ft/ft_file_in.h $(O_DIR)/_public/ft/ft_in.h \
 	$(O_DIR)/_public/ft/math.h $(O_DIR)/_public/ft/ft_out.h \
@@ -405,6 +405,8 @@ MLX_PATH = srcs/mlx/minilibx
 ifeq ($(shell uname),Darwin)
 
 LINK_FLAGS += -framework OpenGL -framework AppKit
+
+C_FLAGS += -DMAC_OS_MODE=1
 
 else
 

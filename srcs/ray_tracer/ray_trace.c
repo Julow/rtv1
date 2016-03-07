@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/28 01:49:12 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/07 14:32:06 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,32 +61,48 @@ t_vec3			ray_to_light(t_scene const *scene, t_material const *mat,
 	return (VEC3_MIN(light_sum, VEC3_1(1.f)));
 }
 
-static t_vec3	trace_reflect(t_scene const *scene, t_vertex const *ray,
-					t_material const *material, t_vertex const *intersect,
-					uint32_t ray_depth)
+static bool		refracted_ray(t_vertex const *ray, t_material const *mat1,
+					t_material const *mat2, t_vertex const *intersect,
+					t_vec3 *dst)
 {
-	t_vertex		reflected;
+	float			index = mat1->refract_index / mat2->refract_index;
+	float			tmp;
+	float const		cos_t = VEC3_DOT(ray->dir, intersect->dir);
 
-	reflected.pos = intersect->pos;
-	reflected.dir = ft_vec3norm(VEC3_ADD(ray->dir,
-		VEC3_MUL1(intersect->dir, -2 * VEC3_DOT(intersect->dir, ray->dir))));
-	return (ray_trace(scene, &reflected, material, ray_depth));
+	tmp = index * index * (1.f - (cos_t * cos_t));
+	if (tmp > 1.f)
+		return (false);
+	tmp = index * cos_t - sqrtf(1.f - tmp);
+	*dst = ft_vec3norm(VEC3_ADD(VEC3_MUL1(ray->dir, index),
+		VEC3_MUL1(intersect->dir, tmp)));
+	return (true);
 }
 
-static t_vec3	trace_refract(t_scene const *scene, t_vertex const *ray,
-					t_material const *material, t_material const *obj_mat,
-					t_vertex const *intersect, uint32_t ray_depth)
+static t_vec3	trace_(t_scene const *scene, t_vertex const *ray,
+					t_material const *mat1, t_material const *mat2,
+					t_vertex const *intersect, uint32_t max_depth)
 {
-	t_vertex		refracted;
-	float			index = material->refract_index / obj_mat->refract_index;
-	float			tmp;
+	t_vertex		tmp;
+	t_vec3			reflected_color;
+	t_vec3			refracted_color;
+	float			reflection;
 
-	tmp = VEC3_DOT(ray->dir, intersect->dir);
-	tmp = index * tmp - sqrt(1.f - (index * index * (1.f - (tmp * tmp))));
-	refracted.pos = intersect->pos;
-	refracted.dir = ft_vec3norm(VEC3_ADD(VEC3_MUL1(ray->dir, index),
-		VEC3_MUL1(intersect->dir, tmp)));
-	return (ray_trace(scene, &refracted, obj_mat, ray_depth));
+	reflection = mat2->reflection;
+	tmp.pos = intersect->pos;
+	if (reflection > 0.001f)
+	{
+		tmp.dir = ft_vec3norm(VEC3_ADD(ray->dir, VEC3_MUL1(intersect->dir,
+			-2.f * VEC3_DOT(intersect->dir, ray->dir))));
+		reflected_color = ray_trace(scene, &tmp, mat1, max_depth);
+	}
+	if (reflection < 0.999f)
+	{
+		if (!refracted_ray(ray, mat1, mat2, intersect, &tmp.dir))
+			reflection = 1.f;
+		else
+			refracted_color = ray_trace(scene, &tmp, mat2, max_depth);
+	}
+	return (ft_vec3mix(reflected_color, refracted_color, reflection));
 }
 
 t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
@@ -100,10 +116,7 @@ t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
 		return (scene->sky_color);
 	color = ray_to_light(scene, &obj->material, ray, &intersect);
 	if (obj->material.opacity < 0.999f && max_depth > 0)
-		color = ft_vec3mix(color,
-			ft_vec3mix(trace_reflect(scene, ray, material, &intersect, max_depth - 1),
-				trace_refract(scene, ray, material, &obj->material, &intersect, max_depth - 1),
-				obj->material.reflection),
-			obj->material.opacity);
+		color = ft_vec3mix(color, trace_(scene, ray, material, &obj->material,
+				&intersect, max_depth - 1), obj->material.opacity);
 	return (color);
 }

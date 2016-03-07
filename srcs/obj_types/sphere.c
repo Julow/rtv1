@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:38:51 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/23 18:14:50 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/07 14:30:21 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,42 @@
 
 #include <math.h>
 
-bool			sphere_ray_intersect(t_vertex *intersect, t_obj const *obj,
-					t_vertex const *ray)
+static bool		sphere_intersect(bool *out, float *dist, t_vertex const *ray)
 {
 	float			a;
 	float			b;
 	float			d;
-	float			tmp;
 
 	a = VEC3_DOT(ray->dir, ray->dir);
 	b = VEC3_DOT(ray->pos, ray->dir) * 2;
 	d = b * b - (4 * a * (VEC3_DOT(ray->pos, ray->pos) - 1.f));
 	if (d == 0.f)
-		tmp = -b / (2.f * a);
-	else if (d < 0.f || ((tmp = (-b - sqrt(d)) / (2.f * a)) < 0.f
-			&& (tmp = (-b + sqrt(d)) / (2.f * a)) < 0.f))
+	{
+		*dist = -b / (2.f * a);
+		return (true);
+	}
+	else if (d > 0.f)
+	{
+		d = sqrtf(d);
+		if ((*dist = (-b - d) / (2.f * a)) > INTERSECT_ERROR)
+			return (true);
+		else if ((*dist = (-b + d) / (2.f * a)) > INTERSECT_ERROR)
+			return ((*out = true), true);
+	}
+	return (false);
+}
+
+bool			sphere_ray_intersect(t_vertex *intersect, t_obj const *obj,
+					t_vertex const *ray)
+{
+	float			dist;
+	bool			out;
+
+	out = false;
+	if (!sphere_intersect(&out, &dist, ray))
 		return (false);
-	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, tmp));
-	intersect->dir = intersect->pos;
+	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, dist));
+	intersect->dir = out ? VEC3_SUB(VEC3_0(), intersect->pos) : intersect->pos;
 	return (true);
+	(void)obj;
 }

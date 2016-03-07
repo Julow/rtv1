@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/04 00:28:46 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/07 14:29:25 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include "ft/libft.h"
 # include "ft/math.h"
 
-# define USE_QUATERNIONS
-
 # include "math_utils.h"
+
+# define USE_QUATERNIONS
 
 # ifdef USE_QUATERNIONS
 
@@ -34,6 +34,8 @@ typedef struct s_material		t_material;
 ** ========================================================================== **
 ** Obj
 */
+
+# define INTERSECT_ERROR		0.0001f
 
 /*
 ** Represent an object type
