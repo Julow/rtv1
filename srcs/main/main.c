@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/07 14:35:03 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/09 02:01:37 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 ** -
 ** TODO: ambient brightness
 ** TODO: gamma
-** TODO: finite cone/cylinder/plane
-** TODO: fix cone/cylinder intersect with inner ray
 */
 
 typedef struct s_main		t_main;

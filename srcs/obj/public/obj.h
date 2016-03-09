@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/08 23:20:57 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/09 02:13:12 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_material		t_material;
 ** Obj
 */
 
-# define INTERSECT_ERROR		0.0001f
+# define INTERSECT_ERROR		0.00001f
 
 /*
 ** Represent an object type

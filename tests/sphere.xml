@@ -1,6 +1,6 @@
 <scene>
 
-	<plane pos="0, 0, 5" rot="-1.57, 0, 0" color="#3355FF" />
+	<plane pos="0, 0, 5" rot="1.57, 0, 0" scale="200" color="#3355FF" />
 
 	<sphere opacity="0" reflection="0" />
 	<!-- <sphere opacity="0" reflection="0" refract_index="1.33" /> -->
