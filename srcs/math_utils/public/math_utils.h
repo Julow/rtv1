@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/29 22:37:40 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/13 14:21:36 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ float			ft_vec3dist2(t_vec3 a, t_vec3 b);
 
 t_vec3			ft_vec3mix(t_vec3 a, t_vec3 b, float mix);
 
-void			ft_mat4apply_vertex(t_mat4 const *m, t_vertex *v);
-void			ft_mat4apply_vec3(t_mat4 const *m, t_vec3 *v);
+void			ft_mat4apply_vec3(t_mat4 const *m, t_vec3 *v, float w);
 void			ft_mat4apply_vec4(t_mat4 const *m, t_vec4 *v);
 
 /*

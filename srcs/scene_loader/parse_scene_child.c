@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/08 23:20:49 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/13 13:21:48 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,6 @@ bool		parse_scene_obj(t_xml_parser *xml, t_obj *obj)
 		return (false);
 	obj->type = c;
 	obj->material = p.material;
-	obj->pos = p.transform.pos;
-	p.transform.pos = VEC3_0();
 	transform_matrix(&p.transform, &obj->m, &obj->m_inv);
 	return (true);
 }

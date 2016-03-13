@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/09 00:12:05 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/13 13:24:41 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@ static bool		is_nearest_than(t_vec3 const *pos, t_vec3 a, t_vec3 b)
 	return (false);
 }
 
-static void		obj_apply_transform(t_obj const *obj, t_vertex *v)
-{
-	ft_mat4apply_vec3(&obj->m, &v->pos);
-	v->pos = VEC3_ADD(v->pos, obj->pos);
-	ft_mat4apply_vec3(&obj->m, &v->dir);
-}
-
-static void		obj_reverse_transform(t_obj const *obj, t_vertex *v)
-{
-	v->pos = VEC3_SUB(v->pos, obj->pos);
-	ft_mat4apply_vec3(&obj->m_inv, &v->pos);
-	ft_mat4apply_vec3(&obj->m_inv, &v->dir);
-}
-
 t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
 					t_vertex ray)
 {
@@ -55,10 +41,12 @@ t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
 	{
 		obj = VECTOR_GET(scene->objs, i++);
 		tmp = ray;
-		obj_reverse_transform(obj, &tmp);
+		ft_mat4apply_vec3(&obj->m_inv, &tmp.pos, 1.f);
+		ft_mat4apply_vec3(&obj->m_inv, &tmp.dir, 0.f);
 		if (obj->type->ray_intersect(&intersect, obj, &tmp))
 		{
-			obj_apply_transform(obj, &intersect);
+			ft_mat4apply_vec3(&obj->m, &intersect.pos, 1.f);
+			ft_mat4apply_vec3(&obj->m, &intersect.dir, 0.f);
 			if (nearest == NULL
 				|| is_nearest_than(&ray.pos, intersect.pos, dst->pos))
 			{

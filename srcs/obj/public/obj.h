@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/09 02:13:12 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/13 13:21:50 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ struct			s_obj
 {
 	t_obj_class const	*type;
 	t_material			material;
-	t_vec3				pos;
 	t_mat4				m;
 	t_mat4				m_inv;
 };
