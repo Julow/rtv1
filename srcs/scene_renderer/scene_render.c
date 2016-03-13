@@ -6,11 +6,11 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:31:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/07 13:14:36 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/13 23:01:21 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft/math.h"
+#include "ft/math_vec3.h"
 
 #include "color_utils.h"
 #include "math_utils.h"

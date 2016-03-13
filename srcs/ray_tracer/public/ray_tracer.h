@@ -6,14 +6,14 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:04:15 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/20 01:13:56 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/13 22:51:09 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAY_TRACER_H
 # define RAY_TRACER_H
 
-# include "ft/math.h"
+# include "ft/math_vec3.h"
 
 # include "math_utils.h"
 # include "scene.h"

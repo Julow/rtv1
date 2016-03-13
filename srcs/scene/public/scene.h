@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/27 20:35:00 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/13 22:51:18 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "ft/ft_dstr.h"
 # include "ft/ft_vector.h"
-# include "ft/math.h"
+# include "ft/math_vec3.h"
 
 # include "obj.h"
 

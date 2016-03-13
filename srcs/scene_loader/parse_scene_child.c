@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/13 13:21:48 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/13 22:59:14 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static t_vector const	g_obj_params = VECTOR(t_param_def,
 	PARAM("refract_index", float, t_parse_obj, material.refract_index),
 	PARAM("specular_color", color, t_parse_obj, material.specular_color),
 	PARAM("specular_exp", float, t_parse_obj, material.specular_exp),
-	PARAM("pos", vec3, t_parse_obj, transform.pos),
-	PARAM("rot", vec3, t_parse_obj, transform.rot),
-	PARAM("scale", vec3, t_parse_obj, transform.scale),
+	PARAM("pos", vec3, t_parse_obj, pos),
+	PARAM("rot", vec3, t_parse_obj, rot),
+	PARAM("scale", vec3, t_parse_obj, scale),
 );
 
 bool		parse_scene_light(t_xml_parser *xml, t_light *light)
@@ -79,8 +79,7 @@ bool		parse_scene_obj(t_xml_parser *xml, t_obj *obj)
 
 	if (c == NULL)
 		return (ft_xml_error(xml, SUBC("Unknown obj type")));
-	p.material = DEF_MTL;
-	p.transform = DEF_TRANSFORM;
+	p = (t_parse_obj){DEF_MTL, VEC3_0(), VEC3_0(), VEC3_0(), VEC3_1(1.f)};
 	while (ft_xml_next(xml))
 	{
 		if (xml->token == XML_TOKEN_START)
@@ -94,6 +93,7 @@ bool		parse_scene_obj(t_xml_parser *xml, t_obj *obj)
 		return (false);
 	obj->type = c;
 	obj->material = p.material;
-	transform_matrix(&p.transform, &obj->m, &obj->m_inv);
+	obj->m = ft_mat4transform(p.pos, p.rot, p.shear, p.scale);
+	obj->m_inv = ft_mat4transform_inv(p.pos, p.rot, p.shear, p.scale);
 	return (true);
 }

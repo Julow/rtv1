@@ -6,14 +6,14 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/28 22:32:35 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/03 21:19:00 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/13 22:51:58 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MATH_QUATERNIONS_H
 # define MATH_QUATERNIONS_H
 
-# include "ft/math.h"
+# include "ft/math_vec3.h"
 # include "math_utils.h"
 
 typedef struct s_quaternions	t_quaternions;

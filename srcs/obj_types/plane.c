@@ -6,11 +6,11 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 12:37:19 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/09 01:53:14 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/13 22:50:05 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft/math.h"
+#include "ft/math_vec3.h"
 
 #include "internal.h"
 #include "math_utils.h"

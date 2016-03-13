@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/09 02:01:37 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/13 22:52:31 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ft/ft_printf.h"
 #include "ft/ft_vector.h"
 #include "ft/libft.h"
-#include "ft/math.h"
 
 #include "math_utils.h"
 #include "mlx_win.h"

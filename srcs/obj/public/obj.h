@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/13 13:21:50 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/13 22:50:58 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define OBJ_H
 
 # include "ft/libft.h"
-# include "ft/math.h"
+# include "ft/math_mat4.h"
+# include "ft/math_vec3.h"
 
 # include "math_utils.h"
 

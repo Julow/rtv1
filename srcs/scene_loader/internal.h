@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/24 19:41:17 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/13 22:57:19 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ typedef struct s_parse_obj		t_parse_obj;
 struct			s_parse_obj
 {
 	t_material		material;
-	t_transform		transform;
+	t_vec3			pos;
+	t_vec3			rot;
+	t_vec3			shear;
+	t_vec3			scale;
 };
 
 bool		parse_scene_light(t_xml_parser *xml, t_light *light);
