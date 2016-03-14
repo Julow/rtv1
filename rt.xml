@@ -5,6 +5,7 @@
 	<vec3>		3 floats separated by ';', spaces are trim
 	<float>		float value, spaces are trim
 	<color>		color value: #RRGGBB, '#' is optionnal
+	<texture>	path to a .tga image file
 	unspecified default values are "0"
 -->
 
@@ -19,6 +20,8 @@
 		pos="<vec3>"
 		color="<color>" // default "#FFFFFF"
 		brightness="<float>" // default "1"
+		attenuation="<float>" // default "1000"
+		attenuation_exp="<float>" // default "4"
 	/>
 
 	<sphere|plane|cone|cylinder
@@ -26,6 +29,8 @@
 		rot="<vec3>"
 		shear="<vec3>"
 		scale="<vec3>" // default "1"
+		texture="<texture>"
+		ambient="<float>" // default "0.1"
 		color="<vec3>"
 		opacity="<float>" // default "1"
 		reflection="<float>"

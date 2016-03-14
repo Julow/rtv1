@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 14:12:36 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 15:59:29 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ struct			s_scene
 */
 
 # define DEF_CAMERA		((t_camera){VEC3_0(), VEC3(0.f, 0.f, 1.f), 1000.f})
-# define DEF_MTL		((t_material){VEC3_1(1.f), NULL, 1.f, 0.f, 1.f, VEC3_1(0.5f), 128.f})
+# define DEF_MTL		((t_material){VEC3_1(1.f), NULL, 0.1f, 1.f, 0.f, 1.f, VEC3_1(0.5f), 128.f})
 # define DEF_TRANSFORM	(TRANSFORM(VEC3_0(), VEC3_0(), VEC3_0(), VEC3_1(1.f)))
 # define DEF_LIGHT		((t_light){VEC3_0(), 1.f, VEC3_1(1.f), 1000.f, 4.f})
 # define DEF_SKY_COLOR	(VEC3(0.f, 0.f, 0.f))

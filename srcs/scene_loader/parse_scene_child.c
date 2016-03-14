@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/14 14:10:45 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 16:02:28 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "obj_types.h"
 #include "scene.h"
 
+#include <math.h>
 #include <stddef.h>
 
 static t_vector const	g_light_params = VECTOR(t_param_def,
@@ -34,6 +35,7 @@ static t_vector const	g_camera_params = VECTOR(t_param_def,
 static t_vector const	g_obj_params = VECTOR(t_param_def,
 	PARAM("color", color, t_parse_obj, material.color),
 	PARAM("texture", texture, t_parse_obj, material.texture),
+	PARAM("ambient", float, t_parse_obj, material.ambient),
 	PARAM("opacity", float, t_parse_obj, material.opacity),
 	PARAM("reflection", float, t_parse_obj, material.reflection),
 	PARAM("refract_index", float, t_parse_obj, material.refract_index),
@@ -97,6 +99,7 @@ bool		parse_scene_obj(t_xml_parser *xml, t_obj *obj)
 		return (false);
 	obj->type = c;
 	obj->material = p.material;
+	p.rot = VEC3_MUL1(p.rot, M_PI/2.f);
 	obj->m = ft_mat4transform(p.pos, p.rot, p.shear, p.scale);
 	obj->m_inv = ft_mat4transform_inv(p.pos, p.rot, p.shear, p.scale);
 	return (true);

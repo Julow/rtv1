@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 13:52:28 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 15:59:08 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@ t_vec3			ray_to_light(t_scene const *scene, t_material const *mat,
 	uint32_t		i;
 	t_light const	*light;
 	t_vec3			light_sum;
+	float			specular_sum;
 	t_vec3			obj_color;
 	float			tmp;
 	float			tmp2;
 	t_vec3			light_dir;
 
 	i = 0;
-	light_sum = VEC3_0();
+	light_sum = VEC3_1(mat->ambient);
+	specular_sum = 0.f;
 	while (i < scene->lights.length)
 	{
 		light = VECTOR_GET(scene->lights, i++);
@@ -55,17 +57,15 @@ t_vec3			ray_to_light(t_scene const *scene, t_material const *mat,
 			|| (tmp = VEC3_DOT(intersect->norm, light_dir)) < 0.f)
 			continue ;
 		tmp = light->brightness * tmp * powf(tmp2, light->att_exp);
-		tmp2 = ft_vec3dot(intersect->norm,
-			ft_vec3norm(VEC3_SUB(light_dir, ray->dir)));
-		tmp2 = (tmp2 <= 0.f) ? 0.f : powf(tmp2, mat->specular_exp);
-		obj_color = (mat->texture != NULL) ?
-			texture_get(mat->texture, intersect->tex) : VEC3_1(1.f);
-		obj_color = VEC3_MUL(obj_color, mat->color);
-		obj_color = VEC3_ADD(obj_color, VEC3_MUL1(mat->specular_color, tmp2));
-		obj_color = VEC3_MUL1(VEC3_MUL(obj_color, light->color), tmp);
-		light_sum = VEC3_ADD(light_sum, obj_color);
+		tmp2 = ft_vec3dot(intersect->norm, ft_vec3norm(VEC3_SUB(light_dir, ray->dir)));
+		specular_sum += (tmp2 <= 0.f) ? 0.f : powf(tmp2, mat->specular_exp) * tmp;
+		light_sum = VEC3_ADD(light_sum, VEC3_MUL1(light->color, tmp));
 	}
-	return (VEC3_MIN(light_sum, VEC3_1(1.f)));
+	light_sum = VEC3_MUL(light_sum, VEC3_ADD1(VEC3_MUL1(mat->specular_color, specular_sum), 1.f));
+	obj_color = (mat->texture != NULL) ?
+		texture_get(mat->texture, intersect->tex) : VEC3_1(1.f);
+	obj_color = VEC3_MUL(VEC3_MUL(obj_color, mat->color), light_sum);
+	return (VEC3_MIN(obj_color, VEC3_1(1.f)));
 }
 
 static bool		refracted_ray(t_vertex const *ray, t_material const *mat1,

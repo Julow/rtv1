@@ -1,0 +1,19 @@
+<scene>
+
+	<plane pos="0,0.5,0" rot="0,0,0" texture="tests/box.tga" />
+	<plane pos="0,-0.5,0" rot="0,0,0" texture="tests/box.tga" />
+
+	<plane pos="0.5,0,0" rot="0,0,1" texture="tests/box.tga" />
+	<plane pos="-0.5,0,0" rot="0,0,1" texture="tests/box.tga" />
+
+	<plane pos="0,0,0.5" rot="1,0,0" texture="tests/box.tga" />
+	<plane pos="0,0,-0.5" rot="1,0,0" texture="tests/box.tga" />
+
+	<light pos="2,3,2" />
+
+	<camera pos="1.2,0.8,0.6" dir="-1,-0.5,-0.5" />
+	<camera pos="-1.2,0.8,0.6" dir="1,-0.5,-0.5" />
+	<camera pos="-1.2,0.8,-0.6" dir="1,-0.5,0.5" />
+	<camera pos="1.2,0.8,-0.6" dir="-1,-0.5,0.5" />
+
+</scene>

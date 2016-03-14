@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 12:17:12 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 15:55:00 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ struct			s_material
 {
 	t_vec3			color;
 	t_img const		*texture;
+	float			ambient;
 	float			opacity;
 	float			reflection;
 	float			refract_index;
