@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 16:56:02 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 22:47:52 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 ** TODO: check invalid values (xml)
 ** TODO: spot light
 ** TODO: check redefined values (xml)
+** TODO: post-process/texture filter
+** TODO: mipmap
 */
 
 typedef struct s_main		t_main;
