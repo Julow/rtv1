@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/13 22:59:14 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/14 11:51:08 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static t_vector const	g_camera_params = VECTOR(t_param_def,
 
 static t_vector const	g_obj_params = VECTOR(t_param_def,
 	PARAM("color", color, t_parse_obj, material.color),
+	PARAM("texture", texture, t_parse_obj, material.texture),
 	PARAM("opacity", float, t_parse_obj, material.opacity),
 	PARAM("reflection", float, t_parse_obj, material.reflection),
 	PARAM("refract_index", float, t_parse_obj, material.refract_index),

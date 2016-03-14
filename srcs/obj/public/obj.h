@@ -6,15 +6,17 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/13 22:50:58 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/14 12:17:12 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBJ_H
 # define OBJ_H
 
+# include "ft/img.h"
 # include "ft/libft.h"
 # include "ft/math_mat4.h"
+# include "ft/math_vec2.h"
 # include "ft/math_vec3.h"
 
 # include "math_utils.h"
@@ -22,6 +24,7 @@
 typedef struct s_obj			t_obj;
 typedef struct s_obj_class		t_obj_class;
 typedef struct s_material		t_material;
+typedef struct s_intersect		t_intersect;
 
 /*
 ** ========================================================================== **
@@ -38,7 +41,7 @@ typedef struct s_material		t_material;
 struct			s_obj_class
 {
 	t_sub			name;
-	bool			(*ray_intersect)(t_vertex *intersect, t_obj const *obj,
+	bool			(*ray_intersect)(t_intersect *intersect, t_obj const *obj,
 						t_vertex const *ray);
 };
 
@@ -48,6 +51,7 @@ struct			s_obj_class
 struct			s_material
 {
 	t_vec3			color;
+	t_img const		*texture;
 	float			opacity;
 	float			reflection;
 	float			refract_index;
@@ -66,6 +70,16 @@ struct			s_obj
 	t_material			material;
 	t_mat4				m;
 	t_mat4				m_inv;
+};
+
+/*
+** Intersection
+*/
+struct			s_intersect
+{
+	t_vec3			pos;
+	t_vec3			norm;
+	t_vec2			tex;
 };
 
 #endif

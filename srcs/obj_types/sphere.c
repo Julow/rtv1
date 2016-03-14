@@ -6,10 +6,11 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:38:51 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/13 22:50:19 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/14 12:17:35 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/math_vec2.h"
 #include "ft/math_vec3.h"
 
 #include "internal.h"
@@ -42,7 +43,7 @@ static bool		sphere_intersect(bool *out, float *dist, t_vertex const *ray)
 	return (false);
 }
 
-bool			sphere_ray_intersect(t_vertex *intersect, t_obj const *obj,
+bool			sphere_ray_intersect(t_intersect *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
 	float			dist;
@@ -52,7 +53,8 @@ bool			sphere_ray_intersect(t_vertex *intersect, t_obj const *obj,
 	if (!sphere_intersect(&out, &dist, ray))
 		return (false);
 	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, dist));
-	intersect->dir = out ? VEC3_SUB(VEC3_0(), intersect->pos) : intersect->pos;
+	intersect->norm = out ? VEC3_SUB(VEC3_0(), intersect->pos) : intersect->pos;
+	intersect->tex = VEC2(0.f, 0.f);
 	return (true);
 	(void)obj;
 }

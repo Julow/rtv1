@@ -6,10 +6,11 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 12:37:19 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/13 22:50:05 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/14 12:50:40 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/math_vec2.h"
 #include "ft/math_vec3.h"
 
 #include "internal.h"
@@ -20,7 +21,7 @@
 #define PLANE_MIN	(VEC2(-0.5f, -0.5f))
 #define PLANE_MAX	(VEC2(0.5f, 0.5f))
 
-bool			plane_ray_intersect(t_vertex *intersect, t_obj const *obj,
+bool			plane_ray_intersect(t_intersect *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
 	float			tmp;
@@ -34,7 +35,9 @@ bool			plane_ray_intersect(t_vertex *intersect, t_obj const *obj,
 	if (intersect->pos.x < PLANE_MIN.x || intersect->pos.x > PLANE_MAX.x
 		|| intersect->pos.z < PLANE_MIN.y || intersect->pos.z > PLANE_MAX.y)
 		return (false);
-	intersect->dir = VEC3(0.f, (ray->dir.y < 0.f) ? 1.f : -1.f, 0.f);
+	intersect->norm = VEC3(0.f, (ray->dir.y < 0.f) ? 1.f : -1.f, 0.f);
+	intersect->tex = VEC2(intersect->pos.x - PLANE_MIN.x,
+		intersect->pos.z - PLANE_MIN.y);
 	return (true);
 	(void)obj;
 }

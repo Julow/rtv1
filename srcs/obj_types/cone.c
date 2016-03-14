@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 19:41:16 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/13 22:50:41 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/14 12:17:28 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static bool		cone_intersect(bool *out, float *dist, t_vertex const *ray)
 	return (false);
 }
 
-bool			cone_ray_intersect(t_vertex *intersect, t_obj const *obj,
+bool			cone_ray_intersect(t_intersect *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
 	float			dist;
@@ -62,9 +62,10 @@ bool			cone_ray_intersect(t_vertex *intersect, t_obj const *obj,
 	if (!cone_intersect(&out, &dist, ray))
 		return (false);
 	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, dist));
-	intersect->dir = ft_vec3norm(VEC3_Z(intersect->pos, -intersect->pos.z));
+	intersect->norm = ft_vec3norm(VEC3_Z(intersect->pos, -intersect->pos.z));
 	if (out)
-		intersect->dir = VEC3_SUB(VEC3_0(), intersect->dir);
+		intersect->norm = VEC3_SUB(VEC3_0(), intersect->norm);
+	intersect->tex = VEC2(0.f, 0.f);
 	return (true);
 	(void)obj;
 }

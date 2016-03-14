@@ -1,0 +1,7 @@
+module texture_loader:
+	public include public/
+
+	public require ft::base
+	public require ft::img
+	private require ft::img_loader
+	private require ft::hmap

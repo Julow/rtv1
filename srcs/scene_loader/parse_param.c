@@ -6,12 +6,13 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 23:13:37 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/24 19:28:48 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/14 12:00:30 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "color_utils.h"
 #include "internal.h"
+#include "texture_loader.h"
 
 t_sub		ft_subtrim_is(t_sub sub, t_is is)
 {
@@ -82,6 +83,11 @@ bool		parse_color(t_sub value, t_vec3 *dst)
 		return (false);
 	*dst = color_24tof(color);
 	return (true);
+}
+
+bool		parse_texture(t_sub value, t_img const **dst)
+{
+	return (BOOL_OF((*dst = load_texture(value)) != NULL));
 }
 
 bool		parse_float(t_sub value, float *dst)

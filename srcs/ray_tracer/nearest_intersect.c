@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/13 13:24:41 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 11:20:46 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static bool		is_nearest_than(t_vec3 const *pos, t_vec3 a, t_vec3 b)
 	return (false);
 }
 
-t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
+t_obj const		*nearest_intersect(t_intersect *dst, t_scene const *scene,
 					t_vertex ray)
 {
 	t_obj const		*obj;
 	uint32_t		i;
 	t_obj const		*nearest;
-	t_vertex		intersect;
+	t_intersect		intersect;
 	t_vertex		tmp;
 
 	ray.pos = VEC3_ADD(ray.pos, VEC3_MUL1(ray.dir, 0.01f));
@@ -46,7 +46,7 @@ t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
 		if (obj->type->ray_intersect(&intersect, obj, &tmp))
 		{
 			ft_mat4apply_vec3(&obj->m, &intersect.pos, 1.f);
-			ft_mat4apply_vec3(&obj->m, &intersect.dir, 0.f);
+			ft_mat4apply_vec3(&obj->m, &intersect.norm, 0.f);
 			if (nearest == NULL
 				|| is_nearest_than(&ray.pos, intersect.pos, dst->pos))
 			{
@@ -55,6 +55,5 @@ t_obj const		*nearest_intersect(t_vertex *dst, t_scene const *scene,
 			}
 		}
 	}
-	dst->dir = ft_vec3norm(dst->dir);
 	return (nearest);
 }

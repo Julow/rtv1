@@ -11,3 +11,4 @@ module scene_loader:
 	private require obj_types
 	private require color_utils
 	private require math_utils
+	private require texture_loader

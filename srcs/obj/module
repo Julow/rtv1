@@ -2,5 +2,6 @@ module obj:
 	public include public/
 
 	public require ft::base
+	public require ft::img
 	public require ft::math
 	public require math_utils
