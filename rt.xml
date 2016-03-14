@@ -30,12 +30,13 @@
 		shear="<vec3>"
 		scale="<vec3>" // default "1"
 		texture="<texture>"
+		specular_map="<texture>"
+		color="<color>" // only used if 'texture' is unset
+		specular_color="<color>" // default "#FFFFFF", only used if 'specular_map' is unset
 		ambient="<float>" // default "0.1"
-		color="<vec3>"
 		opacity="<float>" // default "1"
 		reflection="<float>"
 		refract_index="<float>" // default "1"
-		specular_color="<color>" // default "#7F7F7F"
 		specular_exp="<float>" // default "128"
 	/>
 

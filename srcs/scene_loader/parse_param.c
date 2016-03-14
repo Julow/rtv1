@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 23:13:37 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/14 12:00:30 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 17:13:10 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,23 @@ uint32_t	subto_uint_bi(t_sub sub, uint32_t *dst, t_sub base)
 	return (i);
 }
 
-bool		parse_color(t_sub value, t_vec3 *dst)
+bool		parse_color(t_sub value, uint32_t *dst)
 {
-	uint32_t	color;
-
 	value = ft_subtrim_is(value, IS_SPACE);
 	if (value.length > 0 && value.str[0] == '#')
 		value = SUB_FOR(value, 1);
-	if (subto_uint_bi(value, &color, SUBC("0123456789abcdef")) < value.length)
+	if (subto_uint_bi(value, dst, SUBC("0123456789abcdef")) < value.length)
 		return (false);
-	*dst = color_24tof(color);
+	return (true);
+}
+
+bool		parse_colorf(t_sub value, t_vec3 *dst)
+{
+	uint32_t	c;
+
+	if (!parse_color(value, &c))
+		return (false);
+	*dst = color_24tof(c);
 	return (true);
 }
 

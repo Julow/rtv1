@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/14 12:05:06 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 17:13:24 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_parse_obj		t_parse_obj;
 struct			s_parse_obj
 {
 	t_material		material;
+	uint32_t		color;
+	uint32_t		specular_color;
 	t_vec3			pos;
 	t_vec3			rot;
 	t_vec3			shear;
@@ -59,7 +61,8 @@ bool			parse_param(t_vector const *defs, void *data,
 					t_sub param, t_sub value);
 
 bool			parse_vec3(t_sub value, t_vec3 *dst);
-bool			parse_color(t_sub value, t_vec3 *dst);
+bool			parse_color(t_sub value, uint32_t *dst);
+bool			parse_colorf(t_sub value, t_vec3 *dst);
 bool			parse_texture(t_sub value, t_img const **dst);
 bool			parse_float(t_sub value, float *dst);
 bool			parse_name(t_sub value, t_dstr *dst);

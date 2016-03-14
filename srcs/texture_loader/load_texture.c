@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:40:13 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 12:07:27 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 17:18:14 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ static t_hmap	*texture_cache(void)
 	return (cache);
 }
 
-static void		img_clear(t_img *img)
-{
-	free(img->data);
-}
-
 t_img const		*load_texture(t_sub file_name)
 {
 	t_hmap *const	cache = texture_cache();
@@ -47,7 +42,16 @@ t_img const		*load_texture(t_sub file_name)
 	return (tmp.value);
 }
 
-void			unload_texture(t_sub file_name)
+t_img const		*load_texture1(uint32_t color)
 {
-	ft_hmaprem(texture_cache(), file_name, V(&img_clear));
+	t_hmap *const	cache = texture_cache();
+	t_img			*tmp;
+
+	if ((tmp = ft_hmapget(cache, SUB(V(&color), sizeof(uint32_t))).value) != NULL)
+		return (tmp);
+	tmp = ft_hmapput(cache, SUB(V(&color), sizeof(uint32_t)), NULL,
+			sizeof(t_img) + sizeof(uint32_t)).value;
+	*tmp = (t_img){ENDOF(tmp), 1, 1};
+	*tmp->data = color;
+	return (tmp);
 }

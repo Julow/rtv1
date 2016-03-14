@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:34:50 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 11:39:59 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 17:02:48 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 t_img const		*load_texture(t_sub file_name);
 
 /*
-** Free a texture
+** Create a 1 pixel texture
 */
-void			unload_texture(t_sub file_name);
+t_img const		*load_texture1(uint32_t color);
 
 #endif

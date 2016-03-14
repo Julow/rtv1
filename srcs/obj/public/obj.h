@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 15:55:00 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 16:58:45 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,12 @@ struct			s_obj_class
 */
 struct			s_material
 {
-	t_vec3			color;
 	t_img const		*texture;
+	t_img const		*specular_map;
 	float			ambient;
 	float			opacity;
 	float			reflection;
 	float			refract_index;
-	t_vec3			specular_color;
 	float			specular_exp;
 };
 
