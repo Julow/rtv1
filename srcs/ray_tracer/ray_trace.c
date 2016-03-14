@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 13:46:17 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 13:52:28 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include "internal.h"
 
 #include <math.h>
-
-#define ATTENUATION_DIST		1000.f
-#define ATTENUATION_EXP			4
-
-#define VEC3_MIN(A, B)	(VEC3(MIN(A.x, B.x), MIN(A.y, B.y), MIN(A.z, B.z)))
 
 static float	nearest_dist2(t_scene const *scene, t_vertex const *ray)
 {
@@ -56,10 +51,10 @@ t_vec3			ray_to_light(t_scene const *scene, t_material const *mat,
 		tmp = ft_vec3length(light_dir);
 		light_dir = VEC3_DIV1(light_dir, tmp);
 		if ((tmp * tmp) > nearest_dist2(scene, &VERTEX(intersect->pos, light_dir))
-			|| (tmp2 = 1.f - tmp / ATTENUATION_DIST) <= 0.f
+			|| (tmp2 = 1.f - tmp / light->att_dist) <= 0.f
 			|| (tmp = VEC3_DOT(intersect->norm, light_dir)) < 0.f)
 			continue ;
-		tmp = light->brightness * tmp * powf(tmp2, ATTENUATION_EXP);
+		tmp = light->brightness * tmp * powf(tmp2, light->att_exp);
 		tmp2 = ft_vec3dot(intersect->norm,
 			ft_vec3norm(VEC3_SUB(light_dir, ray->dir)));
 		tmp2 = (tmp2 <= 0.f) ? 0.f : powf(tmp2, mat->specular_exp);

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/14 11:51:08 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/14 14:10:45 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static t_vector const	g_light_params = VECTOR(t_param_def,
 	PARAM("pos", vec3, t_light, pos),
 	PARAM("brightness", float, t_light, brightness),
 	PARAM("color", color, t_light, color),
+	PARAM("attenuation", float, t_light, att_dist),
+	PARAM("attenuation_exp", float, t_light, att_exp),
 );
 
 static t_vector const	g_camera_params = VECTOR(t_param_def,
@@ -39,6 +41,7 @@ static t_vector const	g_obj_params = VECTOR(t_param_def,
 	PARAM("specular_exp", float, t_parse_obj, material.specular_exp),
 	PARAM("pos", vec3, t_parse_obj, pos),
 	PARAM("rot", vec3, t_parse_obj, rot),
+	PARAM("shear", vec3, t_parse_obj, shear),
 	PARAM("scale", vec3, t_parse_obj, scale),
 );
 

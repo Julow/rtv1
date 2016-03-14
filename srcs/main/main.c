@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/13 22:52:31 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/14 14:01:35 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 ** -
 ** TODO: ambient brightness
 ** TODO: gamma
+** TODO: specular/bump mapping
+** TODO: check invalid values
 */
 
 typedef struct s_main		t_main;

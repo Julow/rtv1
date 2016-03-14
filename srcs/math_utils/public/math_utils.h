@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/13 22:51:32 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/14 13:53:16 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "ft/math_vec3.h"
 
 typedef struct s_vertex			t_vertex;
+
+# define VEC3_MIN(A, B)		(VEC3(MIN(A.x, B.x), MIN(A.y, B.y), MIN(A.z, B.z)))
 
 /*
 ** ========================================================================== **
