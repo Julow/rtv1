@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:31:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/13 23:01:21 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/15 11:27:59 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ void			scene_render(t_img *dst, t_scene const *scene, uint32_t camera)
 		{
 			ray.dir = ft_vec3norm(VEC3_ADD(VEC3_ADD(view_top, VEC3_MUL1(delta_x, pt.x)),
 					VEC3_MUL1(delta_y, pt.y)));
-			IMG_PIXEL(*dst, pt.x, pt.y) = color_fto24(
-					ray_trace(scene, &ray, &scene->def_mtl, MAX_RAY_DEPTH));
+			IMG_PIXEL(*dst, pt.x, pt.y) = color_fto24(colorf_gamma(
+					ray_trace(scene, &ray, &scene->def_mtl, MAX_RAY_DEPTH),
+					1.f / 2.2f));
 			pt.x++;
 		}
 		pt.y++;

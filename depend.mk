@@ -1,5 +1,5 @@
 INCLUDE_FLAGS += -I$(O_DIR)/_public
-LINK_FLAGS += -lm -lmlx -lm -lm
+LINK_FLAGS += -lm -lm -lmlx -lm -lm
 OBJ_DIR_TREE += $(O_DIR)/srcs/texture_loader/ $(O_DIR)/srcs/scene_renderer/ \
 	$(O_DIR)/srcs/scene_loader/ $(O_DIR)/srcs/ray_tracer/ \
 	$(O_DIR)/srcs/obj_types/ $(O_DIR)/srcs/mlx_win/ $(O_DIR)/srcs/math_utils/ \
@@ -7,14 +7,14 @@ OBJ_DIR_TREE += $(O_DIR)/srcs/texture_loader/ $(O_DIR)/srcs/scene_renderer/ \
 	$(O_DIR)/libft/ft_xml/ $(O_DIR)/libft/ft_vector/ \
 	$(O_DIR)/libft/ft_printf/formats/ $(O_DIR)/libft/ft_printf/ \
 	$(O_DIR)/libft/ft_out/ $(O_DIR)/libft/ft_math/ $(O_DIR)/libft/ft_in/ \
-	$(O_DIR)/libft/ft_img_loader/ $(O_DIR)/libft/ft_hmap/ \
-	$(O_DIR)/libft/ft_dstr/ $(O_DIR)/libft/ft_base/ $(O_DIR)/libft/ \
-	$(O_DIR)/_public/ft/ $(O_DIR)/_public/ $(O_DIR)/
-O_FILES += $(O_DIR)/srcs/color_utils/color_utils.o \
-	$(O_DIR)/libft/ft_base/ft_abs.o $(O_DIR)/libft/ft_base/ft_assert.o \
-	$(O_DIR)/libft/ft_base/ft_atoib.o $(O_DIR)/libft/ft_base/ft_bitset.o \
-	$(O_DIR)/libft/ft_base/ft_bzero.o $(O_DIR)/libft/ft_base/ft_clock.o \
-	$(O_DIR)/libft/ft_base/ft_clock_stack.o \
+	$(O_DIR)/libft/ft_img_loader/ $(O_DIR)/libft/ft_img/ \
+	$(O_DIR)/libft/ft_hmap/ $(O_DIR)/libft/ft_dstr/ $(O_DIR)/libft/ft_base/ \
+	$(O_DIR)/libft/ $(O_DIR)/_public/ft/ $(O_DIR)/_public/ $(O_DIR)/
+O_FILES += $(O_DIR)/srcs/color_utils/color_gamma.o \
+	$(O_DIR)/srcs/color_utils/color_utils.o $(O_DIR)/libft/ft_base/ft_abs.o \
+	$(O_DIR)/libft/ft_base/ft_assert.o $(O_DIR)/libft/ft_base/ft_atoib.o \
+	$(O_DIR)/libft/ft_base/ft_bitset.o $(O_DIR)/libft/ft_base/ft_bzero.o \
+	$(O_DIR)/libft/ft_base/ft_clock.o $(O_DIR)/libft/ft_base/ft_clock_stack.o \
 	$(O_DIR)/libft/ft_base/ft_emalloc.o $(O_DIR)/libft/ft_base/ft_escape.o \
 	$(O_DIR)/libft/ft_base/ft_getenv.o $(O_DIR)/libft/ft_base/ft_is.o \
 	$(O_DIR)/libft/ft_base/ft_max.o $(O_DIR)/libft/ft_base/ft_memcmp.o \
@@ -37,7 +37,7 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_utils.o \
 	$(O_DIR)/libft/ft_hmap/ft_hmapget.o $(O_DIR)/libft/ft_hmap/ft_hmapkeys.o \
 	$(O_DIR)/libft/ft_hmap/ft_hmapnew.o $(O_DIR)/libft/ft_hmap/ft_hmapput.o \
 	$(O_DIR)/libft/ft_hmap/ft_hmapputp.o $(O_DIR)/libft/ft_hmap/ft_hmaprem.o \
-	$(O_DIR)/libft/ft_hmap/hmap_puth.o \
+	$(O_DIR)/libft/ft_hmap/hmap_puth.o $(O_DIR)/libft/ft_img/ft_img_map.o \
 	$(O_DIR)/libft/ft_img_loader/ft_load_img.o \
 	$(O_DIR)/libft/ft_img_loader/tga_loader.o $(O_DIR)/libft/ft_in/file_in.o \
 	$(O_DIR)/libft/ft_in/file_in_open.o $(O_DIR)/libft/ft_in/ft_in_refresh.o \
@@ -106,6 +106,10 @@ PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
 	$(O_DIR)/_public/texture_loader.h
 
 # module color_utils
+$(O_DIR)/srcs/color_utils/color_gamma.o: srcs/color_utils/color_gamma.c \
+	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	srcs/color_utils/public/color_utils.h
 $(O_DIR)/srcs/color_utils/color_utils.o: srcs/color_utils/color_utils.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
@@ -233,6 +237,8 @@ $(O_DIR)/libft/ft_hmap/ft_hmaprem.o $(O_DIR)/libft/ft_hmap/hmap_puth.o: \
 	INCLUDE_FLAGS += -Ilibft/ft_hmap
 
 # module ft::img
+$(O_DIR)/libft/ft_img/ft_img_map.o: libft/ft_img/ft_img_map.c \
+	libft/ft_base/public/libft.h libft/ft_img/public/img.h
 
 # module ft::img_loader
 $(O_DIR)/libft/ft_img_loader/ft_load_img.o: libft/ft_img_loader/ft_load_img.c \
@@ -598,7 +604,8 @@ $(O_DIR)/srcs/scene_loader/parse_scene_child.o: \
 	libft/ft_xml/public/ft_xml.h srcs/math_utils/public/math_utils.h \
 	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
 	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
-	srcs/scene_loader/public/scene_loader.h
+	srcs/scene_loader/public/scene_loader.h \
+	srcs/texture_loader/public/texture_loader.h
 
 $(O_DIR)/srcs/scene_loader/load_scenes.o \
 $(O_DIR)/srcs/scene_loader/parse_param.o \
@@ -620,7 +627,9 @@ $(O_DIR)/srcs/scene_renderer/scene_render.o: \
 $(O_DIR)/srcs/texture_loader/load_texture.o: \
 	srcs/texture_loader/load_texture.c libft/ft_base/public/libft.h \
 	libft/ft_hmap/public/ft_hmap.h libft/ft_img/public/img.h \
-	libft/ft_img_loader/public/img_loader.h \
+	libft/ft_img_loader/public/img_loader.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	srcs/color_utils/public/color_utils.h \
 	srcs/texture_loader/public/texture_loader.h
 
 # public links

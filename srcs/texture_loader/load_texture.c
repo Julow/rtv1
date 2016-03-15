@@ -6,13 +6,14 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:40:13 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 17:18:14 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/15 11:26:03 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/ft_hmap.h"
 #include "ft/img_loader.h"
 
+#include "color_utils.h"
 #include "texture_loader.h"
 
 #include <stdlib.h>
@@ -24,6 +25,11 @@ static t_hmap	*texture_cache(void)
 	if (cache == NULL)
 		cache = ft_hmapnew(15, &ft_djb2);
 	return (cache);
+}
+
+static uint32_t	correct_gamma(uint32_t c)
+{
+	return (color32_gamma(c, 2.2f));
 }
 
 t_img const		*load_texture(t_sub file_name)
@@ -39,6 +45,7 @@ t_img const		*load_texture(t_sub file_name)
 		ft_hmaprem(cache, file_name, NULL);
 		return (NULL);
 	}
+	ft_img_map(tmp.value, &correct_gamma);
 	return (tmp.value);
 }
 
@@ -52,6 +59,6 @@ t_img const		*load_texture1(uint32_t color)
 	tmp = ft_hmapput(cache, SUB(V(&color), sizeof(uint32_t)), NULL,
 			sizeof(t_img) + sizeof(uint32_t)).value;
 	*tmp = (t_img){ENDOF(tmp), 1, 1};
-	*tmp->data = color;
+	*tmp->data = correct_gamma(color);
 	return (tmp);
 }

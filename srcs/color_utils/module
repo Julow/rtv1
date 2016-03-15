@@ -3,3 +3,5 @@ module color_utils:
 
 	public require ft::math
 	public require ft::base
+
+	put LINK_FLAGS -lm

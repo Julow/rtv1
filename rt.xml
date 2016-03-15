@@ -33,7 +33,7 @@
 		specular_map="<texture>"
 		color="<color>" // only used if 'texture' is unset
 		specular_color="<color>" // default "#FFFFFF", only used if 'specular_map' is unset
-		ambient="<float>" // default "0.1"
+		ambient="<float>" // default "0.01"
 		opacity="<float>" // default "1"
 		reflection="<float>"
 		refract_index="<float>" // default "1"
