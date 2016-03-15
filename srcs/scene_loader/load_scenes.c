@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/02/25 19:53:04 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/15 18:47:12 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,14 @@ static bool	parse_scene(t_xml_parser *xml, t_scene *scene)
 			return (false);
 		}
 	}
+	if (xml->token != XML_TOKEN_END)
+		return (ft_xml_error(xml, SUBC("Unexpected EOF")));
 	if (scene->cameras.length == 0)
 		ft_vpush(&scene->cameras, &DEF_CAMERA, 1);
-	return (BOOL_OF(xml->token == XML_TOKEN_END));
+	ft_logf(LOG_VERBOSE, "Scene '%ts' loaded: %u object(s), %u light(s), "
+		"%u camera(s)", DSTR_SUB(scene->name), scene->objs.length,
+		scene->lights.length, scene->cameras.length);
+	return (true);
 }
 
 static bool	parse_scenes(t_xml_parser *xml, t_vector *dst)

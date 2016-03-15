@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/15 11:35:07 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/15 18:34:51 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,7 @@ static int		loop_hook(t_main *main)
 		scene_render(&main->win.img,
 			&VGET(t_scene, main->scenes, main->current_scene),
 			main->current_camera);
-		ft_printf(C_CYAN "[Info]" C_RESET " Scene #%u: Camera #%u: "
-			"Render time: %llu us%n",
+		ft_logf(LOG_INFO, "Scene #%u: Camera #%u: Render time: %llu us",
 			main->current_scene, main->current_camera, ft_cend());
 		ft_mlx_update(&main->win);
 		main->should_render = false;
@@ -140,6 +139,8 @@ int				main(int argc, char **argv)
 	int				i;
 	t_main			main;
 
+	ft_logf_set_enabled(LOG_DEBUG, true);
+	ft_logf_set_enabled(LOG_VERBOSE, true);
 	main = (t_main){
 		NULL,
 		{},
@@ -154,16 +155,18 @@ int				main(int argc, char **argv)
 
 	i = 0;
 	while (++i < argc)
+	{
+		ft_logf(LOG_VERBOSE, "Loading scene file: %s", argv[i]);
 		if (!load_scenes(argv[i], &main.scenes))
 			return (1);
+	}
 
 	if (main.scenes.length == 0)
 	{
-		ft_dprintf(2, C_RED "[Error]" C_RESET " No scene loaded%n");
+		ft_logf(LOG_ERROR, "No scene loaded");
 		return (1);
 	}
-	ft_printf(C_CYAN "[Info]" C_RESET " %d scene(s) loaded%n",
-		main.scenes.length);
+	ft_logf(LOG_SUCCESS, "%d scene(s) loaded", main.scenes.length);
 
 	mlx_loop_hook(main.mlx, &loop_hook, &main);
 	mlx_key_hook(main.win.win_id, &key_hook, &main);

@@ -4,5 +4,6 @@ module texture_loader:
 	public require ft::base
 	public require ft::img
 	private require ft::img_loader
+	private require ft::printf
 	private require ft::hmap
 	private require color_utils

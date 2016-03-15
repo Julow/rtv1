@@ -70,13 +70,14 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_gamma.o \
 	$(O_DIR)/libft/ft_printf/formats/char.o \
 	$(O_DIR)/libft/ft_printf/formats/int.o \
 	$(O_DIR)/libft/ft_printf/formats/misc.o \
-	$(O_DIR)/libft/ft_printf/formats/str.o $(O_DIR)/libft/ft_printf/ft_out.o \
-	$(O_DIR)/libft/ft_printf/ft_printf.o $(O_DIR)/libft/ft_printf/ft_putf.o \
-	$(O_DIR)/libft/ft_printf/ft_vprintf.o $(O_DIR)/libft/ft_vector/ft_vclear.o \
-	$(O_DIR)/libft/ft_vector/ft_vpush.o $(O_DIR)/libft/ft_vector/ft_vreserve.o \
-	$(O_DIR)/libft/ft_vector/ft_vspan.o $(O_DIR)/libft/ft_xml/ft_xml.o \
-	$(O_DIR)/libft/ft_xml/xml_tokens.o $(O_DIR)/libft/ft_xml/xml_utils.o \
-	$(O_DIR)/srcs/main/main.o $(O_DIR)/srcs/math_utils/quaternions.o \
+	$(O_DIR)/libft/ft_printf/formats/str.o $(O_DIR)/libft/ft_printf/ft_logf.o \
+	$(O_DIR)/libft/ft_printf/ft_out.o $(O_DIR)/libft/ft_printf/ft_printf.o \
+	$(O_DIR)/libft/ft_printf/ft_putf.o $(O_DIR)/libft/ft_printf/ft_vprintf.o \
+	$(O_DIR)/libft/ft_vector/ft_vclear.o $(O_DIR)/libft/ft_vector/ft_vpush.o \
+	$(O_DIR)/libft/ft_vector/ft_vreserve.o $(O_DIR)/libft/ft_vector/ft_vspan.o \
+	$(O_DIR)/libft/ft_xml/ft_xml.o $(O_DIR)/libft/ft_xml/xml_tokens.o \
+	$(O_DIR)/libft/ft_xml/xml_utils.o $(O_DIR)/srcs/main/main.o \
+	$(O_DIR)/srcs/math_utils/quaternions.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_close.o $(O_DIR)/srcs/mlx_win/ft_mlx_open.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o $(O_DIR)/srcs/obj_types/cone.o \
 	$(O_DIR)/srcs/obj_types/cylinder.o $(O_DIR)/srcs/obj_types/obj_types.o \
@@ -406,6 +407,10 @@ $(O_DIR)/libft/ft_printf/formats/str.o: libft/ft_printf/formats/str.c \
 	libft/ft_base/public/ft_wchar.h libft/ft_base/public/libft.h \
 	libft/ft_out/public/ft_out.h libft/ft_printf/printf_internal.h \
 	libft/ft_printf/public/ft_printf.h libft/ft_printf/public/ft_vprintf.h
+$(O_DIR)/libft/ft_printf/ft_logf.o: libft/ft_printf/ft_logf.c \
+	libft/ft_base/public/ft_colors.h libft/ft_base/public/libft.h \
+	libft/ft_out/public/ft_out.h libft/ft_printf/printf_internal.h \
+	libft/ft_printf/public/ft_printf.h libft/ft_printf/public/ft_vprintf.h
 $(O_DIR)/libft/ft_printf/ft_out.o: libft/ft_printf/ft_out.c \
 	libft/ft_base/public/libft.h libft/ft_out/public/ft_out.h \
 	libft/ft_printf/printf_internal.h libft/ft_printf/public/ft_printf.h \
@@ -427,9 +432,9 @@ $(O_DIR)/libft/ft_printf/args_utils.o $(O_DIR)/libft/ft_printf/exec_format.o \
 $(O_DIR)/libft/ft_printf/exec_subformat.o \
 $(O_DIR)/libft/ft_printf/formats/char.o $(O_DIR)/libft/ft_printf/formats/int.o \
 $(O_DIR)/libft/ft_printf/formats/misc.o $(O_DIR)/libft/ft_printf/formats/str.o \
-$(O_DIR)/libft/ft_printf/ft_out.o $(O_DIR)/libft/ft_printf/ft_printf.o \
-$(O_DIR)/libft/ft_printf/ft_putf.o $(O_DIR)/libft/ft_printf/ft_vprintf.o: \
-	INCLUDE_FLAGS += -Ilibft/ft_printf
+$(O_DIR)/libft/ft_printf/ft_logf.o $(O_DIR)/libft/ft_printf/ft_out.o \
+$(O_DIR)/libft/ft_printf/ft_printf.o $(O_DIR)/libft/ft_printf/ft_putf.o \
+$(O_DIR)/libft/ft_printf/ft_vprintf.o: INCLUDE_FLAGS += -Ilibft/ft_printf
 
 # module ft::vector
 $(O_DIR)/libft/ft_vector/ft_vclear.o: libft/ft_vector/ft_vclear.c \
@@ -618,6 +623,7 @@ $(O_DIR)/srcs/scene_renderer/scene_render.o: \
 	libft/ft_dstr/public/ft_dstr.h libft/ft_img/public/img.h \
 	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	libft/ft_out/public/ft_out.h libft/ft_printf/public/ft_printf.h \
 	libft/ft_vector/public/ft_vector.h srcs/color_utils/public/color_utils.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/ray_tracer/public/ray_tracer.h srcs/scene/public/scene.h \
@@ -629,6 +635,7 @@ $(O_DIR)/srcs/texture_loader/load_texture.o: \
 	libft/ft_hmap/public/ft_hmap.h libft/ft_img/public/img.h \
 	libft/ft_img_loader/public/img_loader.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	libft/ft_out/public/ft_out.h libft/ft_printf/public/ft_printf.h \
 	srcs/color_utils/public/color_utils.h \
 	srcs/texture_loader/public/texture_loader.h
 

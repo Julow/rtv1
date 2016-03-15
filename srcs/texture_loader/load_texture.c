@@ -6,11 +6,12 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:40:13 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/15 11:26:03 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/15 18:32:22 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/ft_hmap.h"
+#include "ft/ft_printf.h"
 #include "ft/img_loader.h"
 
 #include "color_utils.h"
@@ -38,13 +39,18 @@ t_img const		*load_texture(t_sub file_name)
 	t_hpair			tmp;
 
 	if ((tmp = ft_hmapget(cache, file_name)).key != NULL)
+	{
+		ft_logf(LOG_DEBUG, "Cached texture: %ts", file_name);
 		return (tmp.value);
+	}
 	tmp = ft_hmapput(cache, file_name, NULL, sizeof(t_img));
 	if (!ft_load_img(tmp.key, tmp.value))
 	{
+		ft_logf(LOG_VERBOSE, "Failed to load '%ts'", file_name);
 		ft_hmaprem(cache, file_name, NULL);
 		return (NULL);
 	}
+	ft_logf(LOG_VERBOSE, "Texture file '%ts' loaded", file_name);
 	ft_img_map(tmp.value, &correct_gamma);
 	return (tmp.value);
 }
@@ -58,6 +64,7 @@ t_img const		*load_texture1(uint32_t color)
 		return (tmp);
 	tmp = ft_hmapput(cache, SUB(V(&color), sizeof(uint32_t)), NULL,
 			sizeof(t_img) + sizeof(uint32_t)).value;
+	ft_logf(LOG_DEBUG, "Solid texture created: %#.6x", color);
 	*tmp = (t_img){ENDOF(tmp), 1, 1};
 	*tmp->data = correct_gamma(color);
 	return (tmp);

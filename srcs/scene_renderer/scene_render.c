@@ -6,10 +6,11 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:31:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/15 11:27:59 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/15 18:41:21 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/ft_printf.h"
 #include "ft/math_vec3.h"
 
 #include "color_utils.h"
@@ -46,6 +47,7 @@ void			scene_render(t_img *dst, t_scene const *scene, uint32_t camera)
 	t_vec2u			pt;
 	t_vertex		ray;
 
+	ft_logf(LOG_VERBOSE, "Rendering scene '%ts'", DSTR_SUB(scene->name));
 	view_top = get_view_plane(cam, VEC2U(dst->width, dst->height), &delta_x, &delta_y);
 	ray.pos = cam->pos;
 	pt.y = 0;
