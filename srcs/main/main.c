@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/15 18:34:51 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/17 11:35:56 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 ** TODO: check redefined values (xml)
 ** TODO: post-process/texture filter
 ** TODO: mipmap
+** TODO: texture transparency (remove opacity property)
+** TODO: gradient texture
+** TODO: sphere/cylinder/cone tex coord
 */
 
 typedef struct s_main		t_main;

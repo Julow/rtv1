@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 16:58:45 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/18 15:12:14 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ struct			s_obj_class
 	t_sub			name;
 	bool			(*ray_intersect)(t_intersect *intersect, t_obj const *obj,
 						t_vertex const *ray);
+	t_vec3 const	*bounds;
+	uint32_t		bounds_len;
 };
 
 /*

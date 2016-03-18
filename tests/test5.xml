@@ -1,0 +1,118 @@
+<scene>
+
+	<plane color="#333333" scale="45" />
+
+	<light pos="0,25,0" brightness="1" attenuation="2000" />
+
+<!-- 
+from random import uniform as r, randint
+for i in range(100):
+	print "\t<sphere pos=\"%f,7,%f\" scale=\"%f\" color=\"#%02x%02x%02x\" />" % (
+		r(-15, 15), r(-15, 15), r(0.2,0.8), randint(0,255),randint(0,255),randint(0,255)
+	)
+ -->
+
+	<sphere pos="6.690251,7,-2.166915" scale="0.602535" color="#88f034" />
+	<sphere pos="1.833158,7,-7.405677" scale="0.651106" color="#fffdee" />
+	<sphere pos="-7.965084,7,-4.255854" scale="0.643165" color="#bce8e4" />
+	<sphere pos="13.454933,7,11.932774" scale="0.403153" color="#16e2c4" />
+	<sphere pos="-1.021027,7,3.201836" scale="0.439698" color="#808081" />
+	<sphere pos="11.624880,7,-3.455701" scale="0.501901" color="#d88af5" />
+	<sphere pos="-0.447897,7,0.081190" scale="0.338180" color="#cb753f" />
+	<sphere pos="0.815115,7,2.136488" scale="0.375579" color="#015ddf" />
+	<sphere pos="-14.397177,7,-2.218191" scale="0.743351" color="#6cb83b" />
+	<sphere pos="-9.826067,7,4.221840" scale="0.591798" color="#b5fa9d" />
+	<sphere pos="-0.688688,7,0.998230" scale="0.650326" color="#689434" />
+	<sphere pos="-3.349078,7,-2.420839" scale="0.650592" color="#4e0da1" />
+	<sphere pos="-2.193020,7,-8.117526" scale="0.773931" color="#7ec957" />
+	<sphere pos="-14.132003,7,-4.298945" scale="0.239733" color="#4b87a3" />
+	<sphere pos="10.566686,7,-11.436899" scale="0.342289" color="#8dfb29" />
+	<sphere pos="7.554741,7,4.219851" scale="0.623776" color="#795202" />
+	<sphere pos="14.386437,7,-0.784066" scale="0.709940" color="#a8e73d" />
+	<sphere pos="-0.525690,7,-7.721471" scale="0.465458" color="#5cbba0" />
+	<sphere pos="1.983664,7,-2.957961" scale="0.594289" color="#2a0232" />
+	<sphere pos="-7.056744,7,-5.226982" scale="0.460876" color="#f469dc" />
+	<sphere pos="-5.162351,7,-6.467985" scale="0.353263" color="#f5976d" />
+	<sphere pos="4.890620,7,-6.094230" scale="0.609336" color="#b30312" />
+	<sphere pos="-10.270783,7,12.769178" scale="0.255642" color="#ddaa3b" />
+	<sphere pos="-6.526232,7,-10.356177" scale="0.224746" color="#343032" />
+	<sphere pos="-5.736040,7,-11.083083" scale="0.675112" color="#8804ca" />
+	<sphere pos="-1.381670,7,9.667097" scale="0.367620" color="#8ca07b" />
+	<sphere pos="-3.996748,7,-0.692977" scale="0.541619" color="#462941" />
+	<sphere pos="11.622354,7,-7.339615" scale="0.431610" color="#1bf50c" />
+	<sphere pos="12.678185,7,1.064686" scale="0.784504" color="#0114ca" />
+	<sphere pos="11.497829,7,-10.666119" scale="0.242131" color="#c975cc" />
+	<sphere pos="-0.784729,7,-7.365452" scale="0.318979" color="#a3dd60" />
+	<sphere pos="-10.560837,7,9.170136" scale="0.427510" color="#9b9217" />
+	<sphere pos="-2.587462,7,-12.212949" scale="0.456472" color="#0346e3" />
+	<sphere pos="-7.114979,7,-12.484354" scale="0.585586" color="#c28521" />
+	<sphere pos="12.047285,7,-8.569265" scale="0.483653" color="#2061c3" />
+	<sphere pos="6.426217,7,13.676157" scale="0.290624" color="#aa0f8d" />
+	<sphere pos="6.519014,7,-12.437811" scale="0.368948" color="#09f977" />
+	<sphere pos="12.044871,7,-14.282206" scale="0.733265" color="#711689" />
+	<sphere pos="1.390864,7,-7.313709" scale="0.384407" color="#38a49e" />
+	<sphere pos="7.402780,7,-13.136372" scale="0.620071" color="#fd0360" />
+	<sphere pos="-9.921597,7,6.460258" scale="0.423465" color="#333b28" />
+	<sphere pos="9.893920,7,5.782918" scale="0.748639" color="#200d95" />
+	<sphere pos="-9.360979,7,-5.309255" scale="0.555318" color="#ff0d90" />
+	<sphere pos="-3.019708,7,14.192639" scale="0.251371" color="#7d2f11" />
+	<sphere pos="-0.049682,7,12.596296" scale="0.557261" color="#67b623" />
+	<sphere pos="10.602498,7,-0.222988" scale="0.655473" color="#d95147" />
+	<sphere pos="11.764950,7,13.063096" scale="0.755691" color="#0caa1d" />
+	<sphere pos="2.165168,7,9.681185" scale="0.579426" color="#42d740" />
+	<sphere pos="-13.938684,7,-7.803971" scale="0.463016" color="#57cef5" />
+	<sphere pos="7.483850,7,-12.131347" scale="0.201301" color="#50aef9" />
+	<sphere pos="-9.676484,7,3.141366" scale="0.749073" color="#1ef1e7" />
+	<sphere pos="5.029687,7,-3.853011" scale="0.772291" color="#d828eb" />
+	<sphere pos="-5.450270,7,3.452280" scale="0.573328" color="#c22154" />
+	<sphere pos="9.918691,7,-0.055420" scale="0.556478" color="#3eff07" />
+	<sphere pos="14.218218,7,-9.853754" scale="0.370026" color="#9a41fb" />
+	<sphere pos="-0.483373,7,9.180173" scale="0.352857" color="#b2813b" />
+	<sphere pos="-11.377551,7,-4.246301" scale="0.496552" color="#9b675d" />
+	<sphere pos="-1.930015,7,-11.832190" scale="0.775491" color="#645aab" />
+	<sphere pos="-9.111718,7,1.137840" scale="0.679710" color="#ef0381" />
+	<sphere pos="7.223094,7,-6.613518" scale="0.649736" color="#d0bda2" />
+	<sphere pos="-6.541988,7,14.538150" scale="0.216070" color="#d21443" />
+	<sphere pos="6.693295,7,-7.776973" scale="0.652589" color="#7f7b48" />
+	<sphere pos="9.226723,7,10.921000" scale="0.766240" color="#2bfc91" />
+	<sphere pos="6.877382,7,11.964121" scale="0.566674" color="#0b6e5d" />
+	<sphere pos="-8.723927,7,-10.041910" scale="0.623845" color="#d8c0d0" />
+	<sphere pos="-7.783157,7,-4.292016" scale="0.485749" color="#486ef3" />
+	<sphere pos="-11.329209,7,9.362020" scale="0.721924" color="#068bc7" />
+	<sphere pos="8.071942,7,11.219816" scale="0.605967" color="#c31cc3" />
+	<sphere pos="-3.278958,7,4.184598" scale="0.638600" color="#eca083" />
+	<sphere pos="6.036603,7,3.430388" scale="0.611816" color="#a208ce" />
+	<sphere pos="13.079897,7,-9.228252" scale="0.411626" color="#2a6bf3" />
+	<sphere pos="-6.195701,7,-10.077692" scale="0.209581" color="#d066c0" />
+	<sphere pos="-1.496078,7,-2.240626" scale="0.362229" color="#cbf6d9" />
+	<sphere pos="14.897802,7,-0.028769" scale="0.489591" color="#d246a6" />
+	<sphere pos="11.096310,7,11.327103" scale="0.723417" color="#8c20eb" />
+	<sphere pos="1.524983,7,-5.870430" scale="0.424492" color="#3f0228" />
+	<sphere pos="-14.654035,7,1.083378" scale="0.632396" color="#d52965" />
+	<sphere pos="-14.831235,7,11.544379" scale="0.378179" color="#a181ae" />
+	<sphere pos="-3.137823,7,-14.628401" scale="0.373618" color="#17cc62" />
+	<sphere pos="-11.459405,7,10.964672" scale="0.736313" color="#07ef9f" />
+	<sphere pos="7.592388,7,-5.446467" scale="0.309343" color="#3da2db" />
+	<sphere pos="3.691005,7,-12.379007" scale="0.792018" color="#2880af" />
+	<sphere pos="6.047018,7,-4.416311" scale="0.606824" color="#1438f6" />
+	<sphere pos="13.021387,7,-5.285350" scale="0.426442" color="#50eb00" />
+	<sphere pos="6.800929,7,-10.093192" scale="0.486348" color="#17638f" />
+	<sphere pos="2.526707,7,-2.364381" scale="0.324965" color="#49fd53" />
+	<sphere pos="-4.031672,7,14.843660" scale="0.651927" color="#c379db" />
+	<sphere pos="9.544632,7,7.806188" scale="0.492585" color="#176967" />
+	<sphere pos="2.107206,7,-1.232124" scale="0.685789" color="#a5b111" />
+	<sphere pos="-5.656295,7,-14.179799" scale="0.488199" color="#84183e" />
+	<sphere pos="-12.065221,7,11.562508" scale="0.401766" color="#a153fb" />
+	<sphere pos="14.050747,7,-10.446702" scale="0.687654" color="#7d4ace" />
+	<sphere pos="13.337563,7,2.601524" scale="0.638620" color="#e88143" />
+	<sphere pos="-9.893501,7,10.797700" scale="0.375876" color="#cc3a6c" />
+	<sphere pos="-7.480901,7,-0.796161" scale="0.706013" color="#747e10" />
+	<sphere pos="-11.134934,7,-6.408452" scale="0.279782" color="#59941c" />
+	<sphere pos="8.740055,7,3.531784" scale="0.767033" color="#0a3c08" />
+	<sphere pos="-6.307424,7,2.202082" scale="0.272862" color="#4610be" />
+	<sphere pos="-2.712125,7,-1.824032" scale="0.433075" color="#255808" />
+	<sphere pos="3.668581,7,-5.685776" scale="0.443272" color="#768a39" />
+
+	<camera pos="0,25,-5" dir="0,-1,0.3" />
+
+</scene>

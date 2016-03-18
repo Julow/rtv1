@@ -6,4 +6,5 @@ module ray_tracer:
 	public require math_utils
 	public require scene
 	private require obj
+	private require kd_tree
 	private require color_utils

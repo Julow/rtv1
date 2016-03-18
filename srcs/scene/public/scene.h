@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/15 11:32:55 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/18 14:48:42 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "ft/ft_vector.h"
 # include "ft/math_vec3.h"
 
+# include "kd_tree.h"
 # include "obj.h"
 
 typedef struct s_scene			t_scene;
@@ -47,7 +48,7 @@ struct			s_camera
 struct			s_scene
 {
 	t_dstr			name;
-	t_vector		objs;
+	t_kdtree		objs;
 	t_vector		lights;
 	t_vector		cameras;
 	t_material		def_mtl;

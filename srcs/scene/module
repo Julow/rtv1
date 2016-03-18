@@ -5,3 +5,4 @@ module scene:
 	public require ft::dstr
 	public require ft::math
 	public require obj
+	public require kd_tree
