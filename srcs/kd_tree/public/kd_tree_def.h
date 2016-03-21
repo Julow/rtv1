@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 14:15:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/18 14:41:35 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/21 11:49:08 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_kdtree_def_data	t_kdtree_def_data;
 struct			s_kdtree_def_data
 {
 	void const		*data;
-	uint32_t		pt_count;
+	t_vec2u			pts;
 };
 
 struct			s_kdtree_def

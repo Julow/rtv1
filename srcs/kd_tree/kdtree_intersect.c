@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:33:07 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/18 17:51:22 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/21 10:08:00 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ bool			kdtree_intersect(t_kdtree const *tree, float const *ray,
 			t_kdtree_child const	*second;
 
 			thit = (n->p - ray[n->d]) / ray[n->d + tree->k];
-			first = (ray[n->d + tree->k] > 0.f) ? n->left : n->right;
-			second = (ray[n->d + tree->k] > 0.f) ? n->right : n->left;
+			first = (ray[n->d + tree->k] <= 0.f) ? n->left : n->right;
+			second = (ray[n->d + tree->k] <= 0.f) ? n->right : n->left;
 			if (thit >= state.tmax || thit < 0)
 				state.node = first;
 			else if (thit <= state.tmin)

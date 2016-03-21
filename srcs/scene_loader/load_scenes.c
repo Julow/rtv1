@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/18 17:33:53 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/21 12:08:17 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ static bool	_parse_scene_obj(t_xml_parser *xml, t_kdtree_def *def)
 		return (false);
 	data = ft_vpush(&def->datas, NULL, 1);
 	data->data = obj;
-	data->pt_count = obj->type->bounds_len;
-	tmp = ft_vpush(&def->pts, NULL, data->pt_count * 3);
+	data->pts = VEC2U1(def->pts.length);
+	data->pts.y += obj->type->bounds_len;
+	tmp = ft_vpush(&def->pts, NULL, obj->type->bounds_len * 3);
 	i = 0;
-	while (i < data->pt_count)
+	while (i < obj->type->bounds_len)
 	{
 		tmp[i] = obj->type->bounds[i];
 		ft_mat4apply_vec3(&obj->m, tmp + i, 1.f);
