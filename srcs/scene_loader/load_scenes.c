@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/22 09:24:46 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/23 00:05:18 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	print_kdtree(t_kdtree_child const *node, uint32_t offset, char prefi
 	if (node->type == KDTREE_SPLIT)
 	{
 		print_kdtree(node->v.split.left, offset + 4, '/');
-		ft_logf(LOG_DEBUG, "%*c- |", offset, prefix);
+		ft_logf(LOG_DEBUG, "%*c %c|", offset, prefix, "xyz"[node->v.split.d]);
 		print_kdtree(node->v.split.right, offset + 4, '\\');
 		return ;
 	}
@@ -93,7 +93,7 @@ static bool	parse_scene(t_xml_parser *xml, t_scene *scene)
 	}
 	scene->objs = kdtree_build(&kdbuilder);
 	kdtree_builder_destroy(&kdbuilder);
-	print_kdtree(scene->objs.root, 0, ':');
+	print_kdtree(scene->objs.root, 1, '.');
 	if (xml->token != XML_TOKEN_END)
 		return (ft_xml_error(xml, SUBC("Unexpected EOF")));
 	if (scene->cameras.length == 0)

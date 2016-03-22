@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/22 08:01:18 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/23 00:11:50 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,15 @@ typedef struct s_vertex			t_vertex;
 ** Math utils
 ** -
 ** MIX(A, B, RATIO+)	Return the value at RATIO between A and B
+** DIFF(A+, B+)			Return abs(A - B) (allow unsigned)
+** IS_POSITIVE(A)		Return true if A is positive, false otherwise
 */
 
 # define MIX(A, B, RATIO)	((A) * (RATIO) + ((B) * (1.f - (RATIO))))
+
+# define DIFF(A, B)			(((A) > (B)) ? (A) - (B) : (B) - (A))
+
+# define IS_POSITIVE(A)		(((A) < 0) ? false : true)
 
 /*
 ** ========================================================================== **

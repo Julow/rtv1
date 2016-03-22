@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 14:30:02 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/22 11:36:24 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/23 00:28:41 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,58 +25,58 @@ static float	kdtree_av(t_kdtree_builder const *b, uint32_t const *indexes,
 					uint32_t index_count, uint32_t d)
 {
 	uint32_t		i;
-	float			sum;
-	float			tmp_sum;
-	uint32_t		n;
+	float			min;
+	float			max;
+	float			tmp;
 	t_vec2u			pts;
 
-	sum = 0.f;
+	pts = VGETC(t_vec2u, b->pts_indexes, indexes[0]);
+	min = VGETC(float, b->pts, pts.x + d);
+	max = min;
 	i = 0;
 	while (i < index_count)
 	{
 		pts = VGETC(t_vec2u, b->pts_indexes, indexes[i]);
-		tmp_sum = 0.f;
-		n = 0;
 		while (pts.x < pts.y)
 		{
-			tmp_sum += VGETC(float, b->pts, pts.x + d);
+			tmp = VGETC(float, b->pts, pts.x + d);
+			if (min > tmp)
+				min = tmp;
+			else if (max < tmp)
+				max = tmp;
 			pts.x += b->k;
-			n++;
 		}
-		sum += tmp_sum / n;
 		i++;
 	}
-	return (sum / index_count);
+	return (MIX(min, max, 0.5f));
 }
 
 // static float	kdtree_av(t_kdtree_builder const *b, uint32_t const *indexes,
 // 					uint32_t index_count, uint32_t d)
 // {
 // 	uint32_t		i;
-// 	float			min;
-// 	float			max;
-// 	float			tmp;
+// 	float			sum;
+// 	float			tmp_sum;
+// 	uint32_t		n;
 // 	t_vec2u			pts;
 
-// 	pts = VGETC(t_vec2u, b->pts_indexes, indexes[0]);
-// 	min = VGETC(float, b->pts, pts.x + d);
-// 	max = min;
+// 	sum = 0.f;
 // 	i = 0;
 // 	while (i < index_count)
 // 	{
 // 		pts = VGETC(t_vec2u, b->pts_indexes, indexes[i]);
+// 		tmp_sum = 0.f;
+// 		n = 0;
 // 		while (pts.x < pts.y)
 // 		{
-// 			tmp = VGETC(float, b->pts, pts.x + d);
-// 			if (tmp < min)
-// 				min = tmp;
-// 			else if (tmp > max)
-// 				max = tmp;
+// 			tmp_sum += VGETC(float, b->pts, pts.x + d);
 // 			pts.x += b->k;
+// 			n++;
 // 		}
+// 		sum += tmp_sum / n;
 // 		i++;
 // 	}
-// 	return (MIX(min, max, 0.5f));
+// 	return (sum / index_count);
 // }
 
 static uint32_t	kdtree_split(t_kdtree_builder const *b,
@@ -116,23 +116,21 @@ static void		kdtree_build_split(t_kdtree_node *dst, t_kdtree_builder *b,
 	t_vec2u			tmp;
 
 	d = 0;
-	dst->d = b->k;
 	while (d < b->k)
 	{
 		tmp_p = kdtree_av(b, indexes, count, d);
-		tmp.x = kdtree_split(b, indexes, count, dst->d, tmp_p, split, true);
-		tmp.y = kdtree_split(b, indexes, count, dst->d, tmp_p, split, false);
-		ft_printf("D %d P %f V [%u, %u] C %u%n", d, tmp_p, tmp.x, tmp.y, count);
-		if (dst->d >= b->k || (tmp.x + tmp.y) < tmp_len)
+		tmp.x = kdtree_split(b, indexes, count, d, tmp_p, split, true);
+		tmp.y = kdtree_split(b, indexes, count, d, tmp_p, split, false);
+		tmp.x = DIFF(tmp.x, tmp.y) + tmp.x + tmp.y;
+		// tmp.x = DIFF(tmp.x, tmp.y) + MAX(tmp.x, tmp.y);
+		if (d == 0 || tmp.x < tmp_len)
 		{
 			dst->d = d;
 			dst->p = tmp_p;
-			tmp_len = tmp.x + tmp.y;
+			tmp_len = tmp.x;
 		}
 		d++;
 	}
-	ft_printf("	D %d P %f%n", dst->d, dst->p);
-
 	tmp_len = kdtree_split(b, indexes, count, dst->d, dst->p, split, true);
 	kdtree_build_child(&dst->left, b, split, tmp_len, BOOL_OF(tmp_len == count));
 	tmp_len = kdtree_split(b, indexes, count, dst->d, dst->p, split, false);

@@ -6,35 +6,28 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:33:07 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/22 11:38:47 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/23 00:26:17 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "kd_tree.h"
+#include "math_utils.h"
+
 #include <math.h>
-
-typedef struct s_kdstate		t_kdstate;
-
-struct			s_kdstate
-{
-	t_kdtree_child const	*node;
-	float					tmin;
-	float					tmax;
-};
 
 bool			kdtree_intersect(t_kdtree const *tree, float const *ray,
 					t_callback intersect)
 {
-	t_kdstate				back[tree->height];
-	t_kdstate				state;
+	t_kdtree_child const	*back[tree->height];
+	t_kdtree_child const	*state;
 	uint32_t				back_i;
 
-	state = (t_kdstate){tree->root, 0.f, INFINITY};
+	state = tree->root;
 	back_i = 0;
 	while (true)
-		if (state.node->type == KDTREE_LEAF)
+		if (state->type == KDTREE_LEAF)
 		{
-			t_vector const *const	leaf = &state.node->v.leaf;
+			t_vector const *const	leaf = &state->v.leaf;
 			uint32_t				i;
 			bool					ok;
 
@@ -51,7 +44,7 @@ bool			kdtree_intersect(t_kdtree const *tree, float const *ray,
 		}
 		else
 		{
-			t_kdtree_node const		*n = &state.node->v.split;
+			t_kdtree_node const		*n = &state->v.split;
 			float					tmp;
 			// float const				pos = ray[n->d] - n->p;
 			float const				pos = n->p - ray[n->d];
@@ -63,11 +56,11 @@ bool			kdtree_intersect(t_kdtree const *tree, float const *ray,
 			second = (pos < 0.f) ? n->left : n->right;
 			if (dir != 0.f && (tmp = pos / dir) > 0)
 			{
-				back[back_i++] = (t_kdstate){second, tmp, state.tmax};
-				state = (t_kdstate){first, state.tmin, tmp};
+				back[back_i++] = first;
+				state = second;
 			}
 			else
-				state.node = first;
+				state = first;
 		}
 	return (false);
 }
