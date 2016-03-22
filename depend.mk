@@ -470,8 +470,8 @@ $(O_DIR)/libft/ft_xml/xml_utils.o: INCLUDE_FLAGS += -Ilibft/ft_xml
 $(O_DIR)/srcs/kd_tree/kdtree_build.o: srcs/kd_tree/kdtree_build.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_vector/public/ft_vector.h \
-	srcs/kd_tree/internal.h srcs/kd_tree/public/kd_tree.h \
-	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h
+	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h \
+	srcs/math_utils/public/math_utils.h
 $(O_DIR)/srcs/kd_tree/kdtree_builder.o: srcs/kd_tree/kdtree_builder.c \
 	libft/ft_base/public/libft.h libft/ft_vector/public/ft_vector.h \
 	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h

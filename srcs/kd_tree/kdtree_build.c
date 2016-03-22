@@ -6,16 +6,17 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 14:30:02 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/22 09:25:13 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/22 11:36:24 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "internal.h"
 #include "kd_tree.h"
 #include "kd_tree_builder.h"
 #include "math_utils.h"
 
 #include <math.h>
+
+#define MAX_HEIGHT			10 // TODO: improve
 
 static void		kdtree_build_child(t_kdtree_child **dst, t_kdtree_builder *b,
 					uint32_t *indexes, uint32_t count, bool force_leaf);
@@ -24,31 +25,59 @@ static float	kdtree_av(t_kdtree_builder const *b, uint32_t const *indexes,
 					uint32_t index_count, uint32_t d)
 {
 	uint32_t		i;
-	float			min;
-	float			max;
-	float			tmp;
+	float			sum;
+	float			tmp_sum;
+	uint32_t		n;
 	t_vec2u			pts;
 
-	pts = VGETC(t_vec2u, b->pts_indexes, indexes[0]);
-	min = VGETC(float, b->pts, pts.x + d);
-	max = min;
+	sum = 0.f;
 	i = 0;
 	while (i < index_count)
 	{
 		pts = VGETC(t_vec2u, b->pts_indexes, indexes[i]);
+		tmp_sum = 0.f;
+		n = 0;
 		while (pts.x < pts.y)
 		{
-			tmp = VGETC(float, b->pts, pts.x + d);
-			if (tmp < min)
-				min = tmp;
-			else if (tmp > max)
-				max = tmp;
+			tmp_sum += VGETC(float, b->pts, pts.x + d);
 			pts.x += b->k;
+			n++;
 		}
+		sum += tmp_sum / n;
 		i++;
 	}
-	return (MIX(min, max, 0.5f));
+	return (sum / index_count);
 }
+
+// static float	kdtree_av(t_kdtree_builder const *b, uint32_t const *indexes,
+// 					uint32_t index_count, uint32_t d)
+// {
+// 	uint32_t		i;
+// 	float			min;
+// 	float			max;
+// 	float			tmp;
+// 	t_vec2u			pts;
+
+// 	pts = VGETC(t_vec2u, b->pts_indexes, indexes[0]);
+// 	min = VGETC(float, b->pts, pts.x + d);
+// 	max = min;
+// 	i = 0;
+// 	while (i < index_count)
+// 	{
+// 		pts = VGETC(t_vec2u, b->pts_indexes, indexes[i]);
+// 		while (pts.x < pts.y)
+// 		{
+// 			tmp = VGETC(float, b->pts, pts.x + d);
+// 			if (tmp < min)
+// 				min = tmp;
+// 			else if (tmp > max)
+// 				max = tmp;
+// 			pts.x += b->k;
+// 		}
+// 		i++;
+// 	}
+// 	return (MIX(min, max, 0.5f));
+// }
 
 static uint32_t	kdtree_split(t_kdtree_builder const *b,
 					uint32_t const *indexes, uint32_t index_count,
@@ -63,10 +92,9 @@ static uint32_t	kdtree_split(t_kdtree_builder const *b,
 	while (i < index_count)
 	{
 		pts = VGETC(t_vec2u, b->pts_indexes, indexes[i]);
-		pts.x += d;
 		while (pts.x < pts.y)
 		{
-			if (BOOL_OF(VGET(float, b->pts, pts.x) < p) == left)
+			if (BOOL_OF(VGET(float, b->pts, pts.x + d) < p) == left)
 			{
 				dst[len++] = indexes[i];
 				break ;

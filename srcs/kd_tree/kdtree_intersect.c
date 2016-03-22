@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:33:07 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/21 10:08:00 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/22 11:38:47 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,22 @@ bool			kdtree_intersect(t_kdtree const *tree, float const *ray,
 		else
 		{
 			t_kdtree_node const		*n = &state.node->v.split;
-			float					thit;
+			float					tmp;
+			// float const				pos = ray[n->d] - n->p;
+			float const				pos = n->p - ray[n->d];
+			float const				dir = ray[n->d + tree->k];
 			t_kdtree_child const	*first;
 			t_kdtree_child const	*second;
 
-			thit = (n->p - ray[n->d]) / ray[n->d + tree->k];
-			first = (ray[n->d + tree->k] <= 0.f) ? n->left : n->right;
-			second = (ray[n->d + tree->k] <= 0.f) ? n->right : n->left;
-			if (thit >= state.tmax || thit < 0)
-				state.node = first;
-			else if (thit <= state.tmin)
-				state.node = second;
-			else
+			first = (pos < 0.f) ? n->right : n->left;
+			second = (pos < 0.f) ? n->left : n->right;
+			if (dir != 0.f && (tmp = pos / dir) > 0)
 			{
-				back[back_i++] = (t_kdstate){second, thit, state.tmax};
-				state = (t_kdstate){first, state.tmin, thit};
+				back[back_i++] = (t_kdstate){second, tmp, state.tmax};
+				state = (t_kdstate){first, state.tmin, tmp};
 			}
+			else
+				state.node = first;
 		}
 	return (false);
 }
