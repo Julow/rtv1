@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/21 12:08:17 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/22 09:24:46 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 #include "ft/ft_printf.h"
 
 #include "internal.h"
-#include "kd_tree_def.h"
+#include "kd_tree_builder.h"
 #include "scene.h"
 
 #include <stddef.h>
+#include <stdlib.h>
 
 static t_vector const	g_scene_params = VECTOR(t_param_def,
 	PARAM("name", name, t_scene, name),
@@ -38,25 +39,21 @@ static void	print_kdtree(t_kdtree_child const *node, uint32_t offset, char prefi
 	ft_logf(LOG_DEBUG, "%*c= %d node(s)", offset, prefix, node->v.leaf.length);
 }
 
-static bool	_parse_scene_obj(t_xml_parser *xml, t_kdtree_def *def)
+static bool	_parse_scene_obj(t_xml_parser *xml, t_kdtree_builder *b)
 {
 	t_obj *const		obj = NEW(t_obj);
-	t_kdtree_def_data	*data;
-	t_vec3				*tmp;
+	t_vec3				tmp;
 	uint32_t			i;
 
 	if (!parse_scene_obj(xml, obj))
-		return (false);
-	data = ft_vpush(&def->datas, NULL, 1);
-	data->data = obj;
-	data->pts = VEC2U1(def->pts.length);
-	data->pts.y += obj->type->bounds_len;
-	tmp = ft_vpush(&def->pts, NULL, obj->type->bounds_len * 3);
+		return (free(obj), false);
+	kdtree_builder_push(b, obj);
 	i = 0;
 	while (i < obj->type->bounds_len)
 	{
-		tmp[i] = obj->type->bounds[i];
-		ft_mat4apply_vec3(&obj->m, tmp + i, 1.f);
+		tmp = obj->type->bounds[i];
+		ft_mat4apply_vec3(&obj->m, &tmp, 1.f);
+		kdtree_builder_pt(b, &tmp, 1);
 		i++;
 	}
 	return (true);
@@ -64,12 +61,12 @@ static bool	_parse_scene_obj(t_xml_parser *xml, t_kdtree_def *def)
 
 static bool	parse_scene(t_xml_parser *xml, t_scene *scene)
 {
-	bool			err;
-	t_kdtree_def	kddef;
+	bool				err;
+	t_kdtree_builder	kdbuilder;
 
 	*scene = (t_scene){DSTR0(), {}, VECTOR(t_light),
 		VECTOR(t_camera), DEF_MTL, DEF_SKY_COLOR};
-	kddef = KDTREE_DEF();
+	kdbuilder = KDTREE_BUILDER(3);
 	while (ft_xml_next(xml))
 	{
 		if (xml->token == XML_TOKEN_PARAM)
@@ -82,7 +79,7 @@ static bool	parse_scene(t_xml_parser *xml, t_scene *scene)
 			else if (ft_subequ(ft_xml_name(xml), SUBC("camera")))
 				err = parse_scene_camera(xml, ft_vpush(&scene->cameras, NULL, 1));
 			else
-				err = _parse_scene_obj(xml, &kddef);
+				err = _parse_scene_obj(xml, &kdbuilder);
 		}
 		else
 			err = ASSERT(false);
@@ -90,15 +87,13 @@ static bool	parse_scene(t_xml_parser *xml, t_scene *scene)
 		{
 			ft_dstrclear(&scene->name);
 			ft_vclear(&scene->lights);
-			ft_vclear(&kddef.datas);
-			ft_vclear(&kddef.pts);
+			kdtree_builder_destroy(&kdbuilder);
 			return (false);
 		}
 	}
-	scene->objs = kdtree_build(3, &kddef);
+	scene->objs = kdtree_build(&kdbuilder);
+	kdtree_builder_destroy(&kdbuilder);
 	print_kdtree(scene->objs.root, 0, ':');
-	ft_vclear(&kddef.datas);
-	ft_vclear(&kddef.pts);
 	if (xml->token != XML_TOKEN_END)
 		return (ft_xml_error(xml, SUBC("Unexpected EOF")));
 	if (scene->cameras.length == 0)

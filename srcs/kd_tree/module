@@ -4,3 +4,4 @@ module kd_tree:
 
 	public require ft::base
 	public require ft::vector
+	private require math_utils

@@ -77,6 +77,7 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_gamma.o \
 	$(O_DIR)/libft/ft_vector/ft_vreserve.o $(O_DIR)/libft/ft_vector/ft_vspan.o \
 	$(O_DIR)/libft/ft_xml/ft_xml.o $(O_DIR)/libft/ft_xml/xml_tokens.o \
 	$(O_DIR)/libft/ft_xml/xml_utils.o $(O_DIR)/srcs/kd_tree/kdtree_build.o \
+	$(O_DIR)/srcs/kd_tree/kdtree_builder.o \
 	$(O_DIR)/srcs/kd_tree/kdtree_intersect.o $(O_DIR)/srcs/main/main.o \
 	$(O_DIR)/srcs/math_utils/quaternions.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_close.o $(O_DIR)/srcs/mlx_win/ft_mlx_open.o \
@@ -101,7 +102,7 @@ PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
 	$(O_DIR)/_public/ft/ft_str_out.h $(O_DIR)/_public/ft/ft_printf.h \
 	$(O_DIR)/_public/ft/ft_vprintf.h $(O_DIR)/_public/ft/ft_vector.h \
 	$(O_DIR)/_public/ft/ft_xml.h $(O_DIR)/_public/kd_tree.h \
-	$(O_DIR)/_public/kd_tree_def.h $(O_DIR)/_public/math_quaternions.h \
+	$(O_DIR)/_public/kd_tree_builder.h $(O_DIR)/_public/math_quaternions.h \
 	$(O_DIR)/_public/math_utils.h $(O_DIR)/_public/mlx_win.h \
 	$(O_DIR)/_public/obj.h $(O_DIR)/_public/obj_types.h \
 	$(O_DIR)/_public/ray_tracer.h $(O_DIR)/_public/scene.h \
@@ -467,15 +468,19 @@ $(O_DIR)/libft/ft_xml/xml_utils.o: INCLUDE_FLAGS += -Ilibft/ft_xml
 
 # module kd_tree
 $(O_DIR)/srcs/kd_tree/kdtree_build.o: srcs/kd_tree/kdtree_build.c \
-	libft/ft_base/public/libft.h libft/ft_vector/public/ft_vector.h \
+	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_vector/public/ft_vector.h \
 	srcs/kd_tree/internal.h srcs/kd_tree/public/kd_tree.h \
-	srcs/kd_tree/public/kd_tree_def.h
+	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h
+$(O_DIR)/srcs/kd_tree/kdtree_builder.o: srcs/kd_tree/kdtree_builder.c \
+	libft/ft_base/public/libft.h libft/ft_vector/public/ft_vector.h \
+	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h
 $(O_DIR)/srcs/kd_tree/kdtree_intersect.o: srcs/kd_tree/kdtree_intersect.c \
 	libft/ft_base/public/libft.h libft/ft_vector/public/ft_vector.h \
 	srcs/kd_tree/public/kd_tree.h
 
-$(O_DIR)/srcs/kd_tree/kdtree_build.o $(O_DIR)/srcs/kd_tree/kdtree_intersect.o: \
-	INCLUDE_FLAGS += -Isrcs/kd_tree
+$(O_DIR)/srcs/kd_tree/kdtree_build.o $(O_DIR)/srcs/kd_tree/kdtree_builder.o \
+$(O_DIR)/srcs/kd_tree/kdtree_intersect.o: INCLUDE_FLAGS += -Isrcs/kd_tree
 
 # module main
 $(O_DIR)/srcs/main/main.o: srcs/main/main.c libft/ft_base/public/ft_colors.h \
@@ -603,7 +608,7 @@ $(O_DIR)/srcs/scene_loader/load_scenes.o: srcs/scene_loader/load_scenes.c \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
 	libft/ft_out/public/ft_out.h libft/ft_printf/public/ft_printf.h \
 	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
-	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_def.h \
+	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
 	srcs/scene_loader/public/scene_loader.h
@@ -681,7 +686,7 @@ $(O_DIR)/_public/ft/math_vec2.h: libft/ft_math/public/math_vec2.h
 $(O_DIR)/_public/ft/math_vec3.h: libft/ft_math/public/math_vec3.h
 $(O_DIR)/_public/ft/math_vec4.h: libft/ft_math/public/math_vec4.h
 $(O_DIR)/_public/kd_tree.h: srcs/kd_tree/public/kd_tree.h
-$(O_DIR)/_public/kd_tree_def.h: srcs/kd_tree/public/kd_tree_def.h
+$(O_DIR)/_public/kd_tree_builder.h: srcs/kd_tree/public/kd_tree_builder.h
 $(O_DIR)/_public/math_quaternions.h: srcs/math_utils/public/math_quaternions.h
 $(O_DIR)/_public/math_utils.h: srcs/math_utils/public/math_utils.h
 $(O_DIR)/_public/mlx_win.h: srcs/mlx_win/public/mlx_win.h

@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/15 11:31:53 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/22 08:01:18 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 # include "ft/math_vec3.h"
 
 typedef struct s_vertex			t_vertex;
+
+/*
+** ========================================================================== **
+** Math utils
+** -
+** MIX(A, B, RATIO+)	Return the value at RATIO between A and B
+*/
+
+# define MIX(A, B, RATIO)	((A) * (RATIO) + ((B) * (1.f - (RATIO))))
 
 /*
 ** ========================================================================== **
