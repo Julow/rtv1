@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/23 00:05:18 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/24 09:07:32 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static bool	_parse_scene_obj(t_xml_parser *xml, t_kdtree_builder *b)
 	{
 		tmp = obj->type->bounds[i];
 		ft_mat4apply_vec3(&obj->m, &tmp, 1.f);
-		kdtree_builder_pt(b, &tmp, 1);
+		kdtree_builder_pt(b, (float*)&tmp, 1);
 		i++;
 	}
 	return (true);

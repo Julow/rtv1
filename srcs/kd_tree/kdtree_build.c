@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 14:30:02 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/23 00:28:41 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/25 15:37:51 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 static void		kdtree_build_child(t_kdtree_child **dst, t_kdtree_builder *b,
 					uint32_t *indexes, uint32_t count, bool force_leaf);
 
-static float	kdtree_av(t_kdtree_builder const *b, uint32_t const *indexes,
+static float	kdtree_median(t_kdtree_builder const *b, uint32_t const *indexes,
 					uint32_t index_count, uint32_t d)
 {
 	uint32_t		i;
@@ -50,34 +50,6 @@ static float	kdtree_av(t_kdtree_builder const *b, uint32_t const *indexes,
 	}
 	return (MIX(min, max, 0.5f));
 }
-
-// static float	kdtree_av(t_kdtree_builder const *b, uint32_t const *indexes,
-// 					uint32_t index_count, uint32_t d)
-// {
-// 	uint32_t		i;
-// 	float			sum;
-// 	float			tmp_sum;
-// 	uint32_t		n;
-// 	t_vec2u			pts;
-
-// 	sum = 0.f;
-// 	i = 0;
-// 	while (i < index_count)
-// 	{
-// 		pts = VGETC(t_vec2u, b->pts_indexes, indexes[i]);
-// 		tmp_sum = 0.f;
-// 		n = 0;
-// 		while (pts.x < pts.y)
-// 		{
-// 			tmp_sum += VGETC(float, b->pts, pts.x + d);
-// 			pts.x += b->k;
-// 			n++;
-// 		}
-// 		sum += tmp_sum / n;
-// 		i++;
-// 	}
-// 	return (sum / index_count);
-// }
 
 static uint32_t	kdtree_split(t_kdtree_builder const *b,
 					uint32_t const *indexes, uint32_t index_count,
@@ -118,7 +90,7 @@ static void		kdtree_build_split(t_kdtree_node *dst, t_kdtree_builder *b,
 	d = 0;
 	while (d < b->k)
 	{
-		tmp_p = kdtree_av(b, indexes, count, d);
+		tmp_p = kdtree_median(b, indexes, count, d);
 		tmp.x = kdtree_split(b, indexes, count, d, tmp_p, split, true);
 		tmp.y = kdtree_split(b, indexes, count, d, tmp_p, split, false);
 		tmp.x = DIFF(tmp.x, tmp.y) + tmp.x + tmp.y;

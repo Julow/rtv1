@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/14 22:44:54 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/24 11:46:48 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ static t_vec3	trace_(t_scene const *scene, t_vertex const *ray,
 
 	reflection = mat2->reflection;
 	tmp.pos = intersect->pos;
+	reflected_color = VEC3_0();
+	refracted_color = VEC3_0();
 	if (reflection > 0.001f)
 	{
 		tmp.dir = ft_vec3norm(VEC3_ADD(ray->dir, VEC3_MUL1(intersect->norm,
