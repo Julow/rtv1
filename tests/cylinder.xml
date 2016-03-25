@@ -3,7 +3,7 @@
 	<plane pos="0, 0, 10" rot="-1, 0, 0" scale="30, 1, 30" color="#3399FF" />
 	<plane pos="0, 0, -10" rot="1, 0, 0" scale="30, 1, 30" color="#3399FF" />
 
-	<cylinder rot="1,0,0" scale="1, 1, 2" color="#1f9900" opacity="0.2" reflection="0" />
+	<cylinder rot="1,0,0" scale="1, 1, 2" color="#1f9900" reflection="0" />
 	<light pos="5, 5, -5" brightness="1" />
 	<light pos="-15, -5, -5" brightness="1" />
 

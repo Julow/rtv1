@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/18 15:12:14 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/25 17:12:13 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ struct			s_material
 	t_img const		*texture;
 	t_img const		*specular_map;
 	float			ambient;
-	float			opacity;
 	float			reflection;
 	float			refract_index;
 	float			specular_exp;

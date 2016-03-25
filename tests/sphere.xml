@@ -2,9 +2,9 @@
 
 	<plane pos="0, 0, 5" rot="1, 0, 0" scale="200" color="#3355FF" />
 
-	<sphere opacity="0" reflection="0" />
-	<!-- <sphere opacity="0" reflection="0" refract_index="1.33" /> -->
-	<!-- <sphere color="#FFFFFF" opacity="0" reflection="0" refract_index="5" /> -->
+	<sphere reflection="0" />
+	<!-- <sphere reflection="0" refract_index="1.33" /> -->
+	<!-- <sphere color="#FFFFFF" reflection="0" refract_index="5" /> -->
 
 	<light pos="10, 0, -5" brightness="1" />
 

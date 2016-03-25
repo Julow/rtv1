@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:17:51 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/15 11:28:55 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/25 17:22:15 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,25 @@
 ** color_fto24		3 floats to 24 bits
 ** color_fto32		4 floats to 32 bits
 ** color_24tof		24 bits to 3 floats
+** TODO: color_32tof	32 bits to 3 floats
 ** color_sto32		hex string to 32 bits
 ** -
 ** COLOR_24TOF(C+)	Macro version of color_24tof
+** COLOR_32TOF(C+)	Macro version of color_32tof
 ** COLOR_FTO24(C+)	Macro version of color_fto24
+** COLOR_FTO32(C+)	Macro version of color_fto32
 */
 
-# define COLOR_24TOF(C)	(VEC3(_24TOF_R(C), _24TOF_G(C), _24TOF_B(C)))
-# define COLOR_FTO24(C)	(_FTO24_R((C).x) | _FTO24_G((C).y) | _FTO24_B((C).z))
+# define COLOR_24TOF(C)	(VEC3(_32TOF_R(C), _32TOF_G(C), _32TOF_B(C)))
+# define COLOR_32TOF(C)	(VEC4(_32TOF_R(C),_32TOF_G(C),_32TOF_B(C),_32TOF_A(C)))
+
+# define COLOR_FTO24(C)	(_FTO32_R((C).x) | _FTO32_G((C).y) | _FTO32_B((C).z))
+# define COLOR_FTO32(C)	(COLOR_FTO24(C) | _FTO32_A((C).w))
 
 uint32_t		color_fto24(t_vec3 color);
 uint32_t		color_fto32(t_vec4 color);
 t_vec3			color_24tof(uint32_t color);
+t_vec4			color_32tof(uint32_t color);
 
 uint32_t		color32_gamma(uint32_t color, float gamma);
 t_vec3			colorf_gamma(t_vec3 color, float gamma);
@@ -80,12 +87,14 @@ t_vec3			colorf_gamma(t_vec3 color, float gamma);
 ** -
 */
 
-# define _24TOF_R(C)	(((float)((C) & COLOR32_R_MASK)) / COLORF_R_FACTOR)
-# define _24TOF_G(C)	(((float)((C) & COLOR32_G_MASK)) / COLORF_G_FACTOR)
-# define _24TOF_B(C)	(((float)((C) & COLOR32_B_MASK)) / COLORF_B_FACTOR)
+# define _32TOF_A(C)	(((float)((C) & COLOR32_A_MASK)) / COLORF_A_FACTOR)
+# define _32TOF_R(C)	(((float)((C) & COLOR32_R_MASK)) / COLORF_R_FACTOR)
+# define _32TOF_G(C)	(((float)((C) & COLOR32_G_MASK)) / COLORF_G_FACTOR)
+# define _32TOF_B(C)	(((float)((C) & COLOR32_B_MASK)) / COLORF_B_FACTOR)
 
-# define _FTO24_R(X)	(((uint32_t)(X * COLORF_R_FACTOR)) & COLOR32_R_MASK)
-# define _FTO24_G(Y)	(((uint32_t)(Y * COLORF_G_FACTOR)) & COLOR32_G_MASK)
-# define _FTO24_B(Z)	(((uint32_t)(Z * COLORF_B_FACTOR)) & COLOR32_B_MASK)
+# define _FTO32_R(X)	(((uint32_t)(X * COLORF_R_FACTOR)) & COLOR32_R_MASK)
+# define _FTO32_G(Y)	(((uint32_t)(Y * COLORF_G_FACTOR)) & COLOR32_G_MASK)
+# define _FTO32_B(Z)	(((uint32_t)(Z * COLORF_B_FACTOR)) & COLOR32_B_MASK)
+# define _FTO32_A(W)	(((uint32_t)(W * COLORF_A_FACTOR)) & COLOR32_A_MASK)
 
 #endif
