@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 19:41:16 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/14 12:17:28 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/27 21:50:54 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ bool			cone_ray_intersect(t_intersect *intersect, t_obj const *obj,
 	intersect->norm = ft_vec3norm(VEC3_Z(intersect->pos, -intersect->pos.z));
 	if (out)
 		intersect->norm = VEC3_SUB(VEC3_0(), intersect->norm);
-	intersect->tex = VEC2(0.f, 0.f);
+	intersect->tex = VEC2(intersect->pos.z + 0.5f,
+		0.5f - (asin(intersect->pos.y) / M_PI));
 	return (true);
 	(void)obj;
 }
