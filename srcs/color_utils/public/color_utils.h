@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:17:51 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/25 17:22:15 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/27 20:02:25 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,15 @@ t_vec3			colorf_gamma(t_vec3 color, float gamma);
 /*
 ** Convert hex string to 32 bits color
 ** -
-** RGB
-** ARGB
-** RRGGBB
-** AARRGGBB
+** #RRGGBB
+** #AARRGGBB
 ** -
+** '#' prefix is optionnal
 ** 'R', 'G', 'B', 'A' are hex digits
 ** Default alpha is 'FF'
 ** Ignore case
 */
-// TODO: uint32_t		color_sto32(t_sub str);
+bool			color_hex(t_sub str, uint32_t *dst);
 
 /*
 ** -

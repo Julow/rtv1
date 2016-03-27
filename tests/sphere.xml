@@ -2,7 +2,7 @@
 
 	<plane pos="0, 0, 5" rot="1, 0, 0" scale="200" color="#3355FF" />
 
-	<sphere reflection="0" />
+	<sphere color="#00000000" />
 	<!-- <sphere reflection="0" refract_index="1.33" /> -->
 	<!-- <sphere color="#FFFFFF" reflection="0" refract_index="5" /> -->
 

@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:40:13 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/15 18:32:22 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/27 20:23:58 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_img const		*load_texture1(uint32_t color)
 		return (tmp);
 	tmp = ft_hmapput(cache, SUB(V(&color), sizeof(uint32_t)), NULL,
 			sizeof(t_img) + sizeof(uint32_t)).value;
-	ft_logf(LOG_DEBUG, "Solid texture created: %#.6x", color);
+	ft_logf(LOG_DEBUG, "Solid texture created: #%.8x", color);
 	*tmp = (t_img){ENDOF(tmp), 1, 1};
 	*tmp->data = correct_gamma(color);
 	return (tmp);

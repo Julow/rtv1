@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/24 09:07:32 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/27 13:09:35 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 static t_vector const	g_scene_params = VECTOR(t_param_def,
 	PARAM("name", name, t_scene, name),
 	PARAM("sky_color", color, t_scene, sky_color),
-	PARAM("refract_index", color, t_scene, def_mtl.refract_index),
 );
 
 static void	print_kdtree(t_kdtree_child const *node, uint32_t offset, char prefix)
@@ -65,7 +64,7 @@ static bool	parse_scene(t_xml_parser *xml, t_scene *scene)
 	t_kdtree_builder	kdbuilder;
 
 	*scene = (t_scene){DSTR0(), {}, VECTOR(t_light),
-		VECTOR(t_camera), DEF_MTL, DEF_SKY_COLOR};
+		VECTOR(t_camera), DEF_SKY_COLOR};
 	kdbuilder = KDTREE_BUILDER(3);
 	while (ft_xml_next(xml))
 	{

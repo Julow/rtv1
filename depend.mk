@@ -1,5 +1,5 @@
 INCLUDE_FLAGS += -I$(O_DIR)/_public
-LINK_FLAGS += -lm -lm -lmlx -lm -lm
+LINK_FLAGS += -lm -lmlx
 OBJ_DIR_TREE += $(O_DIR)/srcs/texture_loader/ $(O_DIR)/srcs/scene_renderer/ \
 	$(O_DIR)/srcs/scene_loader/ $(O_DIR)/srcs/ray_tracer/ \
 	$(O_DIR)/srcs/obj_types/ $(O_DIR)/srcs/mlx_win/ $(O_DIR)/srcs/math_utils/ \
@@ -11,6 +11,7 @@ OBJ_DIR_TREE += $(O_DIR)/srcs/texture_loader/ $(O_DIR)/srcs/scene_renderer/ \
 	$(O_DIR)/libft/ft_hmap/ $(O_DIR)/libft/ft_dstr/ $(O_DIR)/libft/ft_base/ \
 	$(O_DIR)/libft/ $(O_DIR)/_public/ft/ $(O_DIR)/_public/ $(O_DIR)/
 O_FILES += $(O_DIR)/srcs/color_utils/color_gamma.o \
+	$(O_DIR)/srcs/color_utils/color_hex.o \
 	$(O_DIR)/srcs/color_utils/color_utils.o $(O_DIR)/libft/ft_base/ft_abs.o \
 	$(O_DIR)/libft/ft_base/ft_assert.o $(O_DIR)/libft/ft_base/ft_atoib.o \
 	$(O_DIR)/libft/ft_base/ft_bitset.o $(O_DIR)/libft/ft_base/ft_bzero.o \
@@ -91,19 +92,19 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_gamma.o \
 	$(O_DIR)/srcs/scene_loader/parse_scene_child.o \
 	$(O_DIR)/srcs/scene_renderer/scene_render.o \
 	$(O_DIR)/srcs/texture_loader/load_texture.o
-PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
-	$(O_DIR)/_public/ft/ft_wchar.h $(O_DIR)/_public/ft/libft.h \
+PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/libft.h \
+	$(O_DIR)/_public/ft/ft_colors.h $(O_DIR)/_public/ft/ft_wchar.h \
 	$(O_DIR)/_public/ft/ft_dstr.h $(O_DIR)/_public/ft/ft_hmap.h \
 	$(O_DIR)/_public/ft/img.h $(O_DIR)/_public/ft/img_loader.h \
-	$(O_DIR)/_public/ft/ft_file_in.h $(O_DIR)/_public/ft/ft_in.h \
-	$(O_DIR)/_public/ft/math_complex.h $(O_DIR)/_public/ft/math_mat4.h \
-	$(O_DIR)/_public/ft/math_vec2.h $(O_DIR)/_public/ft/math_vec3.h \
-	$(O_DIR)/_public/ft/math_vec4.h $(O_DIR)/_public/ft/ft_out.h \
+	$(O_DIR)/_public/ft/ft_in.h $(O_DIR)/_public/ft/ft_file_in.h \
+	$(O_DIR)/_public/ft/math_complex.h $(O_DIR)/_public/ft/math_vec2.h \
+	$(O_DIR)/_public/ft/math_vec4.h $(O_DIR)/_public/ft/math_vec3.h \
+	$(O_DIR)/_public/ft/math_mat4.h $(O_DIR)/_public/ft/ft_out.h \
 	$(O_DIR)/_public/ft/ft_str_out.h $(O_DIR)/_public/ft/ft_printf.h \
 	$(O_DIR)/_public/ft/ft_vprintf.h $(O_DIR)/_public/ft/ft_vector.h \
-	$(O_DIR)/_public/ft/ft_xml.h $(O_DIR)/_public/kd_tree.h \
-	$(O_DIR)/_public/kd_tree_builder.h $(O_DIR)/_public/math_quaternions.h \
-	$(O_DIR)/_public/math_utils.h $(O_DIR)/_public/mlx_win.h \
+	$(O_DIR)/_public/ft/ft_xml.h $(O_DIR)/_public/kd_tree_builder.h \
+	$(O_DIR)/_public/kd_tree.h $(O_DIR)/_public/math_utils.h \
+	$(O_DIR)/_public/math_quaternions.h $(O_DIR)/_public/mlx_win.h \
 	$(O_DIR)/_public/obj.h $(O_DIR)/_public/obj_types.h \
 	$(O_DIR)/_public/ray_tracer.h $(O_DIR)/_public/scene.h \
 	$(O_DIR)/_public/scene_loader.h $(O_DIR)/_public/scene_render.h \
@@ -111,6 +112,10 @@ PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
 
 # module color_utils
 $(O_DIR)/srcs/color_utils/color_gamma.o: srcs/color_utils/color_gamma.c \
+	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	srcs/color_utils/public/color_utils.h
+$(O_DIR)/srcs/color_utils/color_hex.o: srcs/color_utils/color_hex.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
 	srcs/color_utils/public/color_utils.h
@@ -476,8 +481,9 @@ $(O_DIR)/srcs/kd_tree/kdtree_builder.o: srcs/kd_tree/kdtree_builder.c \
 	libft/ft_base/public/libft.h libft/ft_vector/public/ft_vector.h \
 	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h
 $(O_DIR)/srcs/kd_tree/kdtree_intersect.o: srcs/kd_tree/kdtree_intersect.c \
-	libft/ft_base/public/libft.h libft/ft_vector/public/ft_vector.h \
-	srcs/kd_tree/public/kd_tree.h
+	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_vector/public/ft_vector.h \
+	srcs/kd_tree/public/kd_tree.h srcs/math_utils/public/math_utils.h
 
 $(O_DIR)/srcs/kd_tree/kdtree_build.o $(O_DIR)/srcs/kd_tree/kdtree_builder.o \
 $(O_DIR)/srcs/kd_tree/kdtree_intersect.o: INCLUDE_FLAGS += -Isrcs/kd_tree

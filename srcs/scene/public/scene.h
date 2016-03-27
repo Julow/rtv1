@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/25 19:11:31 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/27 13:07:45 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ struct			s_scene
 	t_kdtree		objs;
 	t_vector		lights;
 	t_vector		cameras;
-	t_material		def_mtl;
 	t_vec3			sky_color;
 };
 
