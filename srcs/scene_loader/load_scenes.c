@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/27 13:09:35 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/28 10:27:16 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,9 @@ bool		load_scenes(char const *file, t_vector *dst)
 	t_xml_parser	xml_parser;
 	bool			ret;
 
-	if ((in = ft_in_open(file)) == NULL)
+	if (file[0] == '-' && file[1] == '\0')
+		in = ft_in_fdopen(0);
+	else if ((in = ft_in_open(file)) == NULL)
 	{
 		ft_dprintf(2, C_RED "[Error]" C_RESET " %s: Invalid file%n", file);
 		return (false);

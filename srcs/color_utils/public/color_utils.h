@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:17:51 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/27 20:02:25 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/28 11:08:13 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 ** color_fto24		3 floats to 24 bits
 ** color_fto32		4 floats to 32 bits
 ** color_24tof		24 bits to 3 floats
-** TODO: color_32tof	32 bits to 3 floats
+** color_32tof		32 bits to 4 floats
 ** color_sto32		hex string to 32 bits
 ** -
 ** COLOR_24TOF(C+)	Macro version of color_24tof

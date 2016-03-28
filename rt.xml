@@ -13,7 +13,6 @@
 <scene
 	name="<name>" // default ""
 	sky_color="<color>"
-	refract_index="<float>" // default "1"
 >
 
 	<light
@@ -34,7 +33,6 @@
 		color="<color>" // only used if 'texture' is unset
 		specular_color="<color>" // default "#FFFFFF", only used if 'specular_map' is unset
 		ambient="<float>" // default "0.01"
-		opacity="<float>" // default "1"
 		reflection="<float>"
 		refract_index="<float>" // default "1"
 		specular_exp="<float>" // default "128"

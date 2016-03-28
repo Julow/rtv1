@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/27 23:13:22 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/28 10:57:45 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void		main_destroy(t_main *main)
 
 # define KEYCODE_ESC	53
 # define KEYCODE_Q		12
+# define KEYCODE_R		15
 # define KEYCODE_RIGHT	124
 # define KEYCODE_LEFT	123
 # define KEYCODE_UP		126
@@ -74,6 +75,7 @@ static void		main_destroy(t_main *main)
 
 # define KEYCODE_ESC	65307
 # define KEYCODE_Q		113
+# define KEYCODE_R		114
 # define KEYCODE_RIGHT	65363
 # define KEYCODE_LEFT	65361
 # define KEYCODE_UP		65362
@@ -85,13 +87,9 @@ static void		render_scene(t_main *main, uint32_t scene, uint32_t camera)
 {
 	uint32_t		tmp;
 
-	scene = (scene + main->scenes.length) % main->scenes.length;
-	tmp = VGET(t_scene, main->scenes, scene).cameras.length;
-	camera = (camera + tmp) % tmp;
-	if (main->current_scene == scene && main->current_camera == camera)
-		return ;
-	main->current_scene = scene;
-	main->current_camera = camera;
+	main->current_scene = (scene + main->scenes.length) % main->scenes.length;
+	tmp = VGET(t_scene, main->scenes, main->current_scene).cameras.length;
+	main->current_camera = (camera + tmp) % tmp;
 	mlx_clear_window(main->mlx, main->win.win_id);
 	mlx_string_put(main->mlx, main->win.win_id, 15, 25, 0xFF0000, "Loading...");
 	main->should_render = true;
@@ -105,10 +103,14 @@ static int		key_hook(int keycode, t_main *main)
 		render_scene(main, main->current_scene - 1, 0);
 	else if (keycode == KEYCODE_RIGHT && main->scenes.length > 1)
 		render_scene(main, main->current_scene + 1, 0);
-	else if (keycode == KEYCODE_UP)
+	else if (keycode == KEYCODE_UP
+		&& VGETC(t_scene, main->scenes, main->current_scene).cameras.length > 1)
 		render_scene(main, main->current_scene, main->current_camera + 1);
-	else if (keycode == KEYCODE_DOWN)
+	else if (keycode == KEYCODE_DOWN
+		&& VGETC(t_scene, main->scenes, main->current_scene).cameras.length > 1)
 		render_scene(main, main->current_scene, main->current_camera - 1);
+	else if (keycode == KEYCODE_R)
+		render_scene(main, main->current_scene, main->current_camera);
 	return (0);
 }
 
@@ -140,8 +142,8 @@ int				main(int argc, char **argv)
 	int				i;
 	t_main			main;
 
-	ft_logf_set_enabled(LOG_DEBUG, true);
-	ft_logf_set_enabled(LOG_VERBOSE, true);
+	// ft_logf_set_enabled(LOG_DEBUG, true);
+	// ft_logf_set_enabled(LOG_VERBOSE, true);
 	main = (t_main){
 		NULL,
 		{},

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 12:23:40 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/27 21:53:33 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/28 10:14:12 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 #include <math.h>
 
-#define CYLINDER_MIN		-0.5f
-#define CYLINDER_MAX		0.5f
+#define CYLINDER_MIN		-1.f
+#define CYLINDER_MAX		1.f
 
 static bool		cylinder_check(float dist, t_vertex const *ray)
 {
@@ -64,8 +64,8 @@ bool			cylinder_ray_intersect(t_intersect *intersect, t_obj const *obj,
 	intersect->norm = VEC3_Z(intersect->pos, 0.f);
 	if (out)
 		intersect->norm = VEC3_SUB(VEC3_0(), intersect->norm);
-	intersect->tex = VEC2(intersect->pos.z + 0.5f,
-		0.5f - (asin(intersect->pos.y) / M_PI));
+	intersect->tex = VEC2((intersect->pos.z - CYLINDER_MIN) / (CYLINDER_MAX - CYLINDER_MIN),
+		intersect->norm.y / 2.f + 0.5f);
 	return (true);
 	(void)obj;
 }

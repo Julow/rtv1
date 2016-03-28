@@ -7,10 +7,10 @@
 
 	<cone pos="0, 0, 10" rot="1, 0.5, 0.44" scale="50" color="#d6c43d" />
 
-	<cylinder pos="-5, 0, 5" rot="1, 0.5, -0.44" scale="3, 3, 35" color="#1f9900" />
+	<cylinder pos="-5, 0, 5" rot="1, 0.5, -0.44" scale="3, 3, 20" color="#1f9900" />
 
 	<light pos="10, 0, -10" />
-	<light pos="-5, 0, 5" color="#FF0000" />
+	<light pos="-5, 0, 5" color="#FF0000" brightness="2" />
 
 	<camera pos="0, 0, -10" />
 	<camera pos="15, 20, 5" dir="-1, -1, 0" />

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 18:01:47 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/24 11:53:16 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/28 09:48:20 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include "obj_types.h"
 
 static t_vec3 const			g_bounds_cube[] = {
-	{-0.5f, 0.5f, -0.5f},
-	{-0.5f, 0.5f, 0.5f},
-	{0.5f, 0.5f, 0.5f},
-	{0.5f, 0.5f, -0.5f},
-	{-0.5f, -0.5f, -0.5f},
-	{-0.5f, -0.5f, 0.5f},
-	{0.5f, -0.5f, 0.5f},
-	{0.5f, -0.5f, -0.5f},
+	{-1.f, 1.f, -1.f},
+	{-1.f, 1.f, 1.f},
+	{1.f, 1.f, 1.f},
+	{1.f, 1.f, -1.f},
+	{-1.f, -1.f, -1.f},
+	{-1.f, -1.f, 1.f},
+	{1.f, -1.f, 1.f},
+	{1.f, -1.f, -1.f},
 };
 
 static t_obj_class const	g_obj_types[] = {
@@ -34,11 +34,11 @@ static t_obj_class const	g_obj_types[] = {
 	}, 4},
 	{SUBC("cylinder"), &cylinder_ray_intersect, g_bounds_cube, 8},
 	{SUBC("cone"), &cone_ray_intersect, (t_vec3[]){
-		{0.f, 0.5f, 0.f},
-		{-0.5f, -0.5f, -0.5f},
-		{-0.5f, -0.5f, 0.5f},
-		{0.5f, -0.5f, 0.5f},
-		{0.5f, -0.5f, -0.5f},
+		{0.f, 0.f, 0.f},
+		{-1.f, 1.f, -1.f},
+		{1.f, 1.f, -1.f},
+		{1.f, -1.f, -1.f},
+		{-1.f, -1.f, -1.f},
 	}, 5},
 };
 
