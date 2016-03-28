@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:38:51 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/28 10:08:42 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/28 12:50:56 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,12 @@ static bool		sphere_intersect(bool *out, float *dist, t_vertex const *ray)
 bool			sphere_ray_intersect(t_intersect *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
-	float			dist;
 	bool			out;
 
 	out = false;
-	if (!sphere_intersect(&out, &dist, ray))
+	if (!sphere_intersect(&out, &intersect->dist, ray))
 		return (false);
-	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, dist));
+	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, intersect->dist));
 	intersect->norm = out ? VEC3_SUB(VEC3_0(), intersect->pos) : intersect->pos;
 	intersect->tex = VEC2(intersect->norm.x / 2.f + 0.5f,
 		intersect->norm.y / 2.f + 0.5f);

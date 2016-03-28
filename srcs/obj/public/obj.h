@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/25 17:12:13 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/28 13:30:34 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@
 typedef struct s_obj			t_obj;
 typedef struct s_obj_class		t_obj_class;
 typedef struct s_material		t_material;
+typedef struct s_obj_csg		t_obj_csg;
 typedef struct s_intersect		t_intersect;
+typedef enum e_obj_csg_t		t_obj_csg_t;
 
 /*
 ** ========================================================================== **
@@ -63,12 +65,30 @@ struct			s_material
 # define MATERIAL(R,G,B,...)	((t_material){.color=VEC3(R,G,B),##__VA_ARGS__})
 
 /*
+** Csg
+*/
+enum			e_obj_csg_t
+{
+	OBJ_CSG_OR,
+	OBJ_CSG_NOT,
+	OBJ_CSG_AND,
+};
+
+struct			s_obj_csg
+{
+	t_obj_csg_t		type;
+	t_obj			*obj;
+	t_obj_csg		*next; // TODO: remove?
+};
+
+/*
 ** Object
 */
 struct			s_obj
 {
 	t_obj_class const	*type;
 	t_material			material;
+	t_obj_csg			*csg;
 	t_mat4				m;
 	t_mat4				m_inv;
 };
@@ -81,6 +101,7 @@ struct			s_intersect
 	t_vec3			pos;
 	t_vec3			norm;
 	t_vec2			tex;
+	float			dist;
 };
 
 #endif

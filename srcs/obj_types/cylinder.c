@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 12:23:40 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/28 10:14:12 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/28 12:50:19 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,12 @@ static bool		cylinder_intersect(bool *out, float *dist, t_vertex const *ray)
 bool			cylinder_ray_intersect(t_intersect *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
-	float			dist;
 	bool			out;
 
 	out = false;
-	if (!cylinder_intersect(&out, &dist, ray))
+	if (!cylinder_intersect(&out, &intersect->dist, ray))
 		return (false);
-	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, dist));
+	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, intersect->dist));
 	intersect->norm = VEC3_Z(intersect->pos, 0.f);
 	if (out)
 		intersect->norm = VEC3_SUB(VEC3_0(), intersect->norm);

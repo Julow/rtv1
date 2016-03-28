@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/28 10:27:16 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/28 14:12:08 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,12 @@ static void	print_kdtree(t_kdtree_child const *node, uint32_t offset, char prefi
 	ft_logf(LOG_DEBUG, "%*c= %d node(s)", offset, prefix, node->v.leaf.length);
 }
 
-static bool	_parse_scene_obj(t_xml_parser *xml, t_kdtree_builder *b)
+static void	push_obj_pts(t_kdtree_builder *b, t_obj const *obj)
 {
-	t_obj *const		obj = NEW(t_obj);
-	t_vec3				tmp;
-	uint32_t			i;
+	t_obj_csg const	*csg;
+	t_vec3			tmp;
+	uint32_t		i;
 
-	if (!parse_scene_obj(xml, obj))
-		return (free(obj), false);
-	kdtree_builder_push(b, obj);
 	i = 0;
 	while (i < obj->type->bounds_len)
 	{
@@ -55,6 +52,22 @@ static bool	_parse_scene_obj(t_xml_parser *xml, t_kdtree_builder *b)
 		kdtree_builder_pt(b, (float*)&tmp, 1);
 		i++;
 	}
+	csg = obj->csg;
+	while (csg != NULL)
+	{
+		push_obj_pts(b, csg->obj); // TODO: don't push 'not' and 'and'
+		csg = csg->next;
+	}
+}
+
+static bool	_parse_scene_obj(t_xml_parser *xml, t_kdtree_builder *b)
+{
+	t_obj *const	obj = NEW(t_obj);
+
+	if (!parse_scene_obj(xml, obj))
+		return (free(obj), false);
+	kdtree_builder_push(b, obj);
+	push_obj_pts(b, obj);
 	return (true);
 }
 

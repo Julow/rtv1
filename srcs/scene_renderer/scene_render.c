@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:31:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/27 13:07:14 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/28 15:16:08 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 #include <math.h>
 
-#define MAX_RAY_DEPTH		20
+#define MAX_RAY_DEPTH		10
 
 static t_vec3	get_view_plane(t_camera const *cam, t_vec2u size,
 					t_vec3 *delta_x, t_vec3 *delta_y)

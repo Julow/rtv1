@@ -36,7 +36,17 @@
 		reflection="<float>"
 		refract_index="<float>" // default "1"
 		specular_exp="<float>" // default "128"
-	/>
+	>
+		<or>
+			<!-- object list -->
+		</or>
+		<not>
+			<!-- object list -->
+		</not>
+		<and>
+			<!-- object list -->
+		</and>
+	</>
 
 	<camera
 		pos="<vec3>"

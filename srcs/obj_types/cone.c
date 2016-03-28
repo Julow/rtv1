@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 19:41:16 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/28 10:12:50 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/28 12:50:30 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,12 @@ static bool		cone_intersect(bool *out, float *dist, t_vertex const *ray)
 bool			cone_ray_intersect(t_intersect *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
-	float			dist;
 	bool			out;
 
 	out = false;
-	if (!cone_intersect(&out, &dist, ray))
+	if (!cone_intersect(&out, &intersect->dist, ray))
 		return (false);
-	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, dist));
+	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, intersect->dist));
 	intersect->norm = ft_vec3norm(VEC3_Z(intersect->pos, -intersect->pos.z));
 	if (out)
 		intersect->norm = VEC3_SUB(VEC3_0(), intersect->norm);

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/14 17:13:24 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/28 11:49:34 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft/ft_xml.h"
 # include "ft/libft.h"
 
+# include "obj.h"
 # include "scene.h"
 # include "scene_loader.h"
 
@@ -31,6 +32,7 @@ typedef struct s_parse_obj		t_parse_obj;
 struct			s_parse_obj
 {
 	t_material		material;
+	t_obj_csg		**csg;
 	uint32_t		color;
 	uint32_t		specular_color;
 	t_vec3			pos;

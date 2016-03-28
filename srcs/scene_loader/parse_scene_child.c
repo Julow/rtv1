@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/25 19:06:42 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/28 11:54:35 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,33 @@ bool		parse_scene_camera(t_xml_parser *xml, t_camera *camera)
 	return (BOOL_OF(xml->token == XML_TOKEN_END));
 }
 
+static bool	parse_scene_obj_csg(t_xml_parser *xml, t_parse_obj *p)
+{
+	t_obj_csg_t	type;
+
+	if (ft_subequ(ft_xml_name(xml), SUBC("or")))
+		type = OBJ_CSG_OR;
+	else if (ft_subequ(ft_xml_name(xml), SUBC("not")))
+		type = OBJ_CSG_NOT;
+	else if (ft_subequ(ft_xml_name(xml), SUBC("and")))
+		type = OBJ_CSG_AND;
+	else
+		return (ft_xml_error(xml, SUBC("Invalid markup")));
+	while (ft_xml_next(xml))
+		if (xml->token == XML_TOKEN_START)
+		{
+			*p->csg = NEW(t_obj_csg);
+			(*p->csg)->type = type;
+			(*p->csg)->obj = NEW(t_obj);
+			(*p->csg)->next = NULL;
+			if (!parse_scene_obj(xml, (*p->csg)->obj))
+				return (false);
+		}
+		else
+			return (ft_xml_error(xml, SUBC("Unexpected token")));
+	return (true);
+}
+
 bool		parse_scene_obj(t_xml_parser *xml, t_obj *obj)
 {
 	t_parse_obj					p;
@@ -86,16 +113,20 @@ bool		parse_scene_obj(t_xml_parser *xml, t_obj *obj)
 
 	if (c == NULL)
 		return (ft_xml_error(xml, SUBC("Unknown obj type")));
-	p = (t_parse_obj){DEF_MTL, 0, 0xFFFFFF, VEC3_0(), VEC3_0(), VEC3_0(), VEC3_1(1.f)};
+	obj->csg = NULL;
+	p = (t_parse_obj){DEF_MTL, &obj->csg, 0, 0xFFFFFF, VEC3_0(), VEC3_0(),
+		VEC3_0(), VEC3_1(1.f)};
 	while (ft_xml_next(xml))
-	{
 		if (xml->token == XML_TOKEN_START)
-			return (ft_xml_error(xml, SUBC("Can't have child")));
-		ASSERT(xml->token == XML_TOKEN_PARAM);
-		if (!parse_param(&g_obj_params, &p,
+		{
+			if (!parse_scene_obj_csg(xml, &p))
+				return (false);
+		}
+		else if (!parse_param(&g_obj_params, &p,
 				ft_xml_name(xml), ft_xml_value(xml)))
 			return (ft_xml_error(xml, SUBC("Invalid value")));
-	}
+		else
+			ASSERT(xml->token == XML_TOKEN_PARAM);
 	if (xml->token != XML_TOKEN_END)
 		return (false);
 	obj->type = c;

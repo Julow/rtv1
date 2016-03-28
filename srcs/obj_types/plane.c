@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 12:37:19 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/14 12:50:40 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/28 12:50:45 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ bool			plane_ray_intersect(t_intersect *intersect, t_obj const *obj,
 	tmp = -ray->pos.y / ray->dir.y;
 	if (tmp < 0)
 		return (false);
+	intersect->dist = tmp;
 	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, tmp));
 	if (intersect->pos.x < PLANE_MIN.x || intersect->pos.x > PLANE_MAX.x
 		|| intersect->pos.z < PLANE_MIN.y || intersect->pos.z > PLANE_MAX.y)

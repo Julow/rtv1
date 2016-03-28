@@ -6,25 +6,14 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/18 18:01:12 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/28 19:41:48 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "internal.h"
 #include "kd_tree.h"
 
-/*
-** Return true if 'a' is nearest of 'pos' than 'b'
-**  false otherwise
-*/
-static bool		is_nearest_than(t_vec3 const *pos, t_vec3 a, t_vec3 b)
-{
-	a = VEC3_SUB(*pos, a);
-	b = VEC3_SUB(*pos, b);
-	if (VEC3_DOT(a, a) <= VEC3_DOT(b, b))
-		return (true);
-	return (false);
-}
+#define RAY_ERROR		0.01f
 
 typedef struct s_nearest		t_nearest;
 
@@ -34,21 +23,71 @@ struct			s_nearest
 	t_obj const		*obj;
 };
 
-static bool		obj_intersect(t_nearest *dst, t_obj const *obj,
+static bool		ray_intersect(t_intersect *dst, t_obj const *obj,
 					t_vertex const *ray)
 {
 	t_vertex		tmp;
-	t_intersect		intersect;
 
 	tmp = *ray;
 	ft_mat4apply_vec3(&obj->m_inv, &tmp.pos, 1.f);
 	ft_mat4apply_vec3(&obj->m_inv, &tmp.dir, 0.f);
-	if (obj->type->ray_intersect(&intersect, obj, &tmp))
+	if (!obj->type->ray_intersect(dst, obj, &tmp))
+		return (false);
+	ft_mat4apply_vec3(&obj->m, &dst->pos, 1.f);
+	ft_mat4apply_vec3(&obj->m, &dst->norm, 0.f);
+	return (true);
+}
+
+static bool		csg_intersect(t_intersect *dst, t_obj const *obj,
+					t_vertex const *ray)
+{
+	t_intersect		intrsct[2];
+	bool			b[2];
+
+	if (obj->csg == NULL)
+		return (ray_intersect(dst, obj, ray));
+	b[0] = ray_intersect(&intrsct[0], obj, ray);
+	b[1] = ray_intersect(&intrsct[1], obj->csg->obj, ray);
+	if (obj->csg->type == OBJ_CSG_OR)
 	{
-		ft_mat4apply_vec3(&obj->m, &intersect.pos, 1.f);
-		ft_mat4apply_vec3(&obj->m, &intersect.norm, 0.f);
-		if (dst->obj == NULL
-			|| is_nearest_than(&ray->pos, intersect.pos, dst->intersect.pos))
+		if (b[0])
+			*dst = intrsct[(b[1] && intrsct[0].dist > intrsct[1].dist) ? 1 : 0];
+		else if (b[1])
+			*dst = intrsct[1];
+		else
+			return (false);
+	}
+	else if (obj->csg->type == OBJ_CSG_NOT)
+	{
+		if (!b[0])
+			return (false);
+		t_vertex		tmp;
+
+		while (b[1] && intrsct[1].dist <= intrsct[0].dist)
+		{
+			tmp.pos = VEC3_ADD(intrsct[1].pos, VEC3_MUL1(ray->dir, RAY_ERROR));
+			tmp.dir = ray->dir;
+			b[1] = ray_intersect(&intrsct[1], obj->csg->obj, &tmp);
+		}
+		*dst = b[1] ? intrsct[1] : intrsct[0];
+	}
+	else if (obj->csg->type == OBJ_CSG_AND)
+	{
+		if (!b[0] || !b[1])
+			return (false);
+		*dst = intrsct[(intrsct[0].dist > intrsct[1].dist) ? 0 : 1];
+	}
+	return (true);
+}
+
+static bool		obj_intersect(t_nearest *dst, t_obj const *obj,
+					t_vertex const *ray)
+{
+	t_intersect		intersect;
+
+	if (csg_intersect(&intersect, obj, ray))
+	{
+		if (dst->obj == NULL || intersect.dist < dst->intersect.dist)
 		{
 			dst->obj = obj;
 			dst->intersect = intersect;
@@ -63,7 +102,7 @@ t_obj const		*nearest_intersect(t_intersect *dst, t_scene const *scene,
 {
 	t_nearest		nearest;
 
-	ray.pos = VEC3_ADD(ray.pos, VEC3_MUL1(ray.dir, 0.01f));
+	ray.pos = VEC3_ADD(ray.pos, VEC3_MUL1(ray.dir, RAY_ERROR));
 	nearest.obj = NULL;
 	if (!kdtree_intersect(&scene->objs, (float*)&ray,
 			CALLBACK(obj_intersect, &nearest)))

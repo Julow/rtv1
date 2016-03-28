@@ -22,5 +22,6 @@ print """
 	<light pos="0, 100, 0" />
 
 	<camera pos="0, %f, %f" dir="0, -1, 0.8" />
+	<camera pos="0, %f, %f" dir="0, -1, -0.8" />
 
-</scene>""" % (SIZE, SIZE, SIZE*2, SIZE*2, SIZE*1.5, -SIZE)
+</scene>""" % (SIZE, SIZE, SIZE*2, SIZE*2, SIZE*1.5, -SIZE, SIZE*1.5, SIZE)
