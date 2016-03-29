@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_scene_obj.c                                  :+:      :+:    :+:   */
+/*   parse_obj.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/29 09:05:58 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/29 15:23:45 by jaguillo         ###   ########.fr       */
+/*   Created: 2016/03/29 15:51:28 by jaguillo          #+#    #+#             */
+/*   Updated: 2016/03/29 17:16:06 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-static t_vector const	g_obj_params = VECTOR(t_param_def,
+t_vector const			g_obj_params = VECTOR(t_param_def,
 	PARAM("texture", texture, t_parse_obj, material.texture),
 	PARAM("specular_map", texture, t_parse_obj, material.specular_map),
 	PARAM("color", color, t_parse_obj, color),
@@ -45,54 +45,29 @@ static t_vec3 const		g_bounds_cube[] = {
 };
 
 static t_vector const	g_parse_objs = VECTOR(t_parse_obj_t,
-	{SUBC("sphere"),
-		&sphere_ray_intersect,
-		&parse_scene_obj_child, &parse_scene_obj_param,
-		0,
-		g_bounds_cube, 8
-	},
-	{SUBC("plane"),
-		&plane_ray_intersect,
-		&parse_scene_obj_child, &parse_scene_obj_param,
-		0,
+	{SUBC("sphere"), &parse_obj_default, &sphere_ray_intersect, 0,
+		g_bounds_cube, 8},
+	{SUBC("plane"), &parse_obj_default, &plane_ray_intersect, 0,
 		(t_vec3[]){
 			{-0.5f, 0.f, -0.5f},
 			{-0.5f, 0.f, 0.5f},
 			{0.5f, 0.f, 0.5f},
 			{0.5f, 0.f, -0.5f},
-		}, 4
-	},
-	{SUBC("cylinder"),
-		&cylinder_ray_intersect,
-		&parse_scene_obj_child, &parse_scene_obj_param,
-		0,
-		g_bounds_cube, 8
-	},
-	{SUBC("cone"),
-		&cone_ray_intersect,
-		&parse_scene_obj_child, &parse_scene_obj_param,
-		0,
+		}, 4},
+	{SUBC("cylinder"), &parse_obj_default, &cylinder_ray_intersect, 0,
+		g_bounds_cube, 8},
+	{SUBC("cone"), &parse_obj_default, &cone_ray_intersect, 0,
 		(t_vec3[]){
 			{0.f, 0.f, 0.f},
 			{-1.f, 1.f, -1.f},
 			{1.f, 1.f, -1.f},
 			{1.f, -1.f, -1.f},
 			{-1.f, -1.f, -1.f},
-		}, 5
-	},
+		}, 5},
+	{SUBC("or"), &parse_obj_csg, &or_ray_intersect, S(t_obj*, 2), NULL, 0},
+	{SUBC("not"), &parse_obj_csg, &not_ray_intersect, S(t_obj*, 2), NULL, 0},
+	{SUBC("and"), &parse_obj_csg, &and_ray_intersect, S(t_obj*, 2), NULL, 0},
 );
-
-bool		parse_scene_obj_param(t_xml_parser *xml, t_obj *obj)
-{
-	return (ft_xml_error(xml, SUBC("Unknown param")));
-	(void)obj;
-}
-
-bool		parse_scene_obj_child(t_xml_parser *xml, t_obj *obj)
-{
-	return (ft_xml_error(xml, SUBC("Can't have child")));
-	(void)obj;
-}
 
 static t_parse_obj_t const	*get_obj_t(t_sub obj_type)
 {
@@ -105,25 +80,24 @@ static t_parse_obj_t const	*get_obj_t(t_sub obj_type)
 	return (NULL);
 }
 
-static bool	push_obj(t_parse_obj *p, t_obj *obj,
-				t_parse_obj_t const *obj_t, t_vector *pts)
+static bool	push_obj(t_parse_obj *p, t_parse_obj_t const *obj_t)
 {
-	t_vec3 *const	tmp = ft_vpush(pts, NULL, obj_t->bound_len * 3);
+	t_vec3 *const	tmp = ft_vpush(p->pts, NULL, obj_t->bound_len * 3);
 	uint32_t		i;
 
-	obj->type->ray_intersect = obj_t->ray_intersect;
-	obj->material = p->material;
+	p->obj->type->ray_intersect = obj_t->ray_intersect;
+	p->obj->material = p->material;
 	p->rot = VEC3_MUL1(p->rot, M_PI/2.f);
-	obj->m = ft_mat4transform(p->pos, p->rot, p->shear, p->scale);
-	obj->m_inv = ft_mat4transform_inv(p->pos, p->rot, p->shear, p->scale);
-	if (obj->material.texture == NULL)
-		obj->material.texture = load_texture1(p->color);
-	if (obj->material.specular_map == NULL)
-		obj->material.specular_map = load_texture1(p->specular_color);
+	p->obj->m = ft_mat4transform(p->pos, p->rot, p->shear, p->scale);
+	p->obj->m_inv = ft_mat4transform_inv(p->pos, p->rot, p->shear, p->scale);
+	if (p->obj->material.texture == NULL)
+		p->obj->material.texture = load_texture1(p->color);
+	if (p->obj->material.specular_map == NULL)
+		p->obj->material.specular_map = load_texture1(p->specular_color);
 	ft_memcpy(tmp, obj_t->bounds, S(t_vec3, obj_t->bound_len));
 	i = 0;
 	while (i < obj_t->bound_len)
-		ft_mat4apply_vec3(&obj->m, &tmp[i++], 1.f);
+		ft_mat4apply_vec3(&p->obj->m, &tmp[i++], 1.f);
 	return (true);
 }
 
@@ -135,34 +109,10 @@ bool		parse_obj(t_xml_parser *xml, t_obj **obj, t_vector *pts)
 	if (obj_t == NULL)
 		return (ft_xml_error(xml, SUBC("Unknown object")));
 	*obj = MALLOC(sizeof(t_obj) + obj_t->extra_size);
+	ft_bzero(*obj, sizeof(t_obj) + obj_t->extra_size);
 	p = (t_parse_obj){DEF_MTL, 0, 0xFFFFFF, VEC3_0(), VEC3_0(),
-		VEC3_0(), VEC3_1(1.f)};
-	while (ft_xml_next(xml))
-		if (xml->token == XML_TOKEN_START)
-		{
-			if (!obj_t->parse_child(xml, *obj))
-				return (free(*obj), false);
-		}
-		else if (xml->token == XML_TOKEN_PARAM)
-		{
-			if (!parse_xml_param(xml, &g_obj_params, &p)
-				&& (xml->token == XML_TOKEN_ERROR
-					|| !obj_t->parse_param(xml, *obj)))
-					return (free(*obj), false);
-		}
-		else
-			ASSERT(xml->token == XML_TOKEN_PARAM);
-	if (xml->token != XML_TOKEN_END)
+		VEC3_0(), VEC3_1(1.f), *obj, pts};
+	if (!obj_t->parse_obj(xml, &p))
 		return (free(*obj), false);
-	return (push_obj(&p, *obj, obj_t, pts));
-}
-
-bool		parse_scene_obj(t_xml_parser *xml, t_parse_scene *scene)
-{
-	t_obj		*obj;
-
-	if (!parse_obj(xml, &obj, &scene->kdtree.pts))
-		return (false);
-	kdtree_builder_push(&scene->kdtree, obj);
-	return (true);
+	return (push_obj(&p, obj_t));
 }

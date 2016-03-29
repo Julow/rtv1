@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 13:45:34 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 17:04:34 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,15 @@ struct		s_parse_obj
 	t_vec3			rot;
 	t_vec3			shear;
 	t_vec3			scale;
+	t_obj			*obj;
+	t_vector		*pts;
 };
 
 struct		s_parse_obj_t
 {
 	t_sub			name;
+	bool			(*parse_obj)(t_xml_parser *xml, t_parse_obj *p);
 	t_intersect_f	ray_intersect;
-	bool			(*parse_child)(t_xml_parser *xml, t_obj *obj);
-	bool			(*parse_param)(t_xml_parser *xml, t_obj *obj);
 	uint32_t		extra_size;
 	t_vec3 const	*bounds;
 	uint32_t		bound_len;
@@ -84,8 +85,10 @@ bool		parse_obj(t_xml_parser *xml, t_obj **obj, t_vector *pts);
 
 bool		parse_scene_obj(t_xml_parser *xml, t_parse_scene *scene);
 
-bool		parse_scene_obj_param(t_xml_parser *xml, t_obj *obj);
-bool		parse_scene_obj_child(t_xml_parser *xml, t_obj *obj);
+bool		parse_obj_default(t_xml_parser *xml, t_parse_obj *p);
+bool		parse_obj_csg(t_xml_parser *xml, t_parse_obj *p);
+
+extern t_vector const	g_obj_params;
 
 /*
 ** ========================================================================== **

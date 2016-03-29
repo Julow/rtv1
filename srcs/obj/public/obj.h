@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/29 13:27:20 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 18:55:16 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef bool					(*t_intersect_f)(t_intersect *intersect,
 */
 
 # define INTERSECT_ERROR		0.00001f
+# define RAY_ERROR				0.001f
 
 /*
 ** Material

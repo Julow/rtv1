@@ -83,14 +83,15 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_gamma.o \
 	$(O_DIR)/srcs/math_utils/quaternions.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_close.o $(O_DIR)/srcs/mlx_win/ft_mlx_open.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o $(O_DIR)/srcs/obj_types/cone.o \
-	$(O_DIR)/srcs/obj_types/cylinder.o $(O_DIR)/srcs/obj_types/plane.o \
-	$(O_DIR)/srcs/obj_types/sphere.o \
+	$(O_DIR)/srcs/obj_types/csg.o $(O_DIR)/srcs/obj_types/cylinder.o \
+	$(O_DIR)/srcs/obj_types/plane.o $(O_DIR)/srcs/obj_types/sphere.o \
 	$(O_DIR)/srcs/ray_tracer/nearest_intersect.o \
 	$(O_DIR)/srcs/ray_tracer/ray_trace.o \
 	$(O_DIR)/srcs/scene_loader/load_scenes.o \
+	$(O_DIR)/srcs/scene_loader/parse_obj.o \
+	$(O_DIR)/srcs/scene_loader/parse_obj_types.o \
 	$(O_DIR)/srcs/scene_loader/parse_param.o \
 	$(O_DIR)/srcs/scene_loader/parse_scene_child.o \
-	$(O_DIR)/srcs/scene_loader/parse_scene_obj.o \
 	$(O_DIR)/srcs/scene_renderer/scene_render.o \
 	$(O_DIR)/srcs/texture_loader/load_texture.o
 PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
@@ -550,6 +551,12 @@ $(O_DIR)/srcs/obj_types/cone.o: srcs/obj_types/cone.c \
 	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h
+$(O_DIR)/srcs/obj_types/csg.o: srcs/obj_types/csg.c \
+	libft/ft_base/public/libft.h libft/ft_img/public/img.h \
+	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/obj_types/public/obj_types.h
 $(O_DIR)/srcs/obj_types/cylinder.o: srcs/obj_types/cylinder.c \
 	libft/ft_base/public/libft.h libft/ft_img/public/img.h \
 	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
@@ -566,9 +573,9 @@ $(O_DIR)/srcs/obj_types/sphere.o: srcs/obj_types/sphere.c \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h
 
-$(O_DIR)/srcs/obj_types/cone.o $(O_DIR)/srcs/obj_types/cylinder.o \
-$(O_DIR)/srcs/obj_types/plane.o $(O_DIR)/srcs/obj_types/sphere.o: \
-	INCLUDE_FLAGS += -Isrcs/obj_types
+$(O_DIR)/srcs/obj_types/cone.o $(O_DIR)/srcs/obj_types/csg.o \
+$(O_DIR)/srcs/obj_types/cylinder.o $(O_DIR)/srcs/obj_types/plane.o \
+$(O_DIR)/srcs/obj_types/sphere.o: INCLUDE_FLAGS += -Isrcs/obj_types
 
 # module ray_tracer
 $(O_DIR)/srcs/ray_tracer/nearest_intersect.o: \
@@ -606,6 +613,27 @@ $(O_DIR)/srcs/scene_loader/load_scenes.o: srcs/scene_loader/load_scenes.c \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
 	srcs/scene_loader/public/scene_loader.h
+$(O_DIR)/srcs/scene_loader/parse_obj.o: srcs/scene_loader/parse_obj.c \
+	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
+	libft/ft_img/public/img.h libft/ft_in/public/ft_in.h \
+	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
+	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/obj_types/public/obj_types.h srcs/scene/public/scene.h \
+	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h \
+	srcs/texture_loader/public/texture_loader.h
+$(O_DIR)/srcs/scene_loader/parse_obj_types.o: \
+	srcs/scene_loader/parse_obj_types.c libft/ft_base/public/libft.h \
+	libft/ft_dstr/public/ft_dstr.h libft/ft_img/public/img.h \
+	libft/ft_in/public/ft_in.h libft/ft_math/public/math_mat4.h \
+	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
+	libft/ft_math/public/math_vec4.h libft/ft_vector/public/ft_vector.h \
+	libft/ft_xml/public/ft_xml.h srcs/kd_tree/public/kd_tree.h \
+	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
+	srcs/obj/public/obj.h srcs/scene/public/scene.h \
+	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h
 $(O_DIR)/srcs/scene_loader/parse_param.o: srcs/scene_loader/parse_param.c \
 	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
 	libft/ft_img/public/img.h libft/ft_in/public/ft_in.h \
@@ -630,23 +658,12 @@ $(O_DIR)/srcs/scene_loader/parse_scene_child.o: \
 	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
 	srcs/scene_loader/public/scene_loader.h \
 	srcs/texture_loader/public/texture_loader.h
-$(O_DIR)/srcs/scene_loader/parse_scene_obj.o: \
-	srcs/scene_loader/parse_scene_obj.c libft/ft_base/public/libft.h \
-	libft/ft_dstr/public/ft_dstr.h libft/ft_img/public/img.h \
-	libft/ft_in/public/ft_in.h libft/ft_math/public/math_mat4.h \
-	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
-	libft/ft_math/public/math_vec4.h libft/ft_vector/public/ft_vector.h \
-	libft/ft_xml/public/ft_xml.h srcs/kd_tree/public/kd_tree.h \
-	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
-	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
-	srcs/scene_loader/public/scene_loader.h \
-	srcs/texture_loader/public/texture_loader.h
 
 $(O_DIR)/srcs/scene_loader/load_scenes.o \
+$(O_DIR)/srcs/scene_loader/parse_obj.o \
+$(O_DIR)/srcs/scene_loader/parse_obj_types.o \
 $(O_DIR)/srcs/scene_loader/parse_param.o \
-$(O_DIR)/srcs/scene_loader/parse_scene_child.o \
-$(O_DIR)/srcs/scene_loader/parse_scene_obj.o: INCLUDE_FLAGS += \
+$(O_DIR)/srcs/scene_loader/parse_scene_child.o: INCLUDE_FLAGS += \
 	-Isrcs/scene_loader
 
 # module scene_renderer

@@ -4,13 +4,10 @@
 	<plane pos="-10, 0, 0" rot="0, 0, 1" scale="20" color="#222222" />
 	<plane pos="0, 0, 10" rot="1, 0, 0" scale="20" reflection="0.9" color="#555555" />
 
-	<sphere color="#ff0000">
-		<!-- <not> -->
-			<!-- <sphere pos="0, -0.5, 1" color="#00ff00" /> -->
-			<!-- <sphere pos="0, -1, 0" color="#00ff00" /> -->
-			<!-- <sphere pos="0, 1, 0" color="#00ff00" /> -->
-		<!-- </not> -->
-	</sphere>
+	<not color="#ff0000">
+		<sphere pos="0, 0.5, 0" />
+		<sphere pos="0, -0.5, 0" />
+	</not>
 
 	<light pos="1, 1, -1" />
 	<light pos="-1, 2, -0.5" />

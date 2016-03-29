@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 13:43:47 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 17:03:45 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,14 @@ bool		parse_scene_camera(t_xml_parser *xml, t_parse_scene *scene)
 	}
 	camera->dir = ft_vec3norm(camera->dir);
 	return (BOOL_OF(xml->token == XML_TOKEN_END));
+}
+
+bool		parse_scene_obj(t_xml_parser *xml, t_parse_scene *scene)
+{
+	t_obj		*obj;
+
+	if (!parse_obj(xml, &obj, &scene->kdtree.pts))
+		return (false);
+	kdtree_builder_push(&scene->kdtree, obj);
+	return (true);
 }
