@@ -546,17 +546,25 @@ $(O_DIR)/srcs/mlx_win/ft_mlx_update.o: srcs/mlx_win/ft_mlx_update.c \
 
 # module obj_types
 $(O_DIR)/srcs/obj_types/cone.o: srcs/obj_types/cone.c \
-	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h srcs/math_utils/public/math_utils.h
+	libft/ft_base/public/libft.h libft/ft_img/public/img.h \
+	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h
 $(O_DIR)/srcs/obj_types/cylinder.o: srcs/obj_types/cylinder.c \
-	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h srcs/math_utils/public/math_utils.h
+	libft/ft_base/public/libft.h libft/ft_img/public/img.h \
+	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h
 $(O_DIR)/srcs/obj_types/plane.o: srcs/obj_types/plane.c \
-	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h srcs/math_utils/public/math_utils.h
+	libft/ft_base/public/libft.h libft/ft_img/public/img.h \
+	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h
 $(O_DIR)/srcs/obj_types/sphere.o: srcs/obj_types/sphere.c \
-	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h srcs/math_utils/public/math_utils.h
+	libft/ft_base/public/libft.h libft/ft_img/public/img.h \
+	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h
 
 $(O_DIR)/srcs/obj_types/cone.o $(O_DIR)/srcs/obj_types/cylinder.o \
 $(O_DIR)/srcs/obj_types/plane.o $(O_DIR)/srcs/obj_types/sphere.o: \
@@ -605,9 +613,9 @@ $(O_DIR)/srcs/scene_loader/parse_param.o: srcs/scene_loader/parse_param.c \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
 	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
 	srcs/color_utils/public/color_utils.h srcs/kd_tree/public/kd_tree.h \
-	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
-	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
-	srcs/scene_loader/public/scene_loader.h \
+	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
+	srcs/obj/public/obj.h srcs/scene/public/scene.h \
+	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h \
 	srcs/texture_loader/public/texture_loader.h
 $(O_DIR)/srcs/scene_loader/parse_scene_child.o: \
 	srcs/scene_loader/parse_scene_child.c libft/ft_base/public/libft.h \
@@ -617,9 +625,10 @@ $(O_DIR)/srcs/scene_loader/parse_scene_child.o: \
 	libft/ft_math/public/math_vec4.h libft/ft_out/public/ft_out.h \
 	libft/ft_printf/public/ft_printf.h libft/ft_vector/public/ft_vector.h \
 	libft/ft_xml/public/ft_xml.h srcs/kd_tree/public/kd_tree.h \
-	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
-	srcs/obj_types/public/obj_types.h srcs/scene/public/scene.h \
-	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h \
+	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
+	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
+	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
+	srcs/scene_loader/public/scene_loader.h \
 	srcs/texture_loader/public/texture_loader.h
 $(O_DIR)/srcs/scene_loader/parse_scene_obj.o: \
 	srcs/scene_loader/parse_scene_obj.c libft/ft_base/public/libft.h \
@@ -628,9 +637,11 @@ $(O_DIR)/srcs/scene_loader/parse_scene_obj.o: \
 	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
 	libft/ft_math/public/math_vec4.h libft/ft_vector/public/ft_vector.h \
 	libft/ft_xml/public/ft_xml.h srcs/kd_tree/public/kd_tree.h \
-	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
+	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
 	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
-	srcs/scene_loader/public/scene_loader.h
+	srcs/scene_loader/public/scene_loader.h \
+	srcs/texture_loader/public/texture_loader.h
 
 $(O_DIR)/srcs/scene_loader/load_scenes.o \
 $(O_DIR)/srcs/scene_loader/parse_param.o \

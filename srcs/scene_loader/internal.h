@@ -6,13 +6,14 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 13:33:58 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 13:45:34 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INTERNAL_H
 # define INTERNAL_H
 
+# include "ft/ft_dstr.h"
 # include "ft/ft_xml.h"
 # include "ft/libft.h"
 
@@ -46,8 +47,7 @@ struct		s_parse_scene
 struct		s_scene_child
 {
 	t_sub		name;
-	bool		(*parse)(t_xml_parser *xml, t_parse_scene *scene,
-					void const *data);
+	bool		(*parse)(t_xml_parser *xml, t_parse_scene *scene);
 };
 
 bool		parse_scene_light(t_xml_parser *xml, t_parse_scene *scene);

@@ -5,11 +5,11 @@
 	<plane pos="0, 0, 10" rot="1, 0, 0" scale="20" reflection="0.9" color="#555555" />
 
 	<sphere color="#ff0000">
-		<not>
+		<!-- <not> -->
 			<!-- <sphere pos="0, -0.5, 1" color="#00ff00" /> -->
 			<!-- <sphere pos="0, -1, 0" color="#00ff00" /> -->
-			<sphere pos="0, 1, 0" color="#00ff00" />
-		</not>
+			<!-- <sphere pos="0, 1, 0" color="#00ff00" /> -->
+		<!-- </not> -->
 	</sphere>
 
 	<light pos="1, 1, -1" />

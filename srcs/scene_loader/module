@@ -7,6 +7,7 @@ module scene_loader:
 	public require ft::vector
 	public require kd_tree
 	private require ft::in
+	private require ft::dstr
 	private require ft::printf
 	private require ft::xml
 	private require obj

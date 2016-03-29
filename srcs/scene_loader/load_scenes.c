@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 13:24:57 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 13:46:15 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,6 @@
 
 #include <stddef.h>
 #include <stdlib.h>
-
-static t_vec3 const		g_bounds_cube[] = {
-	{-1.f, 1.f, -1.f},
-	{-1.f, 1.f, 1.f},
-	{1.f, 1.f, 1.f},
-	{1.f, 1.f, -1.f},
-	{-1.f, -1.f, -1.f},
-	{-1.f, -1.f, 1.f},
-	{1.f, -1.f, 1.f},
-	{1.f, -1.f, -1.f},
-};
 
 static t_vector const	g_scene_params = VECTOR(t_param_def,
 	PARAM("name", name, t_scene, name),
@@ -76,7 +65,7 @@ static bool	parse_scene(t_xml_parser *xml, t_scene *dst)
 	while (ft_xml_next(xml))
 	{
 		if (xml->token == XML_TOKEN_PARAM)
-			err = parse_param(xml, &g_scene_params, &scene)
+			err = parse_xml_param(xml, &g_scene_params, &scene)
 				|| ((xml->token == XML_TOKEN_ERROR) ?
 					false : ft_xml_error(xml, SUBC("Invalid param")));
 		else if (xml->token == XML_TOKEN_START)

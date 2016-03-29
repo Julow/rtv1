@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/28 11:18:50 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 15:24:40 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ int				main(int argc, char **argv)
 	int				i;
 	t_main			main;
 
-	// ft_logf_set_enabled(LOG_DEBUG, true);
-	// ft_logf_set_enabled(LOG_VERBOSE, true);
+	ft_logf_set_enabled(LOG_DEBUG, true);
+	ft_logf_set_enabled(LOG_VERBOSE, true);
 	main = (t_main){
 		NULL,
 		{},
