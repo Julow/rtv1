@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 09:06:15 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 13:25:42 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_vector const	g_camera_params = VECTOR(t_param_def,
 	PARAM("dir", vec3, t_camera, dir),
 );
 
-bool		parse_scene_light(t_xml_parser *xml, t_light *light)
+bool		parse_scene_light(t_xml_parser *xml, t_parse_scene *scene)
 {
 	*light = DEF_LIGHT;
 	while (ft_xml_next(xml))
@@ -46,9 +46,10 @@ bool		parse_scene_light(t_xml_parser *xml, t_light *light)
 			return (ft_xml_error(xml, SUBC("Invalid value")));
 	}
 	return (BOOL_OF(xml->token == XML_TOKEN_END));
+	(void)data;
 }
 
-bool		parse_scene_camera(t_xml_parser *xml, t_camera *camera)
+bool		parse_scene_camera(t_xml_parser *xml, t_parse_scene *scene)
 {
 	*camera = DEF_CAMERA;
 	while (ft_xml_next(xml))
@@ -62,4 +63,5 @@ bool		parse_scene_camera(t_xml_parser *xml, t_camera *camera)
 	}
 	camera->dir = ft_vec3norm(camera->dir);
 	return (BOOL_OF(xml->token == XML_TOKEN_END));
+	(void)data;
 }

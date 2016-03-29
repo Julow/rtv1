@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 08:28:55 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/22 09:04:44 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 13:15:22 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void			kdtree_builder_push(t_kdtree_builder *b, void const *data)
 {
-	t_vec2u const	pt = VEC2U1(b->pts.length);
+	t_vec2u const	pt = VEC2U((b->datas.length > 0) ?
+			VGET(t_vec2u, b->pts_indexes, b->datas.length - 1).y : 0,
+		b->pts_indexes.length);
 
 	ft_vpush(&b->datas, &data, 1);
 	ft_vpush(&b->pts_indexes, &pt, 1);

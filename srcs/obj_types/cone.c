@@ -6,15 +6,15 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 19:41:16 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/28 12:50:30 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 13:21:33 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/math_vec2.h"
 #include "ft/math_vec3.h"
 
-#include "internal.h"
 #include "math_utils.h"
+#include "obj.h"
 
 #include <math.h>
 

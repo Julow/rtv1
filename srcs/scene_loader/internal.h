@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 09:17:44 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 13:33:58 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,42 @@
 # include "ft/ft_xml.h"
 # include "ft/libft.h"
 
+# include "kd_tree_builder.h"
 # include "obj.h"
 # include "scene.h"
 # include "scene_loader.h"
 
+typedef struct s_parse_scene	t_parse_scene;
+typedef struct s_scene_child	t_scene_child;
+
 typedef struct s_parse_obj		t_parse_obj;
 typedef struct s_parse_obj_t	t_parse_obj_t;
 
-typedef struct s_param_def	t_param_def;
+typedef struct s_param_def		t_param_def;
 
 /*
 ** ========================================================================== **
 ** Parse
 */
 
-bool		parse_scene_light(t_xml_parser *xml, t_light *light);
-bool		parse_scene_camera(t_xml_parser *xml, t_camera *camera);
+struct		s_parse_scene
+{
+	t_dstr				name;
+	t_kdtree_builder	kdtree;
+	t_vector			lights;
+	t_vector			cameras;
+	t_vec3				sky_color;
+};
+
+struct		s_scene_child
+{
+	t_sub		name;
+	bool		(*parse)(t_xml_parser *xml, t_parse_scene *scene,
+					void const *data);
+};
+
+bool		parse_scene_light(t_xml_parser *xml, t_parse_scene *scene);
+bool		parse_scene_camera(t_xml_parser *xml, t_parse_scene *scene);
 
 /*
 ** ========================================================================== **
@@ -51,13 +71,21 @@ struct		s_parse_obj
 
 struct		s_parse_obj_t
 {
+	t_sub			name;
+	t_intersect_f	ray_intersect;
 	bool			(*parse_child)(t_xml_parser *xml, t_obj *obj);
 	bool			(*parse_param)(t_xml_parser *xml, t_obj *obj);
-	uint32_t		obj_sizeof;
+	uint32_t		extra_size;
+	t_vec3 const	*bounds;
+	uint32_t		bound_len;
 };
 
-bool		parse_scene_obj(t_xml_parser *xml, t_obj *obj,
-				t_parse_obj_t const *obj_t);
+bool		parse_obj(t_xml_parser *xml, t_obj **obj, t_vector *pts);
+
+bool		parse_scene_obj(t_xml_parser *xml, t_parse_scene *scene);
+
+bool		parse_scene_obj_param(t_xml_parser *xml, t_obj *obj);
+bool		parse_scene_obj_child(t_xml_parser *xml, t_obj *obj);
 
 /*
 ** ========================================================================== **

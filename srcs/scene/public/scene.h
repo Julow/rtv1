@@ -6,14 +6,13 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/27 13:07:45 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/29 09:55:10 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
 
-# include "ft/ft_dstr.h"
 # include "ft/ft_vector.h"
 # include "ft/math_vec3.h"
 
@@ -47,7 +46,7 @@ struct			s_camera
 
 struct			s_scene
 {
-	t_dstr			name;
+	t_sub			name;
 	t_kdtree		objs;
 	t_vector		lights;
 	t_vector		cameras;
