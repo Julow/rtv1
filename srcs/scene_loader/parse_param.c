@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 23:13:37 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/27 20:09:26 by juloo            ###   ########.fr       */
+/*   Updated: 2016/03/29 09:20:52 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ bool		parse_float(t_sub value, float *dst)
 	return (true);
 }
 
-bool		parse_param(t_vector const *defs, void *data,
-					t_sub param, t_sub value)
+bool		parse_xml_param(t_xml_parser *xml, t_vector const *def, void *data)
 {
+	t_sub const			param = ft_xml_name(xml);
 	uint32_t			i;
 	t_param_def const	*def;
 
@@ -93,7 +93,8 @@ bool		parse_param(t_vector const *defs, void *data,
 	{
 		def = VECTOR_GET(*defs, i++);
 		if (SUB_EQU(def->name, param))
-			return (def->parse(value, data + def->offset));
+			return (def->parse(ft_xml_value(xml), data + def->offset)
+				|| ft_xml_error(xml, SUBC("Invalid value")));
 	}
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/28 14:12:08 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 08:51:54 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ static void	push_obj_pts(t_kdtree_builder *b, t_obj const *obj)
 
 static bool	_parse_scene_obj(t_xml_parser *xml, t_kdtree_builder *b)
 {
-	t_obj *const	obj = NEW(t_obj);
+	t_obj		*obj;
 
-	if (!parse_scene_obj(xml, obj))
-		return (free(obj), false);
+	if (!parse_scene_obj(xml, &obj))
+		return (false);
 	kdtree_builder_push(b, obj);
 	push_obj_pts(b, obj);
 	return (true);

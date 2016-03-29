@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/28 13:30:34 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 09:06:04 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@
 # include "math_utils.h"
 
 typedef struct s_obj			t_obj;
-typedef struct s_obj_class		t_obj_class;
 typedef struct s_material		t_material;
-typedef struct s_obj_csg		t_obj_csg;
 typedef struct s_intersect		t_intersect;
-typedef enum e_obj_csg_t		t_obj_csg_t;
 
 /*
 ** ========================================================================== **
@@ -34,20 +31,6 @@ typedef enum e_obj_csg_t		t_obj_csg_t;
 */
 
 # define INTERSECT_ERROR		0.00001f
-
-/*
-** Represent an object type
-** 'ray_intersect' have to find the intersection between 'ray' and 'obj'
-**   or to return false if there is no intersection
-*/
-struct			s_obj_class
-{
-	t_sub			name;
-	bool			(*ray_intersect)(t_intersect *intersect, t_obj const *obj,
-						t_vertex const *ray);
-	t_vec3 const	*bounds;
-	uint32_t		bounds_len;
-};
 
 /*
 ** Material
@@ -65,32 +48,15 @@ struct			s_material
 # define MATERIAL(R,G,B,...)	((t_material){.color=VEC3(R,G,B),##__VA_ARGS__})
 
 /*
-** Csg
-*/
-enum			e_obj_csg_t
-{
-	OBJ_CSG_OR,
-	OBJ_CSG_NOT,
-	OBJ_CSG_AND,
-};
-
-struct			s_obj_csg
-{
-	t_obj_csg_t		type;
-	t_obj			*obj;
-	t_obj_csg		*next; // TODO: remove?
-};
-
-/*
 ** Object
 */
 struct			s_obj
 {
-	t_obj_class const	*type;
-	t_material			material;
-	t_obj_csg			*csg;
-	t_mat4				m;
-	t_mat4				m_inv;
+	bool			(*ray_intersect)(t_intersect *intersect, t_obj const *obj,
+						t_vertex const *ray);
+	t_material		material;
+	t_mat4			m;
+	t_mat4			m_inv;
 };
 
 /*

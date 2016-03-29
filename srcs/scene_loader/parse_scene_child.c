@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/28 11:54:35 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/03/29 09:06:15 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,6 @@ static t_vector const	g_light_params = VECTOR(t_param_def,
 static t_vector const	g_camera_params = VECTOR(t_param_def,
 	PARAM("pos", vec3, t_camera, pos),
 	PARAM("dir", vec3, t_camera, dir),
-);
-
-static t_vector const	g_obj_params = VECTOR(t_param_def,
-	PARAM("texture", texture, t_parse_obj, material.texture),
-	PARAM("specular_map", texture, t_parse_obj, material.specular_map),
-	PARAM("color", color, t_parse_obj, color),
-	PARAM("specular_color", color, t_parse_obj, specular_color),
-	PARAM("ambient", float, t_parse_obj, material.ambient),
-	PARAM("reflection", float, t_parse_obj, material.reflection),
-	PARAM("refract_index", float, t_parse_obj, material.refract_index),
-	PARAM("specular_exp", float, t_parse_obj, material.specular_exp),
-	PARAM("pos", vec3, t_parse_obj, pos),
-	PARAM("rot", vec3, t_parse_obj, rot),
-	PARAM("shear", vec3, t_parse_obj, shear),
-	PARAM("scale", vec3, t_parse_obj, scale),
 );
 
 bool		parse_scene_light(t_xml_parser *xml, t_light *light)
@@ -77,66 +62,4 @@ bool		parse_scene_camera(t_xml_parser *xml, t_camera *camera)
 	}
 	camera->dir = ft_vec3norm(camera->dir);
 	return (BOOL_OF(xml->token == XML_TOKEN_END));
-}
-
-static bool	parse_scene_obj_csg(t_xml_parser *xml, t_parse_obj *p)
-{
-	t_obj_csg_t	type;
-
-	if (ft_subequ(ft_xml_name(xml), SUBC("or")))
-		type = OBJ_CSG_OR;
-	else if (ft_subequ(ft_xml_name(xml), SUBC("not")))
-		type = OBJ_CSG_NOT;
-	else if (ft_subequ(ft_xml_name(xml), SUBC("and")))
-		type = OBJ_CSG_AND;
-	else
-		return (ft_xml_error(xml, SUBC("Invalid markup")));
-	while (ft_xml_next(xml))
-		if (xml->token == XML_TOKEN_START)
-		{
-			*p->csg = NEW(t_obj_csg);
-			(*p->csg)->type = type;
-			(*p->csg)->obj = NEW(t_obj);
-			(*p->csg)->next = NULL;
-			if (!parse_scene_obj(xml, (*p->csg)->obj))
-				return (false);
-		}
-		else
-			return (ft_xml_error(xml, SUBC("Unexpected token")));
-	return (true);
-}
-
-bool		parse_scene_obj(t_xml_parser *xml, t_obj *obj)
-{
-	t_parse_obj					p;
-	t_obj_class const *const	c = get_obj_class(ft_xml_name(xml));
-
-	if (c == NULL)
-		return (ft_xml_error(xml, SUBC("Unknown obj type")));
-	obj->csg = NULL;
-	p = (t_parse_obj){DEF_MTL, &obj->csg, 0, 0xFFFFFF, VEC3_0(), VEC3_0(),
-		VEC3_0(), VEC3_1(1.f)};
-	while (ft_xml_next(xml))
-		if (xml->token == XML_TOKEN_START)
-		{
-			if (!parse_scene_obj_csg(xml, &p))
-				return (false);
-		}
-		else if (!parse_param(&g_obj_params, &p,
-				ft_xml_name(xml), ft_xml_value(xml)))
-			return (ft_xml_error(xml, SUBC("Invalid value")));
-		else
-			ASSERT(xml->token == XML_TOKEN_PARAM);
-	if (xml->token != XML_TOKEN_END)
-		return (false);
-	obj->type = c;
-	obj->material = p.material;
-	p.rot = VEC3_MUL1(p.rot, M_PI/2.f);
-	obj->m = ft_mat4transform(p.pos, p.rot, p.shear, p.scale);
-	obj->m_inv = ft_mat4transform_inv(p.pos, p.rot, p.shear, p.scale);
-	if (obj->material.texture == NULL)
-		obj->material.texture = load_texture1(p.color);
-	if (obj->material.specular_map == NULL)
-		obj->material.specular_map = load_texture1(p.specular_color);
-	return (true);
 }
