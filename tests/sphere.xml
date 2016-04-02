@@ -1,16 +1,17 @@
 <scene>
 
-	<plane pos="0, 0, 5" rot="1, 0, 0" scale="200" color="#3355FF" />
-
-	<sphere color="#00000000" />
-	<!-- <sphere reflection="0" refract_index="1.33" /> -->
-	<!-- <sphere color="#FFFFFF" reflection="0" refract_index="5" /> -->
+	<sphere texture="tests/earth.tga" specular_map="tests/earth.tga" />
 
 	<light pos="10, 0, -5" brightness="1" />
 
-	<camera pos="0, 0, -2" dir="0, 0, 1" />
-	<camera pos="2, 0, 0" dir="-1, 0, 0" />
-	<camera pos="0, 0, 2" dir="0, 0, -1" />
-	<camera pos="-2, 0, 0" dir="1, 0, 0" />
+	<camera pos="0, 1, -2" dir="0, -0.5, 1" />
+	<camera pos="2, 1, 0" dir="-1, -0.5, 0" />
+	<camera pos="0, 1, 2" dir="0, -0.5, -1" />
+	<camera pos="-2, 1, 0" dir="1, -0.5, 0" />
+
+	<camera pos="0, -1, -2" dir="0, 0.5, 1" />
+	<camera pos="2, -1, 0" dir="-1, 0.5, 0" />
+	<camera pos="0, -1, 2" dir="0, 0.5, -1" />
+	<camera pos="-2, -1, 0" dir="1, 0.5, 0" />
 
 </scene>

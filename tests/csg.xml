@@ -1,10 +1,13 @@
 <scene>
 
-	<plane pos="0, -10, 0" scale="20" color="#222222" />
-	<plane pos="-10, 0, 0" rot="0, 0, 1" scale="20" color="#222222" />
-	<plane pos="0, 0, 10" rot="1, 0, 0" scale="20" reflection="0.9" color="#555555" />
+	<plane pos="0, -10, 0" scale="50" color="#dddddd" />
+	<plane pos="0, 40, 0" scale="50" color="#dddddd" />
+	<plane pos="-25, 15, 0" rot="0, 0, 1" scale="50" color="#dddddd" />
+	<plane pos="25, 15, 0" rot="0, 0, 1" scale="50" color="#dddddd" />
+	<plane pos="0, 15, 25" rot="1, 0, 0" scale="50" color="#dddddd" />
+	<plane pos="0, 15, -25" rot="1, 0, 0" scale="50" color="#dddddd" />
 
-	<not color="#ff0000">
+	<not rot="1, 0, 0" color="#ff0000">
 		<sphere pos="0, 0.5, 0" />
 		<sphere pos="0, -0.5, 0" />
 	</not>
@@ -16,5 +19,6 @@
 	<camera pos="0, 0, -2" />
 	<camera pos="0, 0, 2" dir="0, 0, -1" />
 	<camera pos="0, 2, -2" dir="0, -0.7, 1" />
+	<camera pos="2, 1, -1" dir="-2, -1, 1" />
 
 </scene>

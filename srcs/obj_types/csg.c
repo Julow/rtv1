@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 16:52:51 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/29 20:03:51 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/04/02 17:45:28 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ bool			not_ray_intersect(t_intersect *dst, t_obj const *obj,
 	tmp.dir = ray->dir;
 	if (!(b[0] = ray_intersect(&intrsct[0], objs[0], &tmp)))
 		return (false);
-	b[1] = ray_intersect(&intrsct[1], objs[1], &tmp);
+	if ((b[1] = ray_intersect(&intrsct[1], objs[1], &tmp))
+		&& intrsct[1].dist >= intrsct[0].dist)
+		return (false);
 	*dst = intrsct[(b[1] && intrsct[1].dist < intrsct[0].dist) ? 1 : 0];
 	return (true);
 }

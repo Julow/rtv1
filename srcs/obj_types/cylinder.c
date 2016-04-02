@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 12:23:40 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 13:21:32 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/04/02 19:31:43 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ bool			cylinder_ray_intersect(t_intersect *intersect, t_obj const *obj,
 	intersect->norm = VEC3_Z(intersect->pos, 0.f);
 	if (out)
 		intersect->norm = VEC3_SUB(VEC3_0(), intersect->norm);
-	intersect->tex = VEC2((intersect->pos.z - CYLINDER_MIN) / (CYLINDER_MAX - CYLINDER_MIN),
-		intersect->norm.y / 2.f + 0.5f);
+	intersect->tex = VEC2(
+		atan2(intersect->norm.x, intersect->norm.y) / (2.f * M_PI) + 0.5f,
+		(intersect->pos.z - CYLINDER_MIN) / (CYLINDER_MAX - CYLINDER_MIN));
 	return (true);
 	(void)obj;
 }

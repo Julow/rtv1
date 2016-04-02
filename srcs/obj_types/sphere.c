@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:38:51 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/29 13:21:28 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/04/02 19:28:41 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ bool			sphere_ray_intersect(t_intersect *intersect, t_obj const *obj,
 		return (false);
 	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, intersect->dist));
 	intersect->norm = out ? VEC3_SUB(VEC3_0(), intersect->pos) : intersect->pos;
-	intersect->tex = VEC2(intersect->norm.x / 2.f + 0.5f,
-		intersect->norm.y / 2.f + 0.5f);
+	intersect->tex = VEC2(
+		atan2(intersect->norm.z, intersect->norm.x) / (2.f * M_PI) + 0.5f,
+		asin(intersect->norm.y) / M_PI + 0.5f);
 	return (true);
 	(void)obj;
 }
