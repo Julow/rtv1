@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/27 23:12:49 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/05 09:20:54 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@
 #include "internal.h"
 
 #include <math.h>
-
-static float	nearest_dist2(t_scene const *scene, t_vertex const *ray)
-{
-	t_intersect		intersect;
-
-	if (nearest_intersect(&intersect, scene, *ray) == NULL)
-		return (HUGE_VAL);
-	return (ft_vec3dist2(ray->pos, intersect.pos));
-}
 
 t_vec4			texture_nearest(t_img const *texture, t_vec2 uv)
 {
@@ -55,6 +46,26 @@ t_vec4			texture_bilinear(t_img const *texture, t_vec2 uv)
 			VEC4_MUL1(TEXTURE_F(texture, p, 1, 1), uv.x)), uv.y)));
 }
 
+static t_vec4	light_color(t_scene const *scene, t_light const *light,
+					t_vertex ray)
+{
+	t_obj const		*obj;
+	t_vec4			color;
+	t_intersect		intersect;
+	t_vec4			obj_color;
+
+	color = VEC4_3(light->color, 1.f);
+	while ((obj = nearest_intersect(&intersect, scene, ray)) != NULL)
+	{
+		if (ft_vec3dist2(ray.pos, intersect.pos) >= ft_vec3dist2(ray.pos, light->pos))
+			break ;
+		obj_color = texture_nearest(obj->material.texture, intersect.tex);
+		colorf_blend(&color, &obj_color);
+		ray.pos = intersect.pos;
+	}
+	return (VEC4_3(color, light->brightness));
+}
+
 t_vec4			ray_to_light(t_scene const *scene, t_material const *mat,
 					t_vertex const *ray, t_intersect const *intersect)
 {
@@ -76,14 +87,14 @@ t_vec4			ray_to_light(t_scene const *scene, t_material const *mat,
 		light_dir = VEC3_SUB(light->pos, intersect->pos);
 		tmp = ft_vec3length(light_dir);
 		light_dir = VEC3_DIV1(light_dir, tmp);
-		if ((tmp * tmp) > nearest_dist2(scene, &VERTEX(intersect->pos, light_dir))
-			|| (tmp2 = 1.f - tmp / light->att_dist) <= 0.f
+		tmp_color = light_color(scene, light, VERTEX(intersect->pos, light_dir));
+		if ((tmp2 = 1.f - tmp / light->att_dist) <= 0.f
 			|| (tmp = VEC3_DOT(intersect->norm, light_dir)) < 0.f)
 			continue ;
-		tmp = light->brightness * tmp * powf(tmp2, light->att_exp);
+		tmp = tmp_color.w * tmp * powf(tmp2, light->att_exp);
 		tmp2 = ft_vec3dot(intersect->norm, ft_vec3norm(VEC3_SUB(light_dir, ray->dir)));
 		specular_sum += (tmp2 <= 0.f) ? 0.f : powf(tmp2, mat->specular_exp) * tmp;
-		light_sum = VEC3_ADD(light_sum, VEC3_MUL1(light->color, tmp));
+		light_sum = VEC3_ADD(light_sum, VEC3_MUL1(tmp_color, tmp));
 	}
 	tmp_color = (mat->specular_map != NULL) ?
 		texture_bilinear(mat->specular_map, intersect->tex) : VEC4_1(1.f);

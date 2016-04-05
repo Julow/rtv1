@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/29 15:24:40 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/04/05 09:11:46 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@
 ** Main
 ** -
 ** TODO: bump mapping
-** TODO: check invalid values (xml)
+** TODO: check invalid/redefined values (xml)
 ** TODO: spot light
-** TODO: check redefined values (xml)
+** TODO: directional light
 ** TODO: post-process/texture filter
-** TODO: mipmap
 ** TODO: gradient texture
+** TODO: min alpha
 */
 
 typedef struct s_main		t_main;

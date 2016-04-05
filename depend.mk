@@ -10,7 +10,8 @@ OBJ_DIR_TREE += $(O_DIR)/srcs/texture_loader/ $(O_DIR)/srcs/scene_renderer/ \
 	$(O_DIR)/libft/ft_img_loader/ $(O_DIR)/libft/ft_img/ \
 	$(O_DIR)/libft/ft_hmap/ $(O_DIR)/libft/ft_dstr/ $(O_DIR)/libft/ft_base/ \
 	$(O_DIR)/libft/ $(O_DIR)/_public/ft/ $(O_DIR)/_public/ $(O_DIR)/
-O_FILES += $(O_DIR)/srcs/color_utils/color_gamma.o \
+O_FILES += $(O_DIR)/srcs/color_utils/color_blend.o \
+	$(O_DIR)/srcs/color_utils/color_gamma.o \
 	$(O_DIR)/srcs/color_utils/color_hex.o \
 	$(O_DIR)/srcs/color_utils/color_utils.o $(O_DIR)/libft/ft_base/ft_abs.o \
 	$(O_DIR)/libft/ft_base/ft_assert.o $(O_DIR)/libft/ft_base/ft_atoib.o \
@@ -113,6 +114,10 @@ PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
 	$(O_DIR)/_public/texture_loader.h
 
 # module color_utils
+$(O_DIR)/srcs/color_utils/color_blend.o: srcs/color_utils/color_blend.c \
+	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	srcs/color_utils/public/color_utils.h
 $(O_DIR)/srcs/color_utils/color_gamma.o: srcs/color_utils/color_gamma.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \

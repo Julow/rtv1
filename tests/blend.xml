@@ -1,0 +1,16 @@
+<scene>
+
+	<plane pos="-20, -10, 0" scale="50" color="#ffffff" />
+
+	<!-- <plane pos="0, 0, 0" rot="0, 0, 1" scale="20" color="#55d0c030" /> -->
+	<!-- <plane pos="5, 5, 0" rot="0, 0, 1" scale="20" color="#55C76AE6" /> -->
+
+	<plane pos="-10, 5, 0" rot="0, 0, 1" scale="20" color="#55FF0000" />
+	<plane pos="0, 5, 0" rot="0, 0, 1" scale="20" color="#5500FF00" />
+	<plane pos="10, 5, 0" rot="0, 0, 1" scale="20" color="#550000FF" />
+
+	<light pos="30, 10, 0" />
+
+	<camera pos="20, 20, -35" dir="-0.5, -0.5, 1" />
+
+</scene>
