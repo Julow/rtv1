@@ -34,7 +34,7 @@
 		specular_color="<color>" // default "#FFFFFF", only used if 'specular_map' is unset
 		ambient="<float>" // default "0.01"
 		reflection="<float>"
-		refract_index="<float>" // default "1"
+		refract_index="<float>" // default "1", no refraction deviation if negative
 		specular_exp="<float>" // default "128"
 	>
 		<or>
