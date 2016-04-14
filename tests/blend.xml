@@ -6,9 +6,11 @@
 	<plane pos="-5, 5, 0" rot="0, 0, 1" scale="20" color="#7700FFFF" refract_index="-1" />
 	<plane pos="0, 5, 0" rot="0, 0, 1" scale="20" color="#77FFFF00" refract_index="-1" />
 	<plane pos="5, 5, 0" rot="0, 0, 1" scale="20" color="#77C76AE6" refract_index="-1" />
-	<plane pos="10, 5, 0" rot="0, 0, 1" scale="20" color="#770000FF" refract_index="-1" />
+	<plane pos="8, 5, 0" rot="0, 0, 1" scale="20" color="#770000FF" refract_index="-1" />
 
-	<light pos="30, 10, 0" />
+	<plane pos="10, 5, 0" rot="0, 0, 1" scale="20" texture="tests/wire_fence.tga" refract_index="-1" />
+
+	<light pos="30, 30, 0" />
 
 	<camera pos="20, 20, -35" dir="-0.5, -0.5, 1" />
 

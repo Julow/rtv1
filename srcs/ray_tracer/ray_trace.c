@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/04/05 18:59:54 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/04/14 22:48:14 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,43 +46,29 @@ t_vec4			texture_bilinear(t_img const *texture, t_vec2 uv)
 			VEC4_MUL1(TEXTURE_F(texture, p, 1, 1), uv.x)), uv.y)));
 }
 
-// static t_vec4	light_color(t_scene const *scene, t_light const *light,
-// 					t_vec3 const *intersect_pos, t_vec3 const *light_dir)
-// {
-// 	t_vertex		ray;
-// 	t_obj const		*obj;
-// 	t_vec4			color;
-// 	t_intersect		intersect;
-// 	t_vec4			obj_color;
-
-// 	ray = VERTEX(light->pos, VEC3_SUB(VEC3_0(), *light_dir));
-// 	color = VEC4_3(light->color, 1.f);
-// 	while ((obj = nearest_intersect(&intersect, scene, ray)) != NULL)
-// 	{
-// 		if (ft_vec3dist2(*intersect_pos, intersect.pos) <= RAY_ERROR)
-// 			break ;
-// 		obj_color = texture_nearest(obj->material.texture, intersect.tex);
-// 		colorf_blend(&color, &obj_color);
-// 		ray.pos = intersect.pos;
-// 	}
-// 	return (VEC4_3(color, light->brightness));
-// }
-
+/*
+** light_rgb = MIX(obj_rgb * (1 - obj_a) * light_rgb * obj_a, light_rgb, obj_a)
+*/
 static t_vec4	light_color(t_scene const *scene, t_light const *light,
-					t_vertex ray)
+					t_vec3 const *intersect_pos, t_vec3 const *light_dir)
 {
+	t_vertex		ray;
 	t_obj const		*obj;
-	t_vec4			color;
+	t_vec3			color;
 	t_intersect		intersect;
 	t_vec4			obj_color;
 
-	color = VEC4_3(light->color, 1.f);
+	ray = VERTEX(light->pos, VEC3_SUB(VEC3_0(), *light_dir));
+	color = light->color;
 	while ((obj = nearest_intersect(&intersect, scene, ray)) != NULL)
 	{
-		if (ft_vec3dist2(light->pos, intersect.pos) <= RAY_ERROR)
+		if (ft_vec3dist2(*intersect_pos, intersect.pos) <= RAY_ERROR)
 			break ;
-		obj_color = texture_nearest(obj->material.texture, intersect.tex);
-		colorf_blend(&color, &obj_color);
+		obj_color = texture_bilinear(obj->material.texture, intersect.tex);
+		color = VEC3_MUL(color, VEC3_SUB1(
+				VEC3_MUL1(obj_color, obj_color.w * (1 - obj_color.w)),
+				obj_color.w - 1
+			));
 		ray.pos = intersect.pos;
 	}
 	return (VEC4_3(color, light->brightness));
@@ -109,9 +95,7 @@ t_vec4			ray_to_light(t_scene const *scene, t_material const *mat,
 		light_dir = VEC3_SUB(light->pos, intersect->pos);
 		tmp = ft_vec3length(light_dir);
 		light_dir = VEC3_DIV1(light_dir, tmp);
-		// tmp_color = light_color(scene, light, &intersect->pos, &light_dir);
-		tmp_color = light_color(scene, light, VERTEX(intersect->pos, light_dir));
-
+		tmp_color = light_color(scene, light, &intersect->pos, &light_dir);
 		if ((tmp2 = 1.f - tmp / light->att_dist) <= 0.f
 			|| (tmp = VEC3_DOT(intersect->norm, light_dir)) < 0.f)
 			continue ;
