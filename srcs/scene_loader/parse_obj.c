@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 15:51:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/29 17:16:06 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/04/17 14:46:52 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 t_vector const			g_obj_params = VECTOR(t_param_def,
 	PARAM("texture", texture, t_parse_obj, material.texture),
 	PARAM("specular_map", texture, t_parse_obj, material.specular_map),
+	PARAM("normal_map", texture, t_parse_obj, material.normal_map),
 	PARAM("color", color, t_parse_obj, color),
 	PARAM("specular_color", color, t_parse_obj, specular_color),
 	PARAM("ambient", float, t_parse_obj, material.ambient),

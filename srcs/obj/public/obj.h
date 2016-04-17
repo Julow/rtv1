@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/29 18:55:16 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/04/17 14:57:01 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ struct			s_material
 {
 	t_img const		*texture;
 	t_img const		*specular_map;
+	t_img const		*normal_map;
 	float			ambient;
 	float			reflection;
 	float			refract_index;
 	float			specular_exp;
 };
 
-# define MATERIAL(R,G,B,...)	((t_material){.color=VEC3(R,G,B),##__VA_ARGS__})
+# define DEF_MTL		((t_material){NULL, NULL, NULL, 0.01f, 0.f, 1.f, 128.f})
 
 /*
 ** Object

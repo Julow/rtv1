@@ -6,14 +6,16 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/04/14 22:48:14 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/17 23:17:21 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/math_vec3.h"
 #include "ft/math_vec4.h"
 
 #include "color_utils.h"
 #include "internal.h"
+#include "math_mat3.h"
 
 #include <math.h>
 
@@ -165,6 +167,31 @@ static void		trace_refraction(t_scene const *scene, t_vertex const *ray,
 	color->w = 1.f;
 }
 
+// TODO: disable gamma correction for normal maps
+void			apply_normal_map(t_obj const *obj, t_intersect *intersect)
+{
+	t_vec3			tangent;
+	t_vec3			bitangent;
+	t_vec4			map_normal;
+	t_mat3			tbn;
+	t_vec3			up;
+
+	up = VEC3_UP();
+	ft_mat4apply_vec3(&obj->m_inv, &up, 0.f); // TODO: check if necessary
+
+	tangent = ft_vec3norm(ft_vec3cross(intersect->norm, up));
+	bitangent = ft_vec3norm(ft_vec3cross(tangent, intersect->norm));
+	float const		tmp = VEC3_DOT(intersect->norm, tangent);
+	tangent = VEC3_SUB(tangent, VEC3_MUL1(intersect->norm, tmp)); // TODO;
+
+	tbn = MAT3(tangent, bitangent, intersect->norm);
+	ft_mat3transpose(&tbn);
+
+	map_normal = texture_bilinear(obj->material.normal_map, intersect->tex);
+	intersect->norm = VEC3_SUB1(VEC3_MUL1(map_normal, 2.f), 1.f);
+	ft_mat3apply(&tbn, &intersect->norm);
+}
+
 t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
 					uint32_t max_depth)
 {
@@ -175,6 +202,8 @@ t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
 	if ((obj = nearest_intersect(&intersect, scene, *ray)) == NULL)
 		return (scene->sky_color);
 	intersect.norm = ft_vec3norm(intersect.norm);
+	if (obj->material.normal_map != NULL)
+		apply_normal_map(obj, &intersect);
 	color = ray_to_light(scene, &obj->material, ray, &intersect);
 	if (max_depth-- > 0)
 	{

@@ -81,6 +81,9 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_blend.o \
 	$(O_DIR)/libft/ft_xml/xml_utils.o $(O_DIR)/srcs/kd_tree/kdtree_build.o \
 	$(O_DIR)/srcs/kd_tree/kdtree_builder.o \
 	$(O_DIR)/srcs/kd_tree/kdtree_intersect.o $(O_DIR)/srcs/main/main.o \
+	$(O_DIR)/srcs/math_utils/ft_mat3apply.o \
+	$(O_DIR)/srcs/math_utils/ft_mat3mul.o \
+	$(O_DIR)/srcs/math_utils/ft_mat3transpose.o \
 	$(O_DIR)/srcs/math_utils/quaternions.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_close.o $(O_DIR)/srcs/mlx_win/ft_mlx_open.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o $(O_DIR)/srcs/obj_types/cone.o \
@@ -96,22 +99,22 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_blend.o \
 	$(O_DIR)/srcs/scene_renderer/scene_render.o \
 	$(O_DIR)/srcs/texture_loader/load_texture.o
 PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
-	$(O_DIR)/_public/ft/ft_wchar.h $(O_DIR)/_public/ft/libft.h \
+	$(O_DIR)/_public/ft/libft.h $(O_DIR)/_public/ft/ft_wchar.h \
 	$(O_DIR)/_public/ft/ft_dstr.h $(O_DIR)/_public/ft/ft_hmap.h \
 	$(O_DIR)/_public/ft/img.h $(O_DIR)/_public/ft/img_loader.h \
 	$(O_DIR)/_public/ft/ft_file_in.h $(O_DIR)/_public/ft/ft_in.h \
-	$(O_DIR)/_public/ft/math_complex.h $(O_DIR)/_public/ft/math_mat4.h \
-	$(O_DIR)/_public/ft/math_vec2.h $(O_DIR)/_public/ft/math_vec3.h \
+	$(O_DIR)/_public/ft/math_mat4.h $(O_DIR)/_public/ft/math_vec3.h \
+	$(O_DIR)/_public/ft/math_complex.h $(O_DIR)/_public/ft/math_vec2.h \
 	$(O_DIR)/_public/ft/math_vec4.h $(O_DIR)/_public/ft/ft_out.h \
 	$(O_DIR)/_public/ft/ft_str_out.h $(O_DIR)/_public/ft/ft_printf.h \
 	$(O_DIR)/_public/ft/ft_vprintf.h $(O_DIR)/_public/ft/ft_vector.h \
-	$(O_DIR)/_public/ft/ft_xml.h $(O_DIR)/_public/kd_tree.h \
-	$(O_DIR)/_public/kd_tree_builder.h $(O_DIR)/_public/math_quaternions.h \
-	$(O_DIR)/_public/math_utils.h $(O_DIR)/_public/mlx_win.h \
-	$(O_DIR)/_public/obj.h $(O_DIR)/_public/obj_types.h \
-	$(O_DIR)/_public/ray_tracer.h $(O_DIR)/_public/scene.h \
-	$(O_DIR)/_public/scene_loader.h $(O_DIR)/_public/scene_render.h \
-	$(O_DIR)/_public/texture_loader.h
+	$(O_DIR)/_public/ft/ft_xml.h $(O_DIR)/_public/kd_tree_builder.h \
+	$(O_DIR)/_public/kd_tree.h $(O_DIR)/_public/math_mat3.h \
+	$(O_DIR)/_public/math_quaternions.h $(O_DIR)/_public/math_utils.h \
+	$(O_DIR)/_public/mlx_win.h $(O_DIR)/_public/obj.h \
+	$(O_DIR)/_public/obj_types.h $(O_DIR)/_public/ray_tracer.h \
+	$(O_DIR)/_public/scene.h $(O_DIR)/_public/scene_loader.h \
+	$(O_DIR)/_public/scene_render.h $(O_DIR)/_public/texture_loader.h
 
 # module color_utils
 $(O_DIR)/srcs/color_utils/color_blend.o: srcs/color_utils/color_blend.c \
@@ -510,6 +513,15 @@ $(O_DIR)/srcs/main/main.o: srcs/main/main.c libft/ft_base/public/ft_colors.h \
 $(O_DIR)/srcs/main/main.o: INCLUDE_FLAGS += -Isrcs/main
 
 # module math_utils
+$(O_DIR)/srcs/math_utils/ft_mat3apply.o: srcs/math_utils/ft_mat3apply.c \
+	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
+	srcs/math_utils/public/math_mat3.h
+$(O_DIR)/srcs/math_utils/ft_mat3mul.o: srcs/math_utils/ft_mat3mul.c \
+	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
+	srcs/math_utils/public/math_mat3.h
+$(O_DIR)/srcs/math_utils/ft_mat3transpose.o: \
+	srcs/math_utils/ft_mat3transpose.c libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h srcs/math_utils/public/math_mat3.h
 $(O_DIR)/srcs/math_utils/quaternions.o: srcs/math_utils/quaternions.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h srcs/math_utils/public/math_quaternions.h \
@@ -596,9 +608,10 @@ $(O_DIR)/srcs/ray_tracer/ray_trace.o: srcs/ray_tracer/ray_trace.c \
 	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
 	libft/ft_vector/public/ft_vector.h srcs/color_utils/public/color_utils.h \
-	srcs/kd_tree/public/kd_tree.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/ray_tracer/internal.h \
-	srcs/ray_tracer/public/ray_tracer.h srcs/scene/public/scene.h
+	srcs/kd_tree/public/kd_tree.h srcs/math_utils/public/math_mat3.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/ray_tracer/internal.h srcs/ray_tracer/public/ray_tracer.h \
+	srcs/scene/public/scene.h
 
 $(O_DIR)/srcs/ray_tracer/nearest_intersect.o \
 $(O_DIR)/srcs/ray_tracer/ray_trace.o: INCLUDE_FLAGS += -Isrcs/ray_tracer
@@ -717,6 +730,7 @@ $(O_DIR)/_public/ft/math_vec3.h: libft/ft_math/public/math_vec3.h
 $(O_DIR)/_public/ft/math_vec4.h: libft/ft_math/public/math_vec4.h
 $(O_DIR)/_public/kd_tree.h: srcs/kd_tree/public/kd_tree.h
 $(O_DIR)/_public/kd_tree_builder.h: srcs/kd_tree/public/kd_tree_builder.h
+$(O_DIR)/_public/math_mat3.h: srcs/math_utils/public/math_mat3.h
 $(O_DIR)/_public/math_quaternions.h: srcs/math_utils/public/math_quaternions.h
 $(O_DIR)/_public/math_utils.h: srcs/math_utils/public/math_utils.h
 $(O_DIR)/_public/mlx_win.h: srcs/mlx_win/public/mlx_win.h
