@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 11:34:10 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 00:20:22 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 01:16:35 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,36 @@ typedef struct s_rb_node		t_rb_node;
 ** Red-black tree
 */
 
+/*
+** rb_tree object
+** 'root' is the root node
+** 'cmp' is used for comparing keys, take a node and the key to compare as args
+** 'count' keep the total node count
+** 'flags':
+** 	RB_TREE_ALLOW_DUP		allow dupplicated keys on insert
+** -
+** RB_TREE(CMP, FLAGS) construct a rb_tree object
+*/
 struct			s_rb_tree
 {
 	t_rb_node		*root;
-	int				(*cmp)(void const *node, void const *match);
+	int				(*cmp)(void const *node, void const *key);
 	uint32_t		count;
+	uint32_t		flags;
 };
 
-# define RB_TREE(CMP)			((t_rb_tree){NULL, V(CMP), 0})
-
-// # 		if 0
-
+/*
+** rb node header
+** 'parent' is the parent node,
+** 		it is also used to store the node's color
+** 		RB_NODE_PARENT(NODE) return the parent node
+** 		RB_NODE_ISRED(NODE) check the color flag
+** 'left' and 'right' are child nodes
+** -
+** RB_NODE() construct a node header
+** -
+** node's data have to be prefixed with the t_rb_node header
+*/
 struct			s_rb_node
 {
 	t_rb_node		*parent;
@@ -41,55 +60,31 @@ struct			s_rb_node
 	t_rb_node		*right;
 };
 
-# define RB_NODE_PARENT(NODE)	((t_rb_node*)(_RB_NODE(NODE) & ~1))
-# define RB_NODE_ISRED(NODE)	((bool)(_RB_NODE(NODE) & 1))
-
-# define RB_NODE_SETRED(NODE)	(_RB_NODE(NODE) |= 1)
-# define RB_NODE_SETBLACK(NODE)	(_RB_NODE(NODE) &= ~1)
-
-# define RB_NODE_SETPARENT(N,P)	(_RB_NODE(N) = (uintptr_t)(P)|RB_NODE_ISRED(N))
-
-# define _RB_NODE(NODE)			*((uintptr_t*)&(((t_rb_node*)(NODE))->parent))
+# define RB_TREE(CMP, FLAGS)	((t_rb_tree){NULL, V(CMP), 0, (FLAGS)})
 
 # define RB_NODE()				((t_rb_node){NULL, NULL, NULL})
 
-// # 		else
+# define RB_TREE_ALLOW_DUP		(1 << 1)
 
-// struct			s_rb_node
-// {
-// 	t_rb_node		*parent;
-// 	t_rb_node		*left;
-// 	t_rb_node		*right;
-// 	bool			red;
-// };
-
-// # define RB_NODE_PARENT(NODE)	(((t_rb_node const*)(NODE))->parent)
-// # define RB_NODE_ISRED(NODE)	(((t_rb_node const*)(NODE))->red)
-
-// # define RB_NODE_SETRED(NODE)	((NODE)->red = true)
-// # define RB_NODE_SETBLACK(NODE)	((NODE)->red = false)
-
-// # define RB_NODE_SETPARENT(N,P)	((N)->parent = (P))
-
-// # define RB_NODE()				((t_rb_node){NULL, NULL, NULL, false})
-
-// # 		endif
+# define RB_NODE_PARENT(NODE)	((t_rb_node*)(_RB_NODE_P(NODE) & ~1))
+# define RB_NODE_ISRED(NODE)	((bool)(_RB_NODE_P(NODE) & 1))
 
 /*
 ** Search through the tree
-** 'match' is passed to the cmp function
+** 'key' is passed to the cmp function
 ** Return the matching node or NULL if not found
 */
-void			*ft_rbget(t_rb_tree *tree, void const *match);
-void const		*ft_rbcget(t_rb_tree const *tree, void const *match);
+void			*ft_rbget(t_rb_tree *tree, void const *key);
+void const		*ft_rbcget(t_rb_tree const *tree, void const *key);
 
 /*
 ** Insert a node into the tree
-** 'match' is only used for comparaison
+** 'key' is only used for comparaison
 ** 'node' should "extend" the t_rb_node struct
-** Return true on success, false if dupplicate
+** Return true on success
+** Return false on dupplicated key (if RB_TREE_ALLOW_DUP flag is not set)
 */
-bool			ft_rbinsert(t_rb_tree *tree, void *node, void const *match);
+bool			ft_rbinsert(t_rb_tree *tree, void *node, void const *key);
 
 /*
 ** Remove a node
@@ -116,5 +111,11 @@ void const		*ft_rbcnext(void const *node);
 
 void			*ft_rbprev(void *node);
 void const		*ft_rbcprev(void const *node);
+
+/*
+** -
+*/
+
+# define _RB_NODE_P(NODE)		*((uintptr_t*)&(((t_rb_node*)(NODE))->parent))
 
 #endif

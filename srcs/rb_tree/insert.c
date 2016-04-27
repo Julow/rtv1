@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rb_tree_insert.c                                   :+:      :+:    :+:   */
+/*   insert.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 13:42:55 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 00:21:37 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 00:56:21 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ bool			ft_rbinsert(t_rb_tree *tree, void *node, void const *match)
 	{
 		parent = *next;
 		diff = tree->cmp(parent, match);
-		if (diff == 0)
+		if (diff == 0 && !(tree->flags & RB_TREE_ALLOW_DUP))
 			return (false);
-		next = (diff < 0) ? &parent->left : &parent->right;
+		next = (diff <= 0) ? &parent->left : &parent->right;
 	}
 	ASSERT(!(((uintptr_t)node) & 1), "IMPAIR POINTER");
 	tree->count++;
