@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 11:34:10 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/22 00:45:16 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 00:20:22 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ struct			s_rb_node
 
 # define RB_NODE_SETPARENT(N,P)	(_RB_NODE(N) = (uintptr_t)(P)|RB_NODE_ISRED(N))
 
-# define _RB_NODE(NODE)			*((uintptr_t*)&((NODE)->parent))
+# define _RB_NODE(NODE)			*((uintptr_t*)&(((t_rb_node*)(NODE))->parent))
+
+# define RB_NODE()				((t_rb_node){NULL, NULL, NULL})
 
 // # 		else
 
@@ -68,6 +70,8 @@ struct			s_rb_node
 // # define RB_NODE_SETBLACK(NODE)	((NODE)->red = false)
 
 // # define RB_NODE_SETPARENT(N,P)	((N)->parent = (P))
+
+// # define RB_NODE()				((t_rb_node){NULL, NULL, NULL, false})
 
 // # 		endif
 
@@ -89,7 +93,28 @@ bool			ft_rbinsert(t_rb_tree *tree, void *node, void const *match);
 
 /*
 ** Remove a node
+** 'node' have to be a node of 'tree'
 */
-void			ft_rbremove(t_rb_tree *tree, void const *node);
+void			ft_rbremove(t_rb_tree *tree, void *node);
+
+/*
+** Return first/last node in sorted order
+** Return NULL if the tree is empty
+*/
+void			*ft_rbfirst(t_rb_tree *tree);
+void const		*ft_rbcfirst(t_rb_tree const *tree);
+
+void			*ft_rblast(t_rb_tree *tree);
+void const		*ft_rbclast(t_rb_tree const *tree);
+
+/*
+** Return the prev/next node in sorted order
+** Return NULL after the last node
+*/
+void			*ft_rbnext(void *node);
+void const		*ft_rbcnext(void const *node);
+
+void			*ft_rbprev(void *node);
+void const		*ft_rbcprev(void const *node);
 
 #endif

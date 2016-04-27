@@ -6,33 +6,12 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 13:42:55 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/22 00:43:59 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 00:21:37 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "internal.h"
 #include "rb_tree.h"
-
-#define RB_CHILD(NODE, I)	((t_rb_node**)(NODE))[I]
-
-static void		rb_rotate(t_rb_tree *tree, t_rb_node *node, bool left)
-{
-	t_vec2u const		i = left ? VEC2U(1, 2) : VEC2U(2, 1);
-	t_rb_node *const	pivot = RB_CHILD(node, i.y);
-	t_rb_node *const	parent = RB_NODE_PARENT(node);
-
-	if (parent == NULL)
-		tree->root = pivot;
-	else if (node == parent->left)
-		parent->left = pivot;
-	else
-		parent->right = pivot;
-	RB_NODE_SETPARENT(pivot, parent);
-	RB_CHILD(node, i.y) = RB_CHILD(pivot, i.x);
-	if (RB_CHILD(pivot, i.x) != NULL)
-		RB_NODE_SETPARENT(RB_CHILD(pivot, i.x), node);
-	RB_CHILD(pivot, i.x) = node;
-	RB_NODE_SETPARENT(node, pivot);
-}
 
 static void		rb_balance(t_rb_tree *tree, t_rb_node *node)
 {
@@ -42,14 +21,15 @@ static void		rb_balance(t_rb_tree *tree, t_rb_node *node)
 	parent = RB_NODE_PARENT(node);
 	gp = RB_NODE_PARENT(parent);
 	if (node == parent->right && parent == gp->left)
-		rb_rotate(tree, node = parent, true);
+		rb_node_rotate(tree, node = parent, true);
 	else if (node == parent->left && parent == gp->right)
-		rb_rotate(tree, node = parent, false);
+		rb_node_rotate(tree, node = parent, false);
 	parent = RB_NODE_PARENT(node);
 	gp = RB_NODE_PARENT(parent);
 	RB_NODE_SETBLACK(parent);
 	RB_NODE_SETRED(gp);
-	rb_rotate(tree, gp, BOOL_OF(node == parent->right && parent == gp->right));
+	rb_node_rotate(tree, gp,
+		BOOL_OF(node == parent->right && parent == gp->right));
 }
 
 static void		rb_check_balance(t_rb_tree *tree, t_rb_node *node)
@@ -100,7 +80,7 @@ bool			ft_rbinsert(t_rb_tree *tree, void *node, void const *match)
 	*(t_rb_node*)node = (t_rb_node){parent, NULL, NULL};
 	if (parent != NULL)
 	{
-		RB_NODE_SETRED((t_rb_node*)node);
+		RB_NODE_SETRED(*next);
 		if (RB_NODE_ISRED(parent))
 			rb_check_balance(tree, node);
 	}
