@@ -6,12 +6,12 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 13:37:23 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 15:09:48 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 22:36:22 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/set.h"
 #include "internal.h"
-#include "set.h"
 
 void const		*ft_set_cget(t_set const *set, void const *key)
 {
@@ -19,14 +19,9 @@ void const		*ft_set_cget(t_set const *set, void const *key)
 	int					diff;
 
 	node = set->data;
-	while (node != NULL)
-	{
-		diff = set->cmp(node, key);
-		if (diff == 0)
-			return (node);
+	while (node != NULL && (diff = set->cmp(node, key)) != 0)
 		node = (diff < 0) ? node->left : node->right;
-	}
-	return (NULL);
+	return (node);
 }
 
 void			*ft_set_get(t_set *set, void const *key)

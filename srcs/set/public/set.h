@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 11:34:10 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 15:13:06 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 21:28:23 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ struct			s_set_header
 ** Search into the set
 ** 'key' is passed to the cmp function
 ** Return the matching element or NULL if not found
+** If SET_ALLOW_DUP is set, see ft_set_first
 */
 void			*ft_set_get(t_set *set, void const *key);
 void const		*ft_set_cget(t_set const *set, void const *key);
@@ -82,13 +83,14 @@ void			ft_set_remove(t_set *set, void *element);
 
 /*
 ** Return the first/last element in sorted order
+** If 'key' is not NULL, return the first/last element that match the key
 ** Return NULL if the set is empty
 */
-void			*ft_set_first(t_set *set);
-void const		*ft_set_cfirst(t_set const *set);
+void			*ft_set_first(t_set *set, void const *key);
+void const		*ft_set_cfirst(t_set const *set, void const *key);
 
-void			*ft_set_last(t_set *set);
-void const		*ft_set_clast(t_set const *set);
+void			*ft_set_last(t_set *set, void const *key);
+void const		*ft_set_clast(t_set const *set, void const *key);
 
 /*
 ** Return the prev/next element in sorted order

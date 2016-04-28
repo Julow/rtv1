@@ -6,14 +6,14 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 18:45:21 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 15:09:22 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 21:17:21 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INTERNAL_H
 # define INTERNAL_H
 
-# include "set.h"
+# include "ft/set.h"
 
 typedef struct s_set_node		t_set_node;
 

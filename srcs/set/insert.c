@@ -6,12 +6,12 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 13:42:55 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 15:11:20 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 21:17:28 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/set.h"
 #include "internal.h"
-#include "set.h"
 
 static void		set_balance(t_set *set, t_set_node *node)
 {

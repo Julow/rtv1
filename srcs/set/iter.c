@@ -6,12 +6,12 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 15:25:21 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 15:07:50 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 21:17:14 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/set.h"
 #include "internal.h"
-#include "set.h"
 
 void const		*ft_set_cnext(void const *element)
 {
