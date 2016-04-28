@@ -6,28 +6,29 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 18:46:30 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 00:25:41 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 15:10:10 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "internal.h"
+#include "set.h"
 
-void			rb_node_rotate(t_rb_tree *tree, t_rb_node *node, bool left)
+void			set_node_rotate(t_set *set, t_set_node *node, bool left)
 {
 	t_vec2u const		i = left ? VEC2U(1, 2) : VEC2U(2, 1);
-	t_rb_node *const	pivot = RB_CHILD(node, i.y);
-	t_rb_node *const	parent = RB_NODE_PARENT(node);
+	t_set_node *const	pivot = SET_CHILD(node, i.y);
+	t_set_node *const	parent = SET_PARENT(node);
 
 	if (parent == NULL)
-		tree->root = pivot;
+		set->data = pivot;
 	else if (node == parent->left)
 		parent->left = pivot;
 	else
 		parent->right = pivot;
-	RB_NODE_SETPARENT(pivot, parent);
-	RB_CHILD(node, i.y) = RB_CHILD(pivot, i.x);
-	if (RB_CHILD(pivot, i.x) != NULL)
-		RB_NODE_SETPARENT(RB_CHILD(pivot, i.x), node);
-	RB_CHILD(pivot, i.x) = node;
-	RB_NODE_SETPARENT(node, pivot);
+	SET_SETPARENT(pivot, parent);
+	SET_CHILD(node, i.y) = SET_CHILD(pivot, i.x);
+	if (SET_CHILD(pivot, i.x) != NULL)
+		SET_SETPARENT(SET_CHILD(pivot, i.x), node);
+	SET_CHILD(pivot, i.x) = node;
+	SET_SETPARENT(node, pivot);
 }

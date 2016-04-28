@@ -6,25 +6,44 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 18:45:21 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 00:47:15 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 15:09:22 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INTERNAL_H
 # define INTERNAL_H
 
-# include "rb_tree.h"
+# include "set.h"
 
-# define RB_CHILD(NODE, I)		((t_rb_node**)(NODE))[I]
+typedef struct s_set_node		t_set_node;
 
-# define RB_NODE_SETRED(NODE)	(_RB_NODE_P(NODE) |= 1)
-# define RB_NODE_SETBLACK(NODE)	(_RB_NODE_P(NODE) &= ~1)
+/*
+** ========================================================================== **
+** Set implementation: red-black tree
+*/
 
-# define RB_NODE_SETPARENT(N,P)	(_RB_NODE_P(N)=(uintptr_t)(P)|RB_NODE_ISRED(N))
+struct			s_set_node
+{
+	t_set_node		*parent;
+	t_set_node		*left;
+	t_set_node		*right;
+};
+
+# define SET_CHILD(NODE, I)	((t_set_node**)(NODE))[I]
+
+# define SET_PARENT(NODE)	((t_set_node*)(_SET_P(NODE) & ~1))
+# define SET_ISRED(NODE)	((bool)(_SET_P(NODE) & 1))
+
+# define SET_SETRED(NODE)	(_SET_P(NODE) |= 1)
+# define SET_SETBLACK(NODE)	(_SET_P(NODE) &= ~1)
+
+# define SET_SETPARENT(N,P)	(_SET_P(N)=(uintptr_t)(P)|SET_ISRED(N))
 
 /*
 ** Standard tree rotation
 */
-void			rb_node_rotate(t_rb_tree *tree, t_rb_node *node, bool left);
+void			set_node_rotate(t_set *tree, t_set_node *node, bool left);
+
+# define _SET_P(NODE)		*((uintptr_t*)&(((t_set_node*)(NODE))->parent))
 
 #endif

@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rb_tree_get.c                                      :+:      :+:    :+:   */
+/*   get.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 13:37:23 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/22 00:45:08 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 15:09:48 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rb_tree.h"
+#include "internal.h"
+#include "set.h"
 
-void const		*ft_rbcget(t_rb_tree const *tree, void const *match)
+void const		*ft_set_cget(t_set const *set, void const *key)
 {
-	t_rb_node const	*node;
-	int				diff;
+	t_set_node const	*node;
+	int					diff;
 
-	node = tree->root;
+	node = set->data;
 	while (node != NULL)
 	{
-		diff = tree->cmp(node, match);
+		diff = set->cmp(node, key);
 		if (diff == 0)
 			return (node);
 		node = (diff < 0) ? node->left : node->right;
@@ -28,7 +29,7 @@ void const		*ft_rbcget(t_rb_tree const *tree, void const *match)
 	return (NULL);
 }
 
-void			*ft_rbget(t_rb_tree *tree, void const *match)
+void			*ft_set_get(t_set *set, void const *key)
 {
-	return ((void*)ft_rbcget(tree, match));
+	return ((void*)ft_set_cget(set, key));
 }

@@ -6,83 +6,83 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 13:42:55 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 00:56:21 by juloo            ###   ########.fr       */
+/*   Updated: 2016/04/28 15:11:20 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "internal.h"
-#include "rb_tree.h"
+#include "set.h"
 
-static void		rb_balance(t_rb_tree *tree, t_rb_node *node)
+static void		set_balance(t_set *set, t_set_node *node)
 {
-	t_rb_node		*parent;
-	t_rb_node		*gp;
+	t_set_node		*parent;
+	t_set_node		*gp;
 
-	parent = RB_NODE_PARENT(node);
-	gp = RB_NODE_PARENT(parent);
+	parent = SET_PARENT(node);
+	gp = SET_PARENT(parent);
 	if (node == parent->right && parent == gp->left)
-		rb_node_rotate(tree, node = parent, true);
+		set_node_rotate(set, node = parent, true);
 	else if (node == parent->left && parent == gp->right)
-		rb_node_rotate(tree, node = parent, false);
-	parent = RB_NODE_PARENT(node);
-	gp = RB_NODE_PARENT(parent);
-	RB_NODE_SETBLACK(parent);
-	RB_NODE_SETRED(gp);
-	rb_node_rotate(tree, gp,
+		set_node_rotate(set, node = parent, false);
+	parent = SET_PARENT(node);
+	gp = SET_PARENT(parent);
+	SET_SETBLACK(parent);
+	SET_SETRED(gp);
+	set_node_rotate(set, gp,
 		BOOL_OF(node == parent->right && parent == gp->right));
 }
 
-static void		rb_check_balance(t_rb_tree *tree, t_rb_node *node)
+static void		set_check_balance(t_set *set, t_set_node *node)
 {
-	t_rb_node		*parent;
-	t_rb_node		*gp;
-	t_rb_node		*uncle;
+	t_set_node		*parent;
+	t_set_node		*gp;
+	t_set_node		*uncle;
 
-	parent = RB_NODE_PARENT(node);
+	parent = SET_PARENT(node);
 	while (true)
 	{
-		gp = RB_NODE_PARENT(parent);
+		gp = SET_PARENT(parent);
 		ASSERT(gp != NULL);
 		uncle = (gp->left == parent) ? gp->right : gp->left;
-		if (uncle == NULL || !RB_NODE_ISRED(uncle))
-			return (rb_balance(tree, node));
-		RB_NODE_SETBLACK(parent);
-		RB_NODE_SETBLACK(uncle);
+		if (uncle == NULL || !SET_ISRED(uncle))
+			return (set_balance(set, node));
+		SET_SETBLACK(parent);
+		SET_SETBLACK(uncle);
 		node = gp;
-		parent = RB_NODE_PARENT(node);
+		parent = SET_PARENT(node);
 		if (parent == NULL)
 			break ;
-		RB_NODE_SETRED(node);
-		if (!RB_NODE_ISRED(parent))
+		SET_SETRED(node);
+		if (!SET_ISRED(parent))
 			break ;
 	}
 }
 
-bool			ft_rbinsert(t_rb_tree *tree, void *node, void const *match)
+bool			ft_set_insert(t_set *set, void *element, void const *key)
 {
-	t_rb_node		*parent;
-	t_rb_node		**next;
+	t_set_node		*parent;
+	t_set_node		**next;
 	int				diff;
 
 	parent = NULL;
-	next = &tree->root;
+	next = (t_set_node**)&set->data;
 	while (*next != NULL)
 	{
 		parent = *next;
-		diff = tree->cmp(parent, match);
-		if (diff == 0 && !(tree->flags & RB_TREE_ALLOW_DUP))
+		diff = set->cmp(parent, key);
+		if (diff == 0 && !(set->flags & SET_ALLOW_DUP))
 			return (false);
 		next = (diff <= 0) ? &parent->left : &parent->right;
 	}
-	ASSERT(!(((uintptr_t)node) & 1), "IMPAIR POINTER");
-	tree->count++;
-	*next = node;
-	*(t_rb_node*)node = (t_rb_node){parent, NULL, NULL};
+	ASSERT(!(((uintptr_t)element) & 1), "IMPAIR POINTER");
+	set->count++;
+	*next = element;
+	*(t_set_node*)element = (t_set_node){parent, NULL, NULL};
 	if (parent != NULL)
 	{
-		RB_NODE_SETRED(*next);
-		if (RB_NODE_ISRED(parent))
-			rb_check_balance(tree, node);
+		SET_SETRED(*next);
+		if (SET_ISRED(parent))
+			set_check_balance(set, element);
 	}
 	return (true);
 }
