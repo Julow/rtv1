@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 17:04:34 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/01 21:07:37 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ bool		parse_vec3(t_sub value, t_vec3 *dst);
 bool		parse_color(t_sub value, uint32_t *dst);
 bool		parse_colorf(t_sub value, t_vec3 *dst);
 bool		parse_texture(t_sub value, t_img const **dst);
+bool		parse_texture_g(t_sub value, t_img const **dst);
 bool		parse_float(t_sub value, float *dst);
 bool		parse_name(t_sub value, t_dstr *dst);
 

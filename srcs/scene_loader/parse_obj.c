@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 15:51:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/04/17 14:46:52 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/01 21:09:26 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <stdlib.h>
 
 t_vector const			g_obj_params = VECTOR(t_param_def,
-	PARAM("texture", texture, t_parse_obj, material.texture),
+	PARAM("texture", texture_g, t_parse_obj, material.texture),
 	PARAM("specular_map", texture, t_parse_obj, material.specular_map),
 	PARAM("normal_map", texture, t_parse_obj, material.normal_map),
 	PARAM("color", color, t_parse_obj, color),
@@ -92,9 +92,9 @@ static bool	push_obj(t_parse_obj *p, t_parse_obj_t const *obj_t)
 	p->obj->m = ft_mat4transform(p->pos, p->rot, p->shear, p->scale);
 	p->obj->m_inv = ft_mat4transform_inv(p->pos, p->rot, p->shear, p->scale);
 	if (p->obj->material.texture == NULL)
-		p->obj->material.texture = load_texture1(p->color);
+		p->obj->material.texture = load_texture1(p->color, TEXTURE_GAMMA);
 	if (p->obj->material.specular_map == NULL)
-		p->obj->material.specular_map = load_texture1(p->specular_color);
+		p->obj->material.specular_map = load_texture1(p->specular_color, 0);
 	ft_memcpy(tmp, obj_t->bounds, S(t_vec3, obj_t->bound_len));
 	i = 0;
 	while (i < obj_t->bound_len)

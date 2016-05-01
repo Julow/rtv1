@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:34:50 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/28 11:12:06 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/01 21:09:51 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@ typedef struct s_texture		t_texture;
 ** Cache calls to ft_load_img
 */
 
+# define TEXTURE_GAMMA		(1 << 1)
+
 /*
 ** Return a texture or NULL on error
 */
-t_img const		*load_texture(t_sub file_name);
+t_img const		*load_texture(t_sub file_name, uint32_t flags);
 
 /*
 ** Create a 1 pixel texture
 */
-t_img const		*load_texture1(uint32_t color);
+t_img const		*load_texture1(uint32_t color, uint32_t flags);
 
 #endif
