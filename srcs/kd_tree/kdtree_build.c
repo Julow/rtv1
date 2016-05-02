@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 14:30:02 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/25 15:37:51 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/02 16:54:34 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static float	kdtree_median(t_kdtree_builder const *b, uint32_t const *indexes,
 		}
 		i++;
 	}
-	return (MIX(min, max, 0.5f));
+	return (LERP(min, max, 0.5f));
 }
 
 static uint32_t	kdtree_split(t_kdtree_builder const *b,

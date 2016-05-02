@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:04:15 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/27 13:03:48 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/02 17:57:32 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,19 @@ t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
 */
 t_obj const		*nearest_intersect(t_intersect *dst,
 					t_scene const *scene, t_vertex ray);
+
+/*
+** TMP
+*/
+struct			s_ray_stats
+{
+	uint32_t	light_ray;
+	uint32_t	render_ray;
+	uint32_t	sky_ray;
+	uint32_t	intersect_search;
+	uint32_t	intersect_test;
+};
+
+extern struct s_ray_stats	g_ray_stats;
 
 #endif

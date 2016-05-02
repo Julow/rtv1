@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/04/17 14:47:29 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/02 19:51:36 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ struct			s_light
 	t_vec3			pos;
 	float			brightness;
 	t_vec3			color;
-	float			att_dist;
-	float			att_exp;
+	float			max_dist;
 };
 
-# define DEF_LIGHT		((t_light){VEC3_0(), 1.f, VEC3_1(1.f), 1000.f, 4.f})
+# define DEF_LIGHT		((t_light){VEC3_0(), 1.f, VEC3_1(1.f), 100.f})
 
 struct			s_camera
 {

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/02 12:01:46 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/02 19:52:18 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static t_vector const	g_light_params = VECTOR(t_param_def,
 	PARAM("pos", vec3, t_light, pos),
 	PARAM("brightness", float, t_light, brightness),
 	PARAM("color", colorf, t_light, color),
-	PARAM("attenuation", float, t_light, att_dist),
-	PARAM("attenuation_exp", float, t_light, att_exp),
+	PARAM("max_dist", float, t_light, max_dist),
 );
 
 static t_vector const	g_camera_params = VECTOR(t_param_def,

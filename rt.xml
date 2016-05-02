@@ -19,8 +19,7 @@
 		pos="<vec3>"
 		color="<color>" // default "#FFFFFF"
 		brightness="<float>" // default "1"
-		attenuation="<float>" // default "1000"
-		attenuation_exp="<float>" // default "4"
+		max_dist="<float>" // default "100"
 	/>
 
 	<sphere|plane|cone|cylinder

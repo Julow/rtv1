@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:31:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/29 13:48:43 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/02 17:34:50 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void			scene_render(t_img *dst, t_scene const *scene, uint32_t camera)
 	t_vec2u			pt;
 	t_vertex		ray;
 
+	g_ray_stats = (struct s_ray_stats){0, 0, 0, 0, 0};
 	ft_logf(LOG_VERBOSE, "Rendering scene '%ts'", scene->name);
 	view_top = get_view_plane(cam, VEC2U(dst->width, dst->height), &delta_x, &delta_y);
 	ray.pos = cam->pos;
@@ -65,4 +66,14 @@ void			scene_render(t_img *dst, t_scene const *scene, uint32_t camera)
 		}
 		pt.y++;
 	}
+	ft_printf("light rays: %u\n"
+		"render rays: %u\n"
+		"sky rays: %u\n"
+		"intersect search: %u\n"
+		"intersect test: %u\n",
+		g_ray_stats.light_ray,
+		g_ray_stats.render_ray,
+		g_ray_stats.sky_ray,
+		g_ray_stats.intersect_search,
+		g_ray_stats.intersect_test);
 }

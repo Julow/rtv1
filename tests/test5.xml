@@ -2,7 +2,7 @@
 
 	<plane color="#333333" scale="45" />
 
-	<light pos="0,25,0" brightness="1" attenuation="2000" />
+	<light pos="0,25,0" brightness="1" />
 
 <!-- 
 from random import uniform as r, randint
