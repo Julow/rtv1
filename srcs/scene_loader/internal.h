@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/01 21:07:37 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/02 10:59:55 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,11 @@ struct		s_param_def
 
 #define PARAM(NAME,F,S,VAR)		{SUBC(NAME),V(&parse_##F),offsetof(S,VAR)}
 
-bool		parse_xml_param(t_xml_parser *xml, t_vector const *def, void *data);
+/*
+** TODO: move
+*/
+bool		parse_xml_params(t_xml_parser *xml,
+				t_vector const *defs, void *data);
 
 bool		parse_vec3(t_sub value, t_vec3 *dst);
 bool		parse_color(t_sub value, uint32_t *dst);

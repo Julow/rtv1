@@ -15,3 +15,4 @@ module scene_loader:
 	private require color_utils
 	private require math_utils
 	private require texture_loader
+	private require ft::set

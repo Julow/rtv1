@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 11:34:10 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 21:28:23 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/02 12:55:36 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "ft/libft.h"
 
 typedef struct s_set			t_set;
-typedef struct s_set_header		t_set_header;
+typedef struct s_set_h			t_set_h;
 
 /*
 ** ========================================================================== **
@@ -43,18 +43,18 @@ struct			s_set
 /*
 ** set element header
 ** -
-** SET_HEADER() construct an element header
+** SET_H() construct an element header
 ** -
 ** element's data have to be prefixed with the t_rb_node header
 */
-struct			s_set_header
+struct			s_set_h
 {
 	void const *const	data[3];
 };
 
 # define SET(CMP, FLAGS)		((t_set){NULL, V(CMP), 0, (FLAGS)})
 
-# define SET_HEADER()			((t_set_header){{NULL, NULL, NULL}})
+# define SET_H()				((t_set_h){{NULL, NULL, NULL}})
 
 # define SET_ALLOW_DUP			(1 << 1)
 

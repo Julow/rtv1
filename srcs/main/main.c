@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/04/05 09:11:46 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/02 16:31:30 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 ** Main
 ** -
 ** TODO: bump mapping
-** TODO: check invalid/redefined values (xml)
 ** TODO: spot light
 ** TODO: directional light
 ** TODO: post-process/texture filter

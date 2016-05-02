@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 13:46:15 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/02 13:03:14 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,17 @@ static bool	parse_scene_child(t_xml_parser *xml, t_parse_scene *scene)
 
 static bool	parse_scene(t_xml_parser *xml, t_scene *dst)
 {
-	bool				err;
 	t_parse_scene		scene;
 
 	scene = (t_parse_scene){DSTR0(), KDTREE_BUILDER(3),
 		VECTOR(t_light), VECTOR(t_camera), DEF_SKY_COLOR};
-	while (ft_xml_next(xml))
+	if (!ft_xml_next(xml) || (xml->token == XML_TOKEN_PARAM
+			&& !parse_xml_params(xml, &g_scene_params, &scene)))
+		return (false);
+	while (true)
 	{
-		if (xml->token == XML_TOKEN_PARAM)
-			err = parse_xml_param(xml, &g_scene_params, &scene)
-				|| ((xml->token == XML_TOKEN_ERROR) ?
-					false : ft_xml_error(xml, SUBC("Invalid param")));
-		else if (xml->token == XML_TOKEN_START)
-			err = parse_scene_child(xml, &scene);
-		else
-			err = ASSERT(false);
-		if (!err)
+		ASSERT(xml->token == XML_TOKEN_START);
+		if (!parse_scene_child(xml, &scene))
 		{
 			ft_dstrclear(&scene.name);
 			ft_vclear(&scene.lights);
@@ -80,6 +75,8 @@ static bool	parse_scene(t_xml_parser *xml, t_scene *dst)
 			kdtree_builder_destroy(&scene.kdtree);
 			return (false);
 		}
+		if (!ft_xml_next(xml))
+			break ;
 	}
 	if (xml->token != XML_TOKEN_END)
 		return (ft_xml_error(xml, SUBC("Unexpected EOF")));

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 17:03:45 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/02 12:01:46 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ bool		parse_scene_light(t_xml_parser *xml, t_parse_scene *scene)
 	t_light *const	light = ft_vpush(&scene->lights, NULL, 1);
 
 	*light = DEF_LIGHT;
-	while (ft_xml_next(xml))
-	{
-		if (xml->token == XML_TOKEN_START)
-			return (ft_xml_error(xml, SUBC("Can't have child")));
-		ASSERT(xml->token == XML_TOKEN_PARAM);
-		if (!parse_xml_param(xml, &g_light_params, light))
-			return (ft_xml_error(xml, SUBC("Invalid value")));
-	}
+	if (!ft_xml_next(xml)
+		|| (xml->token == XML_TOKEN_PARAM
+			&& !parse_xml_params(xml, &g_light_params, light)))
+		return (false);
+	if (xml->token == XML_TOKEN_START)
+		return (ft_xml_error(xml, SUBC("Can't have child")));
 	return (BOOL_OF(xml->token == XML_TOKEN_END));
 }
 
@@ -54,14 +52,12 @@ bool		parse_scene_camera(t_xml_parser *xml, t_parse_scene *scene)
 	t_camera *const	camera = ft_vpush(&scene->cameras, NULL, 1);
 
 	*camera = DEF_CAMERA;
-	while (ft_xml_next(xml))
-	{
-		if (xml->token == XML_TOKEN_START)
-			return (ft_xml_error(xml, SUBC("Can't have child")));
-		ASSERT(xml->token == XML_TOKEN_PARAM);
-		if (!parse_xml_param(xml, &g_camera_params, camera))
-			return (ft_xml_error(xml, SUBC("Invalid value")));
-	}
+	if (!ft_xml_next(xml)
+		|| (xml->token == XML_TOKEN_PARAM
+			&& !parse_xml_params(xml, &g_camera_params, camera)))
+		return (false);
+	if (xml->token == XML_TOKEN_START)
+		return (ft_xml_error(xml, SUBC("Can't have child")));
 	camera->dir = ft_vec3norm(camera->dir);
 	return (BOOL_OF(xml->token == XML_TOKEN_END));
 }
