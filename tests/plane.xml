@@ -11,6 +11,7 @@
 	<light pos="-100, 0, 100" brightness="5" color="#FF0000" />
 
 	<camera pos="0, 50, -50" dir="0, -1, 1" />
+	<camera pos="0, 150, -150" dir="0, -1, 1" />
 	<camera pos="0, 20, -50" dir="0, -1, 1" />
 
 </scene>

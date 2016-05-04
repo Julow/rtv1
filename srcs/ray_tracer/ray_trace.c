@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/02 20:01:29 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/04 18:50:35 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_vec4			texture_bilinear(t_img const *texture, t_vec2 uv)
 ** light through objects:
 **  light_rgb = LERP(obj_rgb * (1 - obj_a) * light_rgb * obj_a, light_rgb, obj_a)
 */
+
 static t_vec4	light_color(t_scene const *scene, t_light const *light,
 					t_vec3 const *intersect_pos, t_vec3 const *light_dir)
 {
@@ -82,11 +83,16 @@ static t_vec4	light_color(t_scene const *scene, t_light const *light,
 
 /*
 ** light:
-**  d = dot(intrsc_norm, norm(light_pos * intrsc_pos))
-**  att = 1.f - (dist^2 / max_dist^2)
-**  light_sum += light_rgb * (brightness * d * att^2)
-** TODO: stop using light->max_dist
-** TODO: attenuation factor in material + pass current material
+**  light_dir = norm(light_pos - intrsc_pos)
+**  b = dot(intrsc_norm, light_dir) * light_brightness
+** attenuation:
+**  b *= att = 1.f - (dist^2 / max_dist^2)
+** spot light:
+**  b *= (dot(light_dir, -spot_dir) < spot_cutoff)
+** sum:
+**  light_sum += light_rgb * b
+** -
+** TODO: attenuation factor in material (remove t_light.max_dist)
 ** TODO: check specular
 */
 
@@ -98,8 +104,8 @@ t_vec4			ray_to_light(t_scene const *scene, t_material const *mat,
 	t_vec3			light_sum;
 	float			specular_sum;
 	t_vec4			tmp_color;
+	float			b;
 	float			tmp;
-	float			tmp2;
 	t_vec3			light_dir;
 
 	i = 0;
@@ -112,13 +118,13 @@ t_vec4			ray_to_light(t_scene const *scene, t_material const *mat,
 		tmp = ft_vec3length(light_dir);
 		light_dir = VEC3_DIV1(light_dir, tmp);
 		tmp_color = light_color(scene, light, &intersect->pos, &light_dir);
-		if ((tmp2 = 1.f - (tmp * tmp) / (light->max_dist * light->max_dist)) <= 0.f
-			|| (tmp = VEC3_DOT(intersect->norm, light_dir)) < 0.f)
+		if ((tmp = 1.f - (tmp * tmp) / (light->max_dist * light->max_dist)) <= 0.f
+			|| (b = tmp_color.w * VEC3_DOT(intersect->norm, light_dir) * (tmp * tmp)) <= 0.f
+			|| VEC3_DOT(light_dir, VEC3_SUB(VEC3_0(), light->dir)) < light->cutoff)
 			continue ;
-		tmp = tmp_color.w * tmp * (tmp2 * tmp2);
-		tmp2 = ft_vec3dot(intersect->norm, ft_vec3norm(VEC3_SUB(light_dir, ray->dir)));
-		specular_sum += (tmp2 <= 0.f) ? 0.f : powf(tmp2, mat->specular_exp) * tmp;
-		light_sum = VEC3_ADD(light_sum, VEC3_MUL1(tmp_color, tmp));
+		tmp = ft_vec3dot(intersect->norm, ft_vec3norm(VEC3_SUB(light_dir, ray->dir)));
+		specular_sum += (tmp <= 0.f) ? 0.f : powf(tmp, mat->specular_exp) * b;
+		light_sum = VEC3_ADD(light_sum, VEC3_MUL1(tmp_color, b));
 	}
 	tmp_color = (mat->specular_map != NULL) ?
 		texture_bilinear(mat->specular_map, intersect->tex) : VEC4_1(1.f);

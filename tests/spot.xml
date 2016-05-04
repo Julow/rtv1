@@ -1,0 +1,15 @@
+<scene>
+
+	<plane pos="0, -10, 0" scale="300" color="#9999FF" specular_exp="0" />
+	<plane pos="-20, 0, 0" rot="0, 0, 1" scale="300" color="#9999FF" />
+	<plane pos="20, 0, 0" rot="0, 0, 1" scale="300" color="#9999FF" />
+
+	<light pos="0, 25, 0" dir="1, 0, 0" cutoff="0.25" />
+	<light pos="0, 25, 0" dir="-1, 0, 0" cutoff="0.25" />
+	<light pos="0, 25, 0" dir="0, -1, 0" cutoff="0.25" />
+	<light pos="0, 25, 0" dir="0, 1, 0" cutoff="0.25" />
+
+	<camera pos="0, 50, -50" dir="0, -1, 1" />
+	<camera pos="0, 150, -150" dir="0, -1, 1" />
+
+</scene>

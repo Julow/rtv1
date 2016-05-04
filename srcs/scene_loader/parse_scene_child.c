@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/02 19:52:18 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/04 14:22:31 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@
 
 static t_vector const	g_light_params = VECTOR(t_param_def,
 	PARAM("pos", vec3, t_light, pos),
+	PARAM("dir", vec3, t_light, dir),
 	PARAM("brightness", float, t_light, brightness),
 	PARAM("color", colorf, t_light, color),
 	PARAM("max_dist", float, t_light, max_dist),
+	PARAM("cutoff", float, t_light, cutoff),
 );
 
 static t_vector const	g_camera_params = VECTOR(t_param_def,
@@ -43,6 +45,8 @@ bool		parse_scene_light(t_xml_parser *xml, t_parse_scene *scene)
 		return (false);
 	if (xml->token == XML_TOKEN_START)
 		return (ft_xml_error(xml, SUBC("Can't have child")));
+	light->dir = ft_vec3norm(light->dir);
+	light->cutoff = (1.f - light->cutoff) * 2.f - 1.f;
 	return (BOOL_OF(xml->token == XML_TOKEN_END));
 }
 
