@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/04 18:50:35 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/04 21:44:06 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,27 +187,20 @@ static void		trace_refraction(t_scene const *scene, t_vertex const *ray,
 	color->w = 1.f;
 }
 
-void			apply_normal_map(t_obj const *obj, t_intersect *intersect)
+static void		apply_normal_map(t_obj const *obj, t_intersect *intersect)
 {
-	t_vec3			tangent;
-	t_vec3			bitangent;
 	t_vec4			map_normal;
 	t_mat3			tbn;
 	t_vec3			up;
 
 	up = VEC3_UP();
-	ft_mat4apply_vec3(&obj->m_inv, &up, 0.f); // TODO: check if necessary
-
-	tangent = ft_vec3norm(ft_vec3cross(intersect->norm, up));
-	bitangent = ft_vec3norm(ft_vec3cross(tangent, intersect->norm));
-	float const		tmp = VEC3_DOT(intersect->norm, tangent);
-	tangent = VEC3_SUB(tangent, VEC3_MUL1(intersect->norm, tmp)); // TODO;
-
-	tbn = MAT3(tangent, bitangent, intersect->norm);
+	ft_mat4apply_vec3(&obj->m_inv, &up, 0.f);
+	tbn.x = ft_vec3norm(VEC3_CROSS(intersect->norm, up));
+	tbn.y = VEC3_CROSS(tbn.x, intersect->norm);
+	tbn.z = intersect->norm;
 	ft_mat3transpose(&tbn);
-
 	map_normal = texture_bilinear(obj->material.normal_map, intersect->tex);
-	intersect->norm = VEC3_SUB1(VEC3_MUL1(map_normal, 2.f), 1.f);
+	intersect->norm = ft_vec3norm(VEC3_SUB1(VEC3_MUL1(map_normal, 2.f), 1.f));
 	ft_mat3apply(&tbn, &intersect->norm);
 }
 

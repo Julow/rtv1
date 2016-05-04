@@ -1,6 +1,7 @@
 <scene>
 
-	<sphere texture="tests/earth.tga" specular_map="tests/earth.tga" />
+	<sphere texture="tests/earth.tga" specular_map="tests/earth.spec.tga" normal_map="tests/earth.norm.tga" />
+	<sphere scale="1.1" texture="tests/earth_cloud.tga" />
 
 	<light pos="10, 0, -5" brightness="1" />
 

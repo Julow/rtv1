@@ -1,9 +1,10 @@
 <scene>
 
-	<plane pos="0.5, 0, 0" rot="1, 0, 0" texture="tests/wall.tga" normal_map="tests/wall_normal.tga" />
+	<plane pos="0.5, 0, 0" rot="1, 0, 0" texture="tests/wall.tga" normal_map="tests/wall.norm.tga" />
 	<plane pos="-0.5, 0, 0" rot="1, 0, 0" texture="tests/wall.tga" />
 
-	<light pos="2, 1, 5" />
+	<!-- <light pos="2, 1, 5" /> -->
+	<light pos="-5, 1, 5" />
 
 	<camera pos="0, 0, 0.7" dir="0, 0, -1" />
 	<camera pos="0, 1, 0.7" dir="0, -1, -1" />
