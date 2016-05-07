@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/04/17 14:57:01 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/08 00:23:51 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ struct			s_intersect
 	t_vec3			pos;
 	t_vec3			norm;
 	t_vec2			tex;
-	float			dist;
+	t_vec2			dist;
 };
 
 #endif

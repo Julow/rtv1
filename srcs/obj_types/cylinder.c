@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 12:23:40 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/07 23:30:51 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/08 00:33:35 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,10 @@ static bool		cylinder_check_base(float dist, t_vertex const *ray)
 
 static bool		cylinder_side(t_vec2 *dist, t_vertex const *ray)
 {
-	float			a;
-	float			b;
+	float const		a = VEC2_DOT(ray->dir, ray->dir) * 2.f;
+	float const		b = VEC2_DOT(ray->pos, ray->dir) * 2.f;
 	float			d;
 
-	a = VEC2_DOT(ray->dir, ray->dir) * 2.f;
-	b = VEC2_DOT(ray->pos, ray->dir) * 2.f;
 	d = b * b - (2.f * a * (VEC2_DOT(ray->pos, ray->pos) - 1.f));
 	if (d < 0.f)
 		return (false);
@@ -105,18 +103,18 @@ static bool		cylinder_intersect(t_vec2 *dist, bool *base,
 bool			cylinder_ray_intersect(t_intersect *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
-	t_vec2			dist;
 	bool			base;
 
-	if (!cylinder_intersect(&dist, &base, ray)
-		|| (intersect->dist = (dist.x < 0.f) ? dist.y : dist.x) < 0.f)
+	if (!cylinder_intersect(&intersect->dist, &base, ray)
+		|| (intersect->dist.x < 0.f && intersect->dist.y < 0.f))
 		return (false);
-	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, intersect->dist));
+	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir,
+			(intersect->dist.x < 0.f) ? intersect->dist.y : intersect->dist.x));
 	if (base)
 		intersect->norm = VEC3(0.f, 0.f, (ray->dir.z < 0.f) ? 1.f : -1.f);
 	else
 		intersect->norm = VEC3_Z(intersect->pos, 0.f);
-	if (dist.x < 0.f)
+	if (intersect->dist.x < 0.f)
 		intersect->norm = VEC3_SUB(VEC3_0(), intersect->norm);
 	if (base)
 		intersect->tex = VEC2(intersect->pos.x, intersect->pos.y);

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 12:37:19 by juloo             #+#    #+#             */
-/*   Updated: 2016/03/29 13:21:30 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/08 00:27:53 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,12 @@
 bool			plane_ray_intersect(t_intersect *intersect, t_obj const *obj,
 					t_vertex const *ray)
 {
-	float			tmp;
+	float			dist;
 
-	if (ray->dir.y == 0.f)
+	if (ray->dir.y == 0.f || (dist = -ray->pos.y / ray->dir.y) < 0.f)
 		return (false);
-	tmp = -ray->pos.y / ray->dir.y;
-	if (tmp < 0)
-		return (false);
-	intersect->dist = tmp;
-	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, tmp));
+	intersect->dist = VEC2(dist, dist);
+	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, dist));
 	if (intersect->pos.x < PLANE_MIN.x || intersect->pos.x > PLANE_MAX.x
 		|| intersect->pos.z < PLANE_MIN.y || intersect->pos.z > PLANE_MAX.y)
 		return (false);

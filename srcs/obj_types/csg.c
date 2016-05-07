@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 16:52:51 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/04/02 17:45:28 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/08 00:34:18 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool			or_ray_intersect(t_intersect *dst, t_obj const *obj,
 	b[0] = ray_intersect(&intrsct[0], objs[0], ray);
 	b[1] = ray_intersect(&intrsct[1], objs[1], ray);
 	if (b[0])
-		*dst = intrsct[(b[1] && intrsct[0].dist > intrsct[1].dist) ? 1 : 0];
+		*dst = intrsct[(b[1] && intrsct[0].dist.x > intrsct[1].dist.x) ? 1 : 0];
 	else if (b[1])
 		*dst = intrsct[1];
 	else
@@ -56,7 +56,7 @@ bool			and_ray_intersect(t_intersect *dst, t_obj const *obj,
 	b[1] = ray_intersect(&intrsct[1], objs[1], ray);
 	if (!b[0] || !b[1])
 		return (false);
-	*dst = intrsct[(intrsct[0].dist > intrsct[1].dist) ? 0 : 1];
+	*dst = intrsct[(intrsct[0].dist.x > intrsct[1].dist.x) ? 0 : 1];
 	return (true);
 }
 
@@ -71,7 +71,7 @@ bool			not_ray_intersect(t_intersect *dst, t_obj const *obj,
 	if (!(b[0] = ray_intersect(&intrsct[0], objs[0], ray)))
 		return (false);
 	b[1] = ray_intersect(&intrsct[1], objs[1], ray);
-	if (!b[1] || intrsct[1].dist >= intrsct[0].dist)
+	if (!b[1] || intrsct[1].dist.x >= intrsct[0].dist.x)
 	{
 		*dst = intrsct[0];
 		return (true);
@@ -81,8 +81,8 @@ bool			not_ray_intersect(t_intersect *dst, t_obj const *obj,
 	if (!(b[0] = ray_intersect(&intrsct[0], objs[0], &tmp)))
 		return (false);
 	if ((b[1] = ray_intersect(&intrsct[1], objs[1], &tmp))
-		&& intrsct[1].dist >= intrsct[0].dist)
+		&& intrsct[1].dist.x >= intrsct[0].dist.x)
 		return (false);
-	*dst = intrsct[(b[1] && intrsct[1].dist < intrsct[0].dist) ? 1 : 0];
+	*dst = intrsct[(b[1] && intrsct[1].dist.x < intrsct[0].dist.x) ? 1 : 0];
 	return (true);
 }
