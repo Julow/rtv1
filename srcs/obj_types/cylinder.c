@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 12:23:40 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/08 00:33:35 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/08 14:30:27 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,35 +86,32 @@ static bool		cylinder_intersect(t_vec2 *dist, bool *base,
 	{
 		if (!cylinder_base(dist, ray))
 			return (false);
-		*base = true;
+		base[0] = true;
+		base[1] = true;
 	}
 	else if (!cylinder_base(&tmp, ray))
 	{
-		*base = false;
+		base[0] = false;
+		base[1] = false;
 	}
 	else
 	{
-		dist->x = (*base = (tmp.x < dist->x)) ? tmp.x : dist->x;
-		dist->y = MAX(tmp.y, dist->y);
+		dist->x = (base[0] = (tmp.x < dist->x)) ? tmp.x : dist->x;
+		dist->y = (base[1] = (tmp.y > dist->y)) ? tmp.y : dist->y;
 	}
 	return (true);
 }
 
-bool			cylinder_ray_intersect(t_intersect *intersect, t_obj const *obj,
-					t_vertex const *ray)
+static void		load_intersect(bool base, bool out, float dist,
+					t_vertex const *ray, t_intersect *intersect)
 {
-	bool			base;
-
-	if (!cylinder_intersect(&intersect->dist, &base, ray)
-		|| (intersect->dist.x < 0.f && intersect->dist.y < 0.f))
-		return (false);
-	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir,
-			(intersect->dist.x < 0.f) ? intersect->dist.y : intersect->dist.x));
+	intersect->dist = dist;
+	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, dist));
 	if (base)
 		intersect->norm = VEC3(0.f, 0.f, (ray->dir.z < 0.f) ? 1.f : -1.f);
 	else
 		intersect->norm = VEC3_Z(intersect->pos, 0.f);
-	if (intersect->dist.x < 0.f)
+	if (out)
 		intersect->norm = VEC3_SUB(VEC3_0(), intersect->norm);
 	if (base)
 		intersect->tex = VEC2(intersect->pos.x, intersect->pos.y);
@@ -122,6 +119,26 @@ bool			cylinder_ray_intersect(t_intersect *intersect, t_obj const *obj,
 		intersect->tex = VEC2(
 			atan2(intersect->norm.x, intersect->norm.y) / (2.f * M_PI) + 0.5f,
 			(intersect->pos.z - CYLINDER_MIN) / (CYLINDER_MAX - CYLINDER_MIN));
+}
+
+bool			cylinder_ray_intersect(t_obj const *obj, t_vertex const *ray,
+					bool both, t_intersect *intersect)
+{
+	t_vec2			dist;
+	bool			base[2];
+
+	if (!cylinder_intersect(&dist, base, ray)
+		|| (dist.x < 0.f && dist.y < 0.f))
+		return (false);
+	if (both)
+	{
+		load_intersect(base[0], false, dist.x, ray, &intersect[0]);
+		load_intersect(base[1], true, dist.y, ray, &intersect[1]);
+	}
+	else if (dist.x < 0.f)
+		load_intersect(base[1], true, dist.y, ray, intersect);
+	else
+		load_intersect(base[0], false, dist.x, ray, intersect);
 	return (true);
 	(void)obj;
 }

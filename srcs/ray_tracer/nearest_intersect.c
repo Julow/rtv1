@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/08 00:41:16 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/08 14:41:21 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ struct			s_nearest
 {
 	t_intersect		intersect;
 	t_obj const		*obj;
-	float			dist;
 };
 
 static bool		obj_intersect(t_nearest *dst, t_obj const *obj,
@@ -27,22 +26,18 @@ static bool		obj_intersect(t_nearest *dst, t_obj const *obj,
 {
 	t_intersect		intersect;
 	t_vertex		tmp_ray;
-	float			tmp_dist;
 
 	g_ray_stats.intersect_test++;
 	tmp_ray = *ray;
 	ft_mat4apply_vec3(&obj->m_inv, &tmp_ray.pos, 1.f);
 	ft_mat4apply_vec3(&obj->m_inv, &tmp_ray.dir, 0.f);
-	if (obj->type->ray_intersect(&intersect, obj, &tmp_ray))
+	if (obj->type->ray_intersect(obj, &tmp_ray, false, &intersect))
 	{
-		tmp_dist = (intersect.dist.x < 0.f) ?
-				intersect.dist.y : intersect.dist.x;
-		ASSERT(tmp_dist >= 0.f);
-		if (dst->obj == NULL || tmp_dist < dst->dist) // TODO: check dist ??
-		{
+		if (dst->obj == NULL || intersect.dist < dst->intersect.dist)
+		{ // TODO: check dist ??
 			ft_mat4apply_vec3(&obj->m, &intersect.pos, 1.f);
 			ft_mat4apply_vec3(&obj->m, &intersect.norm, 0.f);
-			*dst = (t_nearest){intersect, obj, tmp_dist};
+			*dst = (t_nearest){intersect, obj};
 		}
 		return (true);
 	}

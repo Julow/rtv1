@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:38:51 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/08 00:41:46 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/08 14:40:50 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,36 @@ static bool		sphere_intersect(t_vec2 *dist, t_vertex const *ray)
 	return (true);
 }
 
-bool			sphere_ray_intersect(t_intersect *intersect, t_obj const *obj,
-					t_vertex const *ray)
+static void		load_intersect(bool out, float dist, t_vertex const *ray,
+					t_intersect *intersect)
 {
-	if (!sphere_intersect(&intersect->dist, ray)
-		|| (intersect->dist.x < 0.f && intersect->dist.y < 0.f))
-		return (false);
-	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir,
-			(intersect->dist.x < 0.f) ? intersect->dist.y : intersect->dist.x));
-	if (intersect->dist.x < 0.f)
+	intersect->dist = dist;
+	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, dist));
+	if (out)
 		intersect->norm = VEC3_SUB(VEC3_0(), intersect->pos);
 	else
 		intersect->norm = intersect->pos;
 	intersect->tex = VEC2(
 		atan2(intersect->norm.z, intersect->norm.x) / (2.f * M_PI) + 0.5f,
 		asin(intersect->norm.y) / M_PI + 0.5f);
+}
+
+bool			sphere_ray_intersect(t_obj const *obj, t_vertex const *ray,
+					bool both, t_intersect *intersect)
+{
+	t_vec2			dist;
+
+	if (!sphere_intersect(&dist, ray) || (dist.x < 0.f && dist.y < 0.f))
+		return (false);
+	if (both)
+	{
+		load_intersect(false, dist.x, ray, &intersect[0]);
+		load_intersect(true, dist.y, ray, &intersect[1]);
+	}
+	else if (dist.x < 0.f)
+		load_intersect(true, dist.y, ray, intersect);
+	else
+		load_intersect(false, dist.x, ray, intersect);
 	return (true);
 	(void)obj;
 }

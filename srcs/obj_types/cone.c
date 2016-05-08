@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 19:41:16 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/08 00:26:25 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/08 14:33:45 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,40 +74,56 @@ static bool		cone_intersect(t_vec2 *dist, bool *base, t_vertex const *ray)
 		if (!cone_base(&tmp, ray))
 			return (false);
 		*dist = VEC2(tmp, tmp);
-		*base = true;
+		base[0] = true;
+		base[1] = true;
 	}
 	else if (!cone_base(&tmp, ray))
 	{
-		*base = false;
+		base[0] = false;
+		base[1] = false;
 	}
 	else
 	{
-		dist->x = (*base = (tmp < dist->x)) ? tmp : dist->x;
-		dist->y = MAX(tmp, dist->y);
+		dist->x = (base[0] = (tmp < dist->x)) ? tmp : dist->x;
+		dist->y = (base[1] = (tmp > dist->y)) ? tmp : dist->y;
 	}
 	return (true);
 }
 
-bool			cone_ray_intersect(t_intersect *intersect, t_obj const *obj,
-					t_vertex const *ray)
+static void		load_intersect(bool base, bool out, float dist,
+					t_vertex const *ray, t_intersect *intersect)
 {
-	bool			base;
-
-	if (!cone_intersect(&intersect->dist, &base, ray)
-		|| (intersect->dist.x < 0.f && intersect->dist.y < 0.f))
-		return (false);
-	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir,
-			(intersect->dist.x < 0.f) ? intersect->dist.y : intersect->dist.x));
+	intersect->dist = dist;
+	intersect->pos = VEC3_ADD(ray->pos, VEC3_MUL1(ray->dir, dist));
 	if (base)
 		intersect->norm = VEC3(0, 0, 1.f);
 	else
 		intersect->norm = ft_vec3norm(VEC3_Z(intersect->pos, -intersect->pos.z));
-	if (intersect->dist.x < 0.f)
+	if (out)
 		intersect->norm = VEC3_SUB(VEC3_0(), intersect->norm);
 	if (base)
 		intersect->tex = VEC2(intersect->pos.x, intersect->pos.y);
 	else
 		intersect->tex = VEC2(intersect->norm.z, intersect->norm.y / 2.f + 0.5f);
+}
+
+bool			cone_ray_intersect(t_obj const *obj, t_vertex const *ray,
+					bool both, t_intersect *intersect)
+{
+	t_vec2			dist;
+	bool			base[2];
+
+	if (!cone_intersect(&dist, &base, ray) || (dist.x < 0.f && dist.y < 0.f))
+		return (false);
+	if (both)
+	{
+		load_intersect(base[0], false, dist.x, ray, &intersect[0]);
+		load_intersect(base[1], true, dist.y, ray, &intersect[1]);
+	}
+	else if (dist.x < 0.f)
+		load_intersect(base[1], true, dist.y, ray, intersect);
+	else
+		load_intersect(base[0], false, dist.x, ray, intersect);
 	return (true);
 	(void)obj;
 }

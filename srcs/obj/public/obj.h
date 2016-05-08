@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/08 00:23:51 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/08 12:55:23 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,16 @@
 typedef struct s_obj			t_obj;
 typedef struct s_material		t_material;
 typedef struct s_intersect		t_intersect;
-typedef bool					(*t_intersect_f)(t_intersect *intersect,
-									t_obj const *obj, t_vertex const *ray);
+
+/*
+** Intersection function
+** -
+** if 'both' is true, 2 intersections are store into 'intersect'
+** otherwise, the min positive intersection is used
+*/
+typedef bool					(*t_intersect_f)(t_obj const *obj,
+									t_vertex const *ray, bool both,
+									t_intersect *intersect);
 
 /*
 ** ========================================================================== **
@@ -72,7 +80,7 @@ struct			s_intersect
 	t_vec3			pos;
 	t_vec3			norm;
 	t_vec2			tex;
-	t_vec2			dist;
+	float			dist;
 };
 
 #endif
