@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/23 19:41:16 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/08 14:33:45 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/09 12:01:19 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ bool			cone_ray_intersect(t_obj const *obj, t_vertex const *ray,
 	t_vec2			dist;
 	bool			base[2];
 
-	if (!cone_intersect(&dist, &base, ray) || (dist.x < 0.f && dist.y < 0.f))
+	if (!cone_intersect(&dist, base, ray) || (dist.x < 0.f && dist.y < 0.f))
 		return (false);
 	if (both)
 	{

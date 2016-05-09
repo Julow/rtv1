@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 12:08:18 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/17 13:31:43 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/09 16:35:32 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,16 @@ bool		ft_mlx_open(t_mlx_win *dst, void *mlx, t_vec2u size, t_sub title)
 	if ((dst->win_id = mlx_new_window(mlx, size.x, size.y, title_buff)) == NULL)
 		return (false);
 	if ((dst->img_id = mlx_new_image(mlx, size.x, size.y)) == NULL)
-		return (mlx_destroy_window(dst->mlx_context, dst->win_id), false);
+	{
+		mlx_destroy_window(dst->mlx_context, dst->win_id);
+		return (false);
+	}
 	dst->img = (t_img){V(mlx_get_data_addr(dst->img_id, &bits_per_pixel,
 					&size_line, &endian)), size.x, size.y};
 	if (bits_per_pixel != 32 || endian != 0)
-		return (ft_mlx_close(dst), false);
+	{
+		ft_mlx_close(dst);
+		return (false);
+	}
 	return (true);
 }

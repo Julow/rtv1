@@ -6,20 +6,12 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/08 14:41:21 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/09 16:33:40 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "internal.h"
 #include "kd_tree.h"
-
-typedef struct s_nearest		t_nearest;
-
-struct			s_nearest
-{
-	t_intersect		intersect;
-	t_obj const		*obj;
-};
 
 static bool		obj_intersect(t_nearest *dst, t_obj const *obj,
 					t_vertex const *ray)
@@ -34,7 +26,7 @@ static bool		obj_intersect(t_nearest *dst, t_obj const *obj,
 	if (obj->type->ray_intersect(obj, &tmp_ray, false, &intersect))
 	{
 		if (dst->obj == NULL || intersect.dist < dst->intersect.dist)
-		{ // TODO: check dist ??
+		{
 			ft_mat4apply_vec3(&obj->m, &intersect.pos, 1.f);
 			ft_mat4apply_vec3(&obj->m, &intersect.norm, 0.f);
 			*dst = (t_nearest){intersect, obj};

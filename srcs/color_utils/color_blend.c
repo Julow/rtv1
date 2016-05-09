@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/05 08:15:56 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/04/05 09:15:18 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/09 16:36:53 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ uint32_t		color32_blend(uint32_t dst, uint32_t src)
 	return (COLOR32(out_a / 255,
 		(COLOR32_R(src) * src_fact + (COLOR32_R(dst) * dst_fact)) / out_a,
 		(COLOR32_G(src) * src_fact + (COLOR32_G(dst) * dst_fact)) / out_a,
-		(COLOR32_B(src) * src_fact + (COLOR32_B(dst) * dst_fact)) / out_a
-	));
+		(COLOR32_B(src) * src_fact + (COLOR32_B(dst) * dst_fact)) / out_a));
 }
 
 void			colorf_blend(t_vec4 *color, t_vec4 const *src)

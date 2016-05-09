@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/08 17:19:42 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/09 14:38:33 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ t_vec4			texture_bilinear(t_img const *texture, t_vec2 uv)
 
 /*
 ** light through objects:
-**  light_rgb = LERP(obj_rgb * (1 - obj_a) * light_rgb * obj_a, light_rgb, obj_a)
+**  light_rgb =
+**  	LERP(obj_rgb * (1 - obj_a) * light_rgb * obj_a, light_rgb, obj_a)
+** -
+** TODO: attenuation (w)
 */
 
 static t_vec4	light_color(t_scene const *scene, t_light const *light,
@@ -74,11 +77,10 @@ static t_vec4	light_color(t_scene const *scene, t_light const *light,
 		obj_color = texture_bilinear(obj->material.texture, intersect.tex);
 		color = VEC3_MUL(color, VEC3_SUB1(
 				VEC3_MUL1(obj_color, obj_color.w * (1 - obj_color.w)),
-				obj_color.w - 1
-			));
+				obj_color.w - 1));
 		ray.pos = intersect.pos;
 	}
-	return (VEC4_3(color, light->brightness)); // TODO: w should be the attenued brightness
+	return (VEC4_3(color, light->brightness));
 }
 
 /*
@@ -134,6 +136,9 @@ t_vec4			ray_to_light(t_scene const *scene, t_material const *mat,
 	return (VEC4(light_sum.x, light_sum.y, light_sum.z, tmp_color.w));
 }
 
+/*
+** TODO: pass from/to materials
+*/
 static bool		refracted_ray(t_vertex const *ray, t_material const *material,
 					t_intersect const *intersect, t_vec3 *dst)
 {
@@ -153,7 +158,6 @@ static bool		refracted_ray(t_vertex const *ray, t_material const *material,
 	tmp = index * cos_t - sqrtf(1.f - tmp);
 	*dst = ft_vec3norm(VEC3_ADD(VEC3_MUL1(ray->dir, index),
 		VEC3_MUL1(intersect->norm, tmp)));
-	// TODO: mat -> air
 	return (true);
 }
 

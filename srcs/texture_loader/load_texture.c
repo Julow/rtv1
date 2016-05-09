@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:40:13 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/01 21:17:23 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/09 14:55:30 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@
 
 #include <stdlib.h>
 
-#define SUBV(V)		SUB((char const*)(V), sizeof(V)) /* TODO: move */
+/*
+** TODO: move
+*/
+#define SUBV(V)		SUB((char const*)(V), sizeof(V))
 
 static t_hmap	*texture_cache(void)
 {

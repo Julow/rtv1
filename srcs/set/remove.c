@@ -6,12 +6,32 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 11:31:30 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 21:17:09 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/09 14:45:55 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/set.h"
 #include "internal.h"
+
+static void		set_balance_end(t_set *set, t_set_node *node,
+					t_set_node *parent, t_vec2u i)
+{
+	if (SET_CHILD(node, i.y) == NULL
+		|| !SET_ISRED(SET_CHILD(node, i.y)))
+	{
+		SET_SETBLACK(SET_CHILD(node, i.x));
+		SET_SETRED(node);
+		set_node_rotate(set, node, i.y == 1);
+		node = SET_CHILD(parent, i.y);
+	}
+	if (SET_ISRED(parent))
+		SET_SETRED(node);
+	else
+		SET_SETBLACK(node);
+	SET_SETBLACK(parent);
+	SET_SETBLACK(SET_CHILD(node, i.y));
+	set_node_rotate(set, parent, i.x == 1);
+}
 
 static void		set_balance(t_set *set, t_set_node *node)
 {
@@ -23,8 +43,7 @@ static void		set_balance(t_set *set, t_set_node *node)
 	{
 		i = ((node == parent->left) || (parent->left == NULL
 				&& node != parent->right)) ? VEC2U(1, 2) : VEC2U(2, 1);
-		sibling = SET_CHILD(parent, i.y);
-		if (SET_ISRED(sibling))
+		if (SET_ISRED(sibling = SET_CHILD(parent, i.y)))
 		{
 			SET_SETBLACK(sibling);
 			SET_SETRED(parent);
@@ -38,21 +57,7 @@ static void		set_balance(t_set *set, t_set_node *node)
 			node = parent;
 			continue ;
 		}
-		if (SET_CHILD(sibling, i.y) == NULL
-			|| !SET_ISRED(SET_CHILD(sibling, i.y)))
-		{
-			SET_SETBLACK(SET_CHILD(sibling, i.x));
-			SET_SETRED(sibling);
-			set_node_rotate(set, sibling, i.y == 1);
-			sibling = SET_CHILD(parent, i.y);
-		}
-		if (SET_ISRED(parent))
-			SET_SETRED(sibling);
-		else
-			SET_SETBLACK(sibling);
-		SET_SETBLACK(parent);
-		SET_SETBLACK(SET_CHILD(sibling, i.y));
-		set_node_rotate(set, parent, i.x == 1);
+		set_balance_end(set, sibling, parent, i);
 		break ;
 	}
 	SET_SETBLACK(node);

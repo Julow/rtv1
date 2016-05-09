@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 15:25:21 by juloo             #+#    #+#             */
-/*   Updated: 2016/04/28 21:17:14 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/09 15:33:41 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ void const		*ft_set_cnext(void const *element)
 	}
 	else
 	{
-		tmp = SET_PARENT(element);
-		while (tmp != NULL && element == tmp->right)
-			tmp = SET_PARENT(element = tmp);
+		while ((tmp = SET_PARENT(element)) != NULL && element == tmp->right)
+			element = tmp;
 	}
 	return (tmp);
 }
@@ -42,9 +41,8 @@ void const		*ft_set_cprev(void const *element)
 	}
 	else
 	{
-		tmp = SET_PARENT(element);
-		while (tmp != NULL && element == tmp->left)
-			tmp = SET_PARENT(element = tmp);
+		while ((tmp = SET_PARENT(element)) != NULL && element == tmp->left)
+			element = tmp;
 	}
 	return (tmp);
 }

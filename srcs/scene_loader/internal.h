@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/02 10:59:55 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/09 18:53:32 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft/ft_dstr.h"
 # include "ft/ft_xml.h"
 # include "ft/libft.h"
+# include "ft/set.h"
 
 # include "kd_tree_builder.h"
 # include "obj.h"
@@ -102,13 +103,7 @@ struct		s_param_def
 	uint32_t		offset;
 };
 
-#define PARAM(NAME,F,S,VAR)		{SUBC(NAME),V(&parse_##F),offsetof(S,VAR)}
-
-/*
-** TODO: move
-*/
-bool		parse_xml_params(t_xml_parser *xml,
-				t_vector const *defs, void *data);
+# define PARAM(NAME,F,S,VAR)	{SUBC(NAME),V(&parse_##F),offsetof(S,VAR)}
 
 bool		parse_vec3(t_sub value, t_vec3 *dst);
 bool		parse_color(t_sub value, uint32_t *dst);
@@ -119,5 +114,22 @@ bool		parse_float(t_sub value, float *dst);
 bool		parse_name(t_sub value, t_dstr *dst);
 
 t_sub		ft_subtrim_is(t_sub sub, t_is is);
+
+/*
+** ========================================================================== **
+** Parse xml param
+** TODO: move
+*/
+
+typedef struct s_parse_param		t_parse_param;
+
+struct		s_parse_param
+{
+	t_set_h		set_h;
+	t_sub		name;
+};
+
+bool		parse_xml_params(t_xml_parser *xml,
+				t_vector const *defs, void *data);
 
 #endif

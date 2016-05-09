@@ -6,18 +6,12 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 10:28:44 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/02 16:26:27 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/09 18:52:10 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/set.h"
 #include "internal.h"
-
-struct		s_param
-{
-	t_set_h		set_h;
-	t_sub		name;
-};
 
 static bool	parse_xml_param(t_xml_parser *xml, t_vector const *defs, void *data)
 {
@@ -37,7 +31,7 @@ static bool	parse_xml_param(t_xml_parser *xml, t_vector const *defs, void *data)
 	return (ft_xml_error(xml, SUBC("Invalid param")));
 }
 
-static int	param_cmp(struct s_param const *a, t_sub const *b)
+static int	param_cmp(t_parse_param const *a, t_sub const *b)
 {
 	if (a->name.length != b->length)
 		return (a->name.length - b->length);
@@ -49,10 +43,10 @@ static bool	parse_xml_params_loop(t_xml_parser *xml, t_set *prev_params,
 {
 	t_sub const		p = ft_xml_name(xml);
 	char			param_name[p.length];
-	struct s_param	param;
+	t_parse_param	param;
 
 	ft_memcpy(param_name, p.str, p.length);
-	param = (struct s_param){SET_H(), SUB(param_name, p.length)};
+	param = (t_parse_param){SET_HEAD(), SUB(param_name, p.length)};
 	if ((ft_set_cget(prev_params, &param.name) != NULL
 		&& !ft_xml_error(xml, SUBC("Redefined param")))
 		|| !parse_xml_param(xml, defs, data))

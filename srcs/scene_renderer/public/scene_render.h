@@ -6,17 +6,17 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:29:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/02/25 19:21:28 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/09 15:41:50 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAMERA_H
-# define CAMERA_H
+#ifndef SCENE_RENDER_H
+# define SCENE_RENDER_H
 
 # include "ft/img.h"
 # include "scene.h"
 
-#define FOV		42.f
+# define FOV		42.f
 
 /*
 ** ========================================================================== **

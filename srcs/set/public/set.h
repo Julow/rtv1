@@ -6,12 +6,12 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 11:34:10 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/02 12:55:36 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/09 18:52:21 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RB_TREE_H
-# define RB_TREE_H
+#ifndef SET_H
+# define SET_H
 
 # include "ft/libft.h"
 
@@ -43,7 +43,7 @@ struct			s_set
 /*
 ** set element header
 ** -
-** SET_H() construct an element header
+** SET_HEAD() construct an element header
 ** -
 ** element's data have to be prefixed with the t_rb_node header
 */
@@ -54,7 +54,7 @@ struct			s_set_h
 
 # define SET(CMP, FLAGS)		((t_set){NULL, V(CMP), 0, (FLAGS)})
 
-# define SET_H()				((t_set_h){{NULL, NULL, NULL}})
+# define SET_HEAD()				((t_set_h){{NULL, NULL, NULL}})
 
 # define SET_ALLOW_DUP			(1 << 1)
 

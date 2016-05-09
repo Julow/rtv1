@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/08 12:55:23 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/09 18:52:57 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct s_obj			t_obj;
 typedef struct s_material		t_material;
 typedef struct s_intersect		t_intersect;
+typedef struct s_obj_type		t_obj_type;
 
 /*
 ** Intersection function
@@ -60,13 +61,19 @@ struct			s_material
 # define DEF_MTL		((t_material){NULL, NULL, NULL, 0.01f, 0.f, 1.f, 128.f})
 
 /*
+** Obj type
+*/
+struct			s_obj_type
+{
+	t_intersect_f	ray_intersect;
+};
+
+/*
 ** Object
 */
 struct			s_obj
 {
-	struct {
-		t_intersect_f	ray_intersect;
-	}				type[1];
+	t_obj_type		type[1];
 	t_material		material;
 	t_mat4			m;
 	t_mat4			m_inv;

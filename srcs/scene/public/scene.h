@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:33:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/04 13:38:05 by juloo            ###   ########.fr       */
+/*   Updated: 2016/05/09 18:36:26 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ struct			s_light
 	float			cutoff;
 };
 
-# define DEF_LIGHT		((t_light){VEC3_0(), VEC3_UP(), 1.f, VEC3_1(1.f), 100.f, 1.f})
+# define DEF_LIGHT		((t_light){VEC3_0(), VEC3_UP(), 1, VEC3_1(1), 100, 1})
 
 struct			s_camera
 {
