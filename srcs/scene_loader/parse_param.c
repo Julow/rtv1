@@ -6,11 +6,12 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 23:13:37 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/02 10:35:00 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/12 23:48:55 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "color_utils.h"
+#include "ft/color_utils.h"
+
 #include "internal.h"
 #include "texture_loader.h"
 

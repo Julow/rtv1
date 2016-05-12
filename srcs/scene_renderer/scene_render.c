@@ -6,14 +6,14 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:31:49 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/02 17:34:50 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/12 23:48:42 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/color_utils.h"
 #include "ft/ft_printf.h"
 #include "ft/math_vec3.h"
 
-#include "color_utils.h"
 #include "math_utils.h"
 #include "ray_tracer.h"
 #include "scene_render.h"

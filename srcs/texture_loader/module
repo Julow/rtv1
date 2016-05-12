@@ -6,4 +6,4 @@ module texture_loader:
 	private require ft::img_loader
 	private require ft::printf
 	private require ft::hmap
-	private require color_utils
+	private require ft::color_utils

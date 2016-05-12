@@ -6,15 +6,15 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:40:13 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/09 14:55:30 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/05/12 23:48:47 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/color_utils.h"
 #include "ft/ft_hmap.h"
 #include "ft/ft_printf.h"
 #include "ft/img_loader.h"
 
-#include "color_utils.h"
 #include "texture_loader.h"
 
 #include <stdlib.h>

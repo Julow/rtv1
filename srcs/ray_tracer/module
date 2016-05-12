@@ -7,4 +7,4 @@ module ray_tracer:
 	public require scene
 	private require obj
 	private require kd_tree
-	private require color_utils
+	private require ft::color_utils

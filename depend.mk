@@ -1,22 +1,20 @@
 INCLUDE_FLAGS += -I$(O_DIR)/_public
 LINK_FLAGS += -lm -lm -lmlx -lm -lm
-OBJ_DIR_TREE += $(O_DIR)/srcs/texture_loader/ $(O_DIR)/srcs/set/ \
-	$(O_DIR)/srcs/scene_renderer/ $(O_DIR)/srcs/scene_loader/ \
-	$(O_DIR)/srcs/ray_tracer/ $(O_DIR)/srcs/obj_types/ $(O_DIR)/srcs/mlx_win/ \
-	$(O_DIR)/srcs/math_utils/ $(O_DIR)/srcs/main/ $(O_DIR)/srcs/kd_tree/ \
-	$(O_DIR)/srcs/color_utils/ $(O_DIR)/srcs/ $(O_DIR)/libft/ft_xml/ \
-	$(O_DIR)/libft/ft_vector/ $(O_DIR)/libft/ft_printf/formats/ \
-	$(O_DIR)/libft/ft_printf/ $(O_DIR)/libft/ft_out/ $(O_DIR)/libft/ft_math/ \
-	$(O_DIR)/libft/ft_in/ $(O_DIR)/libft/ft_img_loader/ $(O_DIR)/libft/ft_img/ \
-	$(O_DIR)/libft/ft_hmap/ $(O_DIR)/libft/ft_dstr/ $(O_DIR)/libft/ft_base/ \
-	$(O_DIR)/libft/ $(O_DIR)/_public/ft/ $(O_DIR)/_public/ $(O_DIR)/
-O_FILES += $(O_DIR)/srcs/color_utils/color_blend.o \
-	$(O_DIR)/srcs/color_utils/color_gamma.o \
-	$(O_DIR)/srcs/color_utils/color_hex.o \
-	$(O_DIR)/srcs/color_utils/color_utils.o $(O_DIR)/libft/ft_base/ft_abs.o \
-	$(O_DIR)/libft/ft_base/ft_assert.o $(O_DIR)/libft/ft_base/ft_atoib.o \
-	$(O_DIR)/libft/ft_base/ft_bitset.o $(O_DIR)/libft/ft_base/ft_bzero.o \
-	$(O_DIR)/libft/ft_base/ft_clock.o $(O_DIR)/libft/ft_base/ft_clock_stack.o \
+OBJ_DIR_TREE += $(O_DIR)/srcs/texture_loader/ $(O_DIR)/srcs/scene_renderer/ \
+	$(O_DIR)/srcs/scene_loader/ $(O_DIR)/srcs/ray_tracer/ \
+	$(O_DIR)/srcs/obj_types/ $(O_DIR)/srcs/mlx_win/ $(O_DIR)/srcs/math_utils/ \
+	$(O_DIR)/srcs/main/ $(O_DIR)/srcs/kd_tree/ $(O_DIR)/srcs/ \
+	$(O_DIR)/libft/ft_xml/ $(O_DIR)/libft/ft_vector/ $(O_DIR)/libft/ft_set/ \
+	$(O_DIR)/libft/ft_printf/formats/ $(O_DIR)/libft/ft_printf/ \
+	$(O_DIR)/libft/ft_out/ $(O_DIR)/libft/ft_math/ $(O_DIR)/libft/ft_in/ \
+	$(O_DIR)/libft/ft_img_loader/ $(O_DIR)/libft/ft_img/ \
+	$(O_DIR)/libft/ft_hmap/ $(O_DIR)/libft/ft_dstr/ \
+	$(O_DIR)/libft/ft_color_utils/ $(O_DIR)/libft/ft_base/ $(O_DIR)/libft/ \
+	$(O_DIR)/_public/ft/ $(O_DIR)/_public/ $(O_DIR)/
+O_FILES += $(O_DIR)/libft/ft_base/ft_abs.o $(O_DIR)/libft/ft_base/ft_assert.o \
+	$(O_DIR)/libft/ft_base/ft_atoib.o $(O_DIR)/libft/ft_base/ft_bitset.o \
+	$(O_DIR)/libft/ft_base/ft_bzero.o $(O_DIR)/libft/ft_base/ft_clock.o \
+	$(O_DIR)/libft/ft_base/ft_clock_stack.o \
 	$(O_DIR)/libft/ft_base/ft_emalloc.o $(O_DIR)/libft/ft_base/ft_escape.o \
 	$(O_DIR)/libft/ft_base/ft_getenv.o $(O_DIR)/libft/ft_base/ft_is.o \
 	$(O_DIR)/libft/ft_base/ft_max.o $(O_DIR)/libft/ft_base/ft_memcmp.o \
@@ -31,6 +29,10 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_blend.o \
 	$(O_DIR)/libft/ft_base/ft_subto.o $(O_DIR)/libft/ft_base/ft_unescape.o \
 	$(O_DIR)/libft/ft_base/ft_widetoa.o $(O_DIR)/libft/ft_base/ft_wstrconv.o \
 	$(O_DIR)/libft/ft_base/ft_wstrlen.o $(O_DIR)/libft/ft_base/ft_wstrnconv.o \
+	$(O_DIR)/libft/ft_color_utils/color_blend.o \
+	$(O_DIR)/libft/ft_color_utils/color_gamma.o \
+	$(O_DIR)/libft/ft_color_utils/color_hex.o \
+	$(O_DIR)/libft/ft_color_utils/color_utils.o \
 	$(O_DIR)/libft/ft_dstr/ft_dstradd.o $(O_DIR)/libft/ft_dstr/ft_dstrclear.o \
 	$(O_DIR)/libft/ft_dstr/ft_dstrextend.o \
 	$(O_DIR)/libft/ft_dstr/ft_dstrspan.o $(O_DIR)/libft/ft_hmap/ft_djb2.o \
@@ -44,6 +46,8 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_blend.o \
 	$(O_DIR)/libft/ft_img_loader/tga_loader.o $(O_DIR)/libft/ft_in/file_in.o \
 	$(O_DIR)/libft/ft_in/file_in_open.o $(O_DIR)/libft/ft_in/ft_in_refresh.o \
 	$(O_DIR)/libft/ft_in/ft_read.o $(O_DIR)/libft/ft_in/ft_readto.o \
+	$(O_DIR)/libft/ft_math/ft_mat3apply.o $(O_DIR)/libft/ft_math/ft_mat3mul.o \
+	$(O_DIR)/libft/ft_math/ft_mat3transpose.o \
 	$(O_DIR)/libft/ft_math/ft_mat4apply.o \
 	$(O_DIR)/libft/ft_math/ft_mat4look_at.o \
 	$(O_DIR)/libft/ft_math/ft_mat4mult.o \
@@ -75,18 +79,15 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_blend.o \
 	$(O_DIR)/libft/ft_printf/formats/str.o $(O_DIR)/libft/ft_printf/ft_logf.o \
 	$(O_DIR)/libft/ft_printf/ft_out.o $(O_DIR)/libft/ft_printf/ft_printf.o \
 	$(O_DIR)/libft/ft_printf/ft_putf.o $(O_DIR)/libft/ft_printf/ft_vprintf.o \
-	$(O_DIR)/srcs/set/first.o $(O_DIR)/srcs/set/get.o \
-	$(O_DIR)/srcs/set/insert.o $(O_DIR)/srcs/set/iter.o \
-	$(O_DIR)/srcs/set/remove.o $(O_DIR)/srcs/set/utils.o \
+	$(O_DIR)/libft/ft_set/first.o $(O_DIR)/libft/ft_set/get.o \
+	$(O_DIR)/libft/ft_set/insert.o $(O_DIR)/libft/ft_set/iter.o \
+	$(O_DIR)/libft/ft_set/remove.o $(O_DIR)/libft/ft_set/utils.o \
 	$(O_DIR)/libft/ft_vector/ft_vclear.o $(O_DIR)/libft/ft_vector/ft_vpush.o \
 	$(O_DIR)/libft/ft_vector/ft_vreserve.o $(O_DIR)/libft/ft_vector/ft_vspan.o \
 	$(O_DIR)/libft/ft_xml/ft_xml.o $(O_DIR)/libft/ft_xml/xml_tokens.o \
 	$(O_DIR)/libft/ft_xml/xml_utils.o $(O_DIR)/srcs/kd_tree/kdtree_build.o \
 	$(O_DIR)/srcs/kd_tree/kdtree_builder.o \
 	$(O_DIR)/srcs/kd_tree/kdtree_intersect.o $(O_DIR)/srcs/main/main.o \
-	$(O_DIR)/srcs/math_utils/ft_mat3apply.o \
-	$(O_DIR)/srcs/math_utils/ft_mat3mul.o \
-	$(O_DIR)/srcs/math_utils/ft_mat3transpose.o \
 	$(O_DIR)/srcs/math_utils/quaternions.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_close.o $(O_DIR)/srcs/mlx_win/ft_mlx_open.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o $(O_DIR)/srcs/obj_types/cone.o \
@@ -102,42 +103,24 @@ O_FILES += $(O_DIR)/srcs/color_utils/color_blend.o \
 	$(O_DIR)/srcs/scene_loader/parse_xml_params.o \
 	$(O_DIR)/srcs/scene_renderer/scene_render.o \
 	$(O_DIR)/srcs/texture_loader/load_texture.o
-PUBLIC_LINKS += $(O_DIR)/_public/color_utils.h $(O_DIR)/_public/ft/ft_colors.h \
-	$(O_DIR)/_public/ft/ft_wchar.h $(O_DIR)/_public/ft/libft.h \
+PUBLIC_LINKS += $(O_DIR)/_public/ft/ft_wchar.h $(O_DIR)/_public/ft/ft_colors.h \
+	$(O_DIR)/_public/ft/libft.h $(O_DIR)/_public/ft/color_utils.h \
 	$(O_DIR)/_public/ft/ft_dstr.h $(O_DIR)/_public/ft/ft_hmap.h \
 	$(O_DIR)/_public/ft/img.h $(O_DIR)/_public/ft/img_loader.h \
-	$(O_DIR)/_public/ft/ft_file_in.h $(O_DIR)/_public/ft/ft_in.h \
-	$(O_DIR)/_public/ft/math_complex.h $(O_DIR)/_public/ft/math_mat4.h \
-	$(O_DIR)/_public/ft/math_vec2.h $(O_DIR)/_public/ft/math_vec3.h \
-	$(O_DIR)/_public/ft/math_vec4.h $(O_DIR)/_public/ft/ft_out.h \
-	$(O_DIR)/_public/ft/ft_str_out.h $(O_DIR)/_public/ft/ft_printf.h \
-	$(O_DIR)/_public/ft/ft_vprintf.h $(O_DIR)/_public/ft/set.h \
-	$(O_DIR)/_public/ft/ft_vector.h $(O_DIR)/_public/ft/ft_xml.h \
-	$(O_DIR)/_public/kd_tree.h $(O_DIR)/_public/kd_tree_builder.h \
-	$(O_DIR)/_public/math_mat3.h $(O_DIR)/_public/math_quaternions.h \
+	$(O_DIR)/_public/ft/ft_in.h $(O_DIR)/_public/ft/ft_file_in.h \
+	$(O_DIR)/_public/ft/math_vec4.h $(O_DIR)/_public/ft/math_mat4.h \
+	$(O_DIR)/_public/ft/math_complex.h $(O_DIR)/_public/ft/math_vec2.h \
+	$(O_DIR)/_public/ft/math_mat3.h $(O_DIR)/_public/ft/math_vec3.h \
+	$(O_DIR)/_public/ft/ft_out.h $(O_DIR)/_public/ft/ft_str_out.h \
+	$(O_DIR)/_public/ft/ft_printf.h $(O_DIR)/_public/ft/ft_vprintf.h \
+	$(O_DIR)/_public/ft/set.h $(O_DIR)/_public/ft/ft_vector.h \
+	$(O_DIR)/_public/ft/ft_xml.h $(O_DIR)/_public/kd_tree.h \
+	$(O_DIR)/_public/kd_tree_builder.h $(O_DIR)/_public/math_quaternions.h \
 	$(O_DIR)/_public/math_utils.h $(O_DIR)/_public/mlx_win.h \
 	$(O_DIR)/_public/obj.h $(O_DIR)/_public/obj_types.h \
 	$(O_DIR)/_public/ray_tracer.h $(O_DIR)/_public/scene.h \
 	$(O_DIR)/_public/scene_loader.h $(O_DIR)/_public/scene_render.h \
 	$(O_DIR)/_public/texture_loader.h
-
-# module color_utils
-$(O_DIR)/srcs/color_utils/color_blend.o: srcs/color_utils/color_blend.c \
-	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
-	srcs/color_utils/public/color_utils.h
-$(O_DIR)/srcs/color_utils/color_gamma.o: srcs/color_utils/color_gamma.c \
-	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
-	srcs/color_utils/public/color_utils.h
-$(O_DIR)/srcs/color_utils/color_hex.o: srcs/color_utils/color_hex.c \
-	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
-	srcs/color_utils/public/color_utils.h
-$(O_DIR)/srcs/color_utils/color_utils.o: srcs/color_utils/color_utils.c \
-	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
-	srcs/color_utils/public/color_utils.h
 
 # module ft::base
 $(O_DIR)/libft/ft_base/ft_abs.o: libft/ft_base/ft_abs.c \
@@ -210,6 +193,24 @@ $(O_DIR)/libft/ft_base/ft_wstrlen.o: libft/ft_base/ft_wstrlen.c \
 	libft/ft_base/public/ft_wchar.h libft/ft_base/public/libft.h
 $(O_DIR)/libft/ft_base/ft_wstrnconv.o: libft/ft_base/ft_wstrnconv.c \
 	libft/ft_base/public/ft_wchar.h libft/ft_base/public/libft.h
+
+# module ft::color_utils
+$(O_DIR)/libft/ft_color_utils/color_blend.o: \
+	libft/ft_color_utils/color_blend.c libft/ft_base/public/libft.h \
+	libft/ft_color_utils/public/color_utils.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h
+$(O_DIR)/libft/ft_color_utils/color_gamma.o: \
+	libft/ft_color_utils/color_gamma.c libft/ft_base/public/libft.h \
+	libft/ft_color_utils/public/color_utils.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h
+$(O_DIR)/libft/ft_color_utils/color_hex.o: libft/ft_color_utils/color_hex.c \
+	libft/ft_base/public/libft.h libft/ft_color_utils/public/color_utils.h \
+	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
+	libft/ft_math/public/math_vec4.h
+$(O_DIR)/libft/ft_color_utils/color_utils.o: \
+	libft/ft_color_utils/color_utils.c libft/ft_base/public/libft.h \
+	libft/ft_color_utils/public/color_utils.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h
 
 # module ft::dstr
 $(O_DIR)/libft/ft_dstr/ft_dstradd.o: libft/ft_dstr/ft_dstradd.c \
@@ -297,6 +298,15 @@ $(O_DIR)/libft/ft_in/ft_readto.o: libft/ft_in/ft_readto.c \
 	libft/ft_in/public/ft_in.h
 
 # module ft::math
+$(O_DIR)/libft/ft_math/ft_mat3apply.o: libft/ft_math/ft_mat3apply.c \
+	libft/ft_math/public/math_mat3.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h
+$(O_DIR)/libft/ft_math/ft_mat3mul.o: libft/ft_math/ft_mat3mul.c \
+	libft/ft_math/public/math_mat3.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h
+$(O_DIR)/libft/ft_math/ft_mat3transpose.o: libft/ft_math/ft_mat3transpose.c \
+	libft/ft_math/public/math_mat3.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h
 $(O_DIR)/libft/ft_math/ft_mat4apply.o: libft/ft_math/ft_mat4apply.c \
 	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h
@@ -460,22 +470,27 @@ $(O_DIR)/libft/ft_printf/ft_printf.o $(O_DIR)/libft/ft_printf/ft_putf.o \
 $(O_DIR)/libft/ft_printf/ft_vprintf.o: INCLUDE_FLAGS += -Ilibft/ft_printf
 
 # module ft::set
-$(O_DIR)/srcs/set/first.o: srcs/set/first.c libft/ft_base/public/libft.h \
-	srcs/set/internal.h srcs/set/public/set.h
-$(O_DIR)/srcs/set/get.o: srcs/set/get.c libft/ft_base/public/libft.h \
-	srcs/set/internal.h srcs/set/public/set.h
-$(O_DIR)/srcs/set/insert.o: srcs/set/insert.c libft/ft_base/public/libft.h \
-	srcs/set/internal.h srcs/set/public/set.h
-$(O_DIR)/srcs/set/iter.o: srcs/set/iter.c libft/ft_base/public/libft.h \
-	srcs/set/internal.h srcs/set/public/set.h
-$(O_DIR)/srcs/set/remove.o: srcs/set/remove.c libft/ft_base/public/libft.h \
-	srcs/set/internal.h srcs/set/public/set.h
-$(O_DIR)/srcs/set/utils.o: srcs/set/utils.c libft/ft_base/public/libft.h \
-	srcs/set/internal.h srcs/set/public/set.h
+$(O_DIR)/libft/ft_set/first.o: libft/ft_set/first.c \
+	libft/ft_base/public/libft.h libft/ft_set/internal.h \
+	libft/ft_set/public/set.h
+$(O_DIR)/libft/ft_set/get.o: libft/ft_set/get.c libft/ft_base/public/libft.h \
+	libft/ft_set/internal.h libft/ft_set/public/set.h
+$(O_DIR)/libft/ft_set/insert.o: libft/ft_set/insert.c \
+	libft/ft_base/public/libft.h libft/ft_set/internal.h \
+	libft/ft_set/public/set.h
+$(O_DIR)/libft/ft_set/iter.o: libft/ft_set/iter.c libft/ft_base/public/libft.h \
+	libft/ft_set/internal.h libft/ft_set/public/set.h
+$(O_DIR)/libft/ft_set/remove.o: libft/ft_set/remove.c \
+	libft/ft_base/public/libft.h libft/ft_set/internal.h \
+	libft/ft_set/public/set.h
+$(O_DIR)/libft/ft_set/utils.o: libft/ft_set/utils.c \
+	libft/ft_base/public/libft.h libft/ft_set/internal.h \
+	libft/ft_set/public/set.h
 
-$(O_DIR)/srcs/set/first.o $(O_DIR)/srcs/set/get.o $(O_DIR)/srcs/set/insert.o \
-$(O_DIR)/srcs/set/iter.o $(O_DIR)/srcs/set/remove.o $(O_DIR)/srcs/set/utils.o: \
-	INCLUDE_FLAGS += -Isrcs/set
+$(O_DIR)/libft/ft_set/first.o $(O_DIR)/libft/ft_set/get.o \
+$(O_DIR)/libft/ft_set/insert.o $(O_DIR)/libft/ft_set/iter.o \
+$(O_DIR)/libft/ft_set/remove.o $(O_DIR)/libft/ft_set/utils.o: INCLUDE_FLAGS += \
+	-Ilibft/ft_set
 
 # module ft::vector
 $(O_DIR)/libft/ft_vector/ft_vclear.o: libft/ft_vector/ft_vclear.c \
@@ -536,15 +551,6 @@ $(O_DIR)/srcs/main/main.o: srcs/main/main.c libft/ft_base/public/ft_colors.h \
 $(O_DIR)/srcs/main/main.o: INCLUDE_FLAGS += -Isrcs/main
 
 # module math_utils
-$(O_DIR)/srcs/math_utils/ft_mat3apply.o: srcs/math_utils/ft_mat3apply.c \
-	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
-	srcs/math_utils/public/math_mat3.h
-$(O_DIR)/srcs/math_utils/ft_mat3mul.o: srcs/math_utils/ft_mat3mul.c \
-	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
-	srcs/math_utils/public/math_mat3.h
-$(O_DIR)/srcs/math_utils/ft_mat3transpose.o: \
-	srcs/math_utils/ft_mat3transpose.c libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h srcs/math_utils/public/math_mat3.h
 $(O_DIR)/srcs/math_utils/quaternions.o: srcs/math_utils/quaternions.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h srcs/math_utils/public/math_quaternions.h \
@@ -627,11 +633,11 @@ $(O_DIR)/srcs/ray_tracer/nearest_intersect.o: \
 	srcs/obj/public/obj.h srcs/ray_tracer/internal.h \
 	srcs/ray_tracer/public/ray_tracer.h srcs/scene/public/scene.h
 $(O_DIR)/srcs/ray_tracer/ray_trace.o: srcs/ray_tracer/ray_trace.c \
-	libft/ft_base/public/libft.h libft/ft_img/public/img.h \
+	libft/ft_base/public/libft.h libft/ft_color_utils/public/color_utils.h \
+	libft/ft_img/public/img.h libft/ft_math/public/math_mat3.h \
 	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
-	libft/ft_vector/public/ft_vector.h srcs/color_utils/public/color_utils.h \
-	srcs/kd_tree/public/kd_tree.h srcs/math_utils/public/math_mat3.h \
+	libft/ft_vector/public/ft_vector.h srcs/kd_tree/public/kd_tree.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/ray_tracer/internal.h srcs/ray_tracer/public/ray_tracer.h \
 	srcs/scene/public/scene.h
@@ -649,42 +655,45 @@ $(O_DIR)/srcs/scene_loader/load_scenes.o: srcs/scene_loader/load_scenes.c \
 	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
 	libft/ft_out/public/ft_out.h libft/ft_printf/public/ft_printf.h \
-	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
-	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h \
-	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
-	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
-	srcs/scene_loader/public/scene_loader.h
+	libft/ft_set/public/set.h libft/ft_vector/public/ft_vector.h \
+	libft/ft_xml/public/ft_xml.h srcs/kd_tree/public/kd_tree.h \
+	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
+	srcs/obj/public/obj.h srcs/scene/public/scene.h \
+	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h
 $(O_DIR)/srcs/scene_loader/parse_obj.o: srcs/scene_loader/parse_obj.c \
 	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
 	libft/ft_img/public/img.h libft/ft_in/public/ft_in.h \
 	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
-	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
-	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h \
-	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
-	srcs/obj_types/public/obj_types.h srcs/scene/public/scene.h \
-	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h \
+	libft/ft_set/public/set.h libft/ft_vector/public/ft_vector.h \
+	libft/ft_xml/public/ft_xml.h srcs/kd_tree/public/kd_tree.h \
+	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
+	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
+	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
+	srcs/scene_loader/public/scene_loader.h \
 	srcs/texture_loader/public/texture_loader.h
 $(O_DIR)/srcs/scene_loader/parse_obj_types.o: \
 	srcs/scene_loader/parse_obj_types.c libft/ft_base/public/libft.h \
 	libft/ft_dstr/public/ft_dstr.h libft/ft_img/public/img.h \
 	libft/ft_in/public/ft_in.h libft/ft_math/public/math_mat4.h \
 	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
-	libft/ft_math/public/math_vec4.h libft/ft_vector/public/ft_vector.h \
-	libft/ft_xml/public/ft_xml.h srcs/kd_tree/public/kd_tree.h \
-	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/scene/public/scene.h \
-	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h
-$(O_DIR)/srcs/scene_loader/parse_param.o: srcs/scene_loader/parse_param.c \
-	libft/ft_base/public/libft.h libft/ft_dstr/public/ft_dstr.h \
-	libft/ft_img/public/img.h libft/ft_in/public/ft_in.h \
-	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	libft/ft_math/public/math_vec4.h libft/ft_set/public/set.h \
 	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
-	srcs/color_utils/public/color_utils.h srcs/kd_tree/public/kd_tree.h \
-	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/scene/public/scene.h \
-	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h \
+	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
+	srcs/scene_loader/public/scene_loader.h
+$(O_DIR)/srcs/scene_loader/parse_param.o: srcs/scene_loader/parse_param.c \
+	libft/ft_base/public/libft.h libft/ft_color_utils/public/color_utils.h \
+	libft/ft_dstr/public/ft_dstr.h libft/ft_img/public/img.h \
+	libft/ft_in/public/ft_in.h libft/ft_math/public/math_mat4.h \
+	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
+	libft/ft_math/public/math_vec4.h libft/ft_set/public/set.h \
+	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
+	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
+	srcs/scene_loader/public/scene_loader.h \
 	srcs/texture_loader/public/texture_loader.h
 $(O_DIR)/srcs/scene_loader/parse_scene_child.o: \
 	srcs/scene_loader/parse_scene_child.c libft/ft_base/public/libft.h \
@@ -692,24 +701,24 @@ $(O_DIR)/srcs/scene_loader/parse_scene_child.o: \
 	libft/ft_in/public/ft_in.h libft/ft_math/public/math_mat4.h \
 	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
 	libft/ft_math/public/math_vec4.h libft/ft_out/public/ft_out.h \
-	libft/ft_printf/public/ft_printf.h libft/ft_vector/public/ft_vector.h \
-	libft/ft_xml/public/ft_xml.h srcs/kd_tree/public/kd_tree.h \
-	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/obj_types/public/obj_types.h \
-	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
-	srcs/scene_loader/public/scene_loader.h \
+	libft/ft_printf/public/ft_printf.h libft/ft_set/public/set.h \
+	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
+	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/obj_types/public/obj_types.h srcs/scene/public/scene.h \
+	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h \
 	srcs/texture_loader/public/texture_loader.h
 $(O_DIR)/srcs/scene_loader/parse_xml_params.o: \
 	srcs/scene_loader/parse_xml_params.c libft/ft_base/public/libft.h \
 	libft/ft_dstr/public/ft_dstr.h libft/ft_img/public/img.h \
 	libft/ft_in/public/ft_in.h libft/ft_math/public/math_mat4.h \
 	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
-	libft/ft_math/public/math_vec4.h libft/ft_vector/public/ft_vector.h \
-	libft/ft_xml/public/ft_xml.h srcs/kd_tree/public/kd_tree.h \
-	srcs/kd_tree/public/kd_tree_builder.h srcs/math_utils/public/math_utils.h \
-	srcs/obj/public/obj.h srcs/scene/public/scene.h \
-	srcs/scene_loader/internal.h srcs/scene_loader/public/scene_loader.h \
-	srcs/set/public/set.h
+	libft/ft_math/public/math_vec4.h libft/ft_set/public/set.h \
+	libft/ft_vector/public/ft_vector.h libft/ft_xml/public/ft_xml.h \
+	srcs/kd_tree/public/kd_tree.h srcs/kd_tree/public/kd_tree_builder.h \
+	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
+	srcs/scene/public/scene.h srcs/scene_loader/internal.h \
+	srcs/scene_loader/public/scene_loader.h
 
 $(O_DIR)/srcs/scene_loader/load_scenes.o \
 $(O_DIR)/srcs/scene_loader/parse_obj.o \
@@ -722,11 +731,11 @@ $(O_DIR)/srcs/scene_loader/parse_xml_params.o: INCLUDE_FLAGS += \
 # module scene_renderer
 $(O_DIR)/srcs/scene_renderer/scene_render.o: \
 	srcs/scene_renderer/scene_render.c libft/ft_base/public/libft.h \
-	libft/ft_img/public/img.h libft/ft_math/public/math_mat4.h \
-	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
-	libft/ft_math/public/math_vec4.h libft/ft_out/public/ft_out.h \
-	libft/ft_printf/public/ft_printf.h libft/ft_vector/public/ft_vector.h \
-	srcs/color_utils/public/color_utils.h srcs/kd_tree/public/kd_tree.h \
+	libft/ft_color_utils/public/color_utils.h libft/ft_img/public/img.h \
+	libft/ft_math/public/math_mat4.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
+	libft/ft_out/public/ft_out.h libft/ft_printf/public/ft_printf.h \
+	libft/ft_vector/public/ft_vector.h srcs/kd_tree/public/kd_tree.h \
 	srcs/math_utils/public/math_utils.h srcs/obj/public/obj.h \
 	srcs/ray_tracer/public/ray_tracer.h srcs/scene/public/scene.h \
 	srcs/scene_renderer/public/scene_render.h
@@ -734,15 +743,15 @@ $(O_DIR)/srcs/scene_renderer/scene_render.o: \
 # module texture_loader
 $(O_DIR)/srcs/texture_loader/load_texture.o: \
 	srcs/texture_loader/load_texture.c libft/ft_base/public/libft.h \
-	libft/ft_hmap/public/ft_hmap.h libft/ft_img/public/img.h \
-	libft/ft_img_loader/public/img_loader.h libft/ft_math/public/math_vec2.h \
-	libft/ft_math/public/math_vec3.h libft/ft_math/public/math_vec4.h \
-	libft/ft_out/public/ft_out.h libft/ft_printf/public/ft_printf.h \
-	srcs/color_utils/public/color_utils.h \
+	libft/ft_color_utils/public/color_utils.h libft/ft_hmap/public/ft_hmap.h \
+	libft/ft_img/public/img.h libft/ft_img_loader/public/img_loader.h \
+	libft/ft_math/public/math_vec2.h libft/ft_math/public/math_vec3.h \
+	libft/ft_math/public/math_vec4.h libft/ft_out/public/ft_out.h \
+	libft/ft_printf/public/ft_printf.h \
 	srcs/texture_loader/public/texture_loader.h
 
 # public links
-$(O_DIR)/_public/color_utils.h: srcs/color_utils/public/color_utils.h
+$(O_DIR)/_public/ft/color_utils.h: libft/ft_color_utils/public/color_utils.h
 $(O_DIR)/_public/ft/ft_colors.h: libft/ft_base/public/ft_colors.h
 $(O_DIR)/_public/ft/ft_dstr.h: libft/ft_dstr/public/ft_dstr.h
 $(O_DIR)/_public/ft/ft_file_in.h: libft/ft_in/public/ft_file_in.h
@@ -759,14 +768,14 @@ $(O_DIR)/_public/ft/img.h: libft/ft_img/public/img.h
 $(O_DIR)/_public/ft/img_loader.h: libft/ft_img_loader/public/img_loader.h
 $(O_DIR)/_public/ft/libft.h: libft/ft_base/public/libft.h
 $(O_DIR)/_public/ft/math_complex.h: libft/ft_math/public/math_complex.h
+$(O_DIR)/_public/ft/math_mat3.h: libft/ft_math/public/math_mat3.h
 $(O_DIR)/_public/ft/math_mat4.h: libft/ft_math/public/math_mat4.h
 $(O_DIR)/_public/ft/math_vec2.h: libft/ft_math/public/math_vec2.h
 $(O_DIR)/_public/ft/math_vec3.h: libft/ft_math/public/math_vec3.h
 $(O_DIR)/_public/ft/math_vec4.h: libft/ft_math/public/math_vec4.h
-$(O_DIR)/_public/ft/set.h: srcs/set/public/set.h
+$(O_DIR)/_public/ft/set.h: libft/ft_set/public/set.h
 $(O_DIR)/_public/kd_tree.h: srcs/kd_tree/public/kd_tree.h
 $(O_DIR)/_public/kd_tree_builder.h: srcs/kd_tree/public/kd_tree_builder.h
-$(O_DIR)/_public/math_mat3.h: srcs/math_utils/public/math_mat3.h
 $(O_DIR)/_public/math_quaternions.h: srcs/math_utils/public/math_quaternions.h
 $(O_DIR)/_public/math_utils.h: srcs/math_utils/public/math_utils.h
 $(O_DIR)/_public/mlx_win.h: srcs/mlx_win/public/mlx_win.h

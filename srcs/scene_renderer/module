@@ -7,4 +7,4 @@ module scene_renderer:
 	private require ft::printf
 	private require ray_tracer
 	private require math_utils
-	private require color_utils
+	private require ft::color_utils

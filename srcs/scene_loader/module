@@ -12,7 +12,7 @@ module scene_loader:
 	private require ft::xml
 	private require obj
 	private require obj_types
-	private require color_utils
+	private require ft::color_utils
 	private require math_utils
 	private require texture_loader
 	private require ft::set
