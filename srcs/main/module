@@ -1,4 +1,4 @@
-main module main:
+main module rtv1:
 	private include ./
 
 	require mlx

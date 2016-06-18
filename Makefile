@@ -1,9 +1,6 @@
 
 #
 
-# Executable name
-NAME			:= rtv1
-
 # Git submodule to init
 SUBMODULES		:= libft
 
@@ -48,20 +45,20 @@ PRINT_LINK		= printf '\033[32m$@\033[0m\n'
 
 # Default rule (need to be before any include)
 all: init
-	make -j$(JOBS) $(NAME)
+	make -j$(JOBS) $(MAINS)
 
 # Include $(O_FILES) and dependencies
 include $(DEPEND)
 
 # make -n
 n: init
-	make -n $(NAME)
+	make -n $(MAINS)
 
-init: $(SUBMODULE_RULES) $(LIBS_RULES) $(OBJ_DIR_TREE) $(PUBLIC_LINKS)
+init: | $(SUBMODULE_RULES) $(LIBS_RULES) $(OBJ_DIR_TREE) $(PUBLIC_LINKS)
 
 # Linking
-$(NAME): $(OBJ_DIR_TREE) $(PUBLIC_LINKS) $(LINK_DEPENDS) $(O_FILES)
-	$(LINKER) -o $@ $(O_FILES) $(LINK_FLAGS) && $(PRINT_LINK)
+$(MAINS): | init
+	$(LINKER) -o $@ $^ $(LINK_FLAGS) && $(PRINT_LINK)
 
 # Compiling
 $(O_DIR)/%.o: %.c
@@ -69,10 +66,6 @@ $(O_DIR)/%.o: %.c
 $(O_DIR)/%.o: %.cpp
 	$(CXX) $(CPP_FLAGS) -c $< -o $@ && $(PRINT_OK)
 	$(eval LINKER = $(CXX))
-
-# Compile to .s
-%.s: %.c
-	$(CC) $(C_FLAGS) -S $< -o $@ && $(PRINT_LINK)
 
 # Init submodules
 $(SUBMODULE_RULES):
@@ -99,7 +92,7 @@ clean:
 
 # Clean everything
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(MAINS)
 
 # Clean and make
 re: fclean all
