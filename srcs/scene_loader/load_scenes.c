@@ -6,12 +6,12 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/09 18:40:02 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/18 21:51:56 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft/file_in.h"
 #include "ft/ft_colors.h"
-#include "ft/ft_file_in.h"
 #include "ft/ft_printf.h"
 
 #include "internal.h"
@@ -117,7 +117,7 @@ bool		load_scenes(char const *file, t_vector *dst)
 
 	if (file[0] == '-' && file[1] == '\0')
 		in = ft_in_fdopen(0);
-	else if ((in = ft_in_open(file)) == NULL)
+	else if ((in = ft_in_open(ft_sub(file, 0, -1))) == NULL)
 	{
 		ft_dprintf(2, "%s[Error]%s %s: Invalid file%n", C_RED, C_RESET, file);
 		return (false);
