@@ -1,10 +1,13 @@
 module scene_renderer:
 	public include public/
 
+	public require ft::base
 	public require ft::img
 	public require scene
-	private require ft::math
-	private require ft::printf
-	private require ray_tracer
-	private require math_utils
+
 	private require ft::color_utils
+	private require ft::math
+	private require math_utils
+	private require ray_tracer
+
+	put LINK_FLAGS -lm

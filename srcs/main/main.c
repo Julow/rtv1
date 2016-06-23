@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/07 23:32:29 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/23 16:43:51 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "obj_types.h"
 #include "scene.h"
 #include "scene_loader.h"
-#include "scene_render.h"
+#include "scene_renderer.h"
 
 #include <mlx.h>
 #include <stdlib.h>
@@ -79,7 +79,7 @@ static void		main_destroy(t_main *main)
 
 #endif
 
-static void		render_scene(t_main *main, uint32_t scene, uint32_t camera)
+static void		render(t_main *main, uint32_t scene, uint32_t camera)
 {
 	uint32_t		tmp;
 
@@ -96,30 +96,38 @@ static int		key_hook(int keycode, t_main *main)
 	if (keycode == KEYCODE_ESC || keycode == KEYCODE_Q)
 		main_destroy(main);
 	else if (keycode == KEYCODE_LEFT && main->scenes.length > 1)
-		render_scene(main, main->current_scene - 1, 0);
+		render(main, main->current_scene - 1, 0);
 	else if (keycode == KEYCODE_RIGHT && main->scenes.length > 1)
-		render_scene(main, main->current_scene + 1, 0);
+		render(main, main->current_scene + 1, 0);
 	else if (keycode == KEYCODE_UP
 		&& VGETC(t_scene, main->scenes, main->current_scene).cameras.length > 1)
-		render_scene(main, main->current_scene, main->current_camera + 1);
+		render(main, main->current_scene, main->current_camera + 1);
 	else if (keycode == KEYCODE_DOWN
 		&& VGETC(t_scene, main->scenes, main->current_scene).cameras.length > 1)
-		render_scene(main, main->current_scene, main->current_camera - 1);
+		render(main, main->current_scene, main->current_camera - 1);
 	else if (keycode == KEYCODE_R)
-		render_scene(main, main->current_scene, main->current_camera);
+		render(main, main->current_scene, main->current_camera);
 	return (0);
+}
+
+static void		render_scene(t_scene const *scene, uint32_t camera, t_img *dst)
+{
+	t_scene_renderer	renderer;
+
+	ft_logf(LOG_VERBOSE, "Rendering scene '%ts'", scene->name);
+	scene_renderer_init(&renderer, scene, camera, dst);
+	ft_cstart();
+	scene_renderer_render(&renderer, VEC2U1(0), VEC2U(dst->width, dst->height));
+	ft_logf(LOG_INFO, "Scene '%ts': Camera #%u: Render time: %llu us",
+		scene->name, camera, ft_cend());
 }
 
 static int		loop_hook(t_main *main)
 {
 	if (main->should_render)
 	{
-		ft_cstart();
-		scene_render(&main->win.img,
-			&VGET(t_scene, main->scenes, main->current_scene),
-			main->current_camera);
-		ft_logf(LOG_INFO, "Scene #%u: Camera #%u: Render time: %llu us",
-			main->current_scene, main->current_camera, ft_cend());
+		render_scene(VECTOR_GET(main->scenes, main->current_scene),
+			main->current_camera, &main->win.img);
 		ft_mlx_update(&main->win);
 		main->should_render = false;
 	}
@@ -171,7 +179,7 @@ int				main(int argc, char **argv)
 	mlx_key_hook(main.win.win_id, &key_hook, &main);
 	mlx_expose_hook(main.win.win_id, &expose_hook, &main);
 
-	render_scene(&main, 0, 0);
+	render(&main, 0, 0);
 
 	mlx_loop(main.mlx);
 	ASSERT(false);

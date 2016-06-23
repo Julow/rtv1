@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/25 15:54:05 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/23 15:06:29 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,15 @@ struct			s_vertex
 # define VERTEX_A(V)		((V).pos)
 # define VERTEX_B(V)		(VEC3_ADD((V).pos, (V).dir))
 # define VERTEX_AB(A, B)	(VERTEX(A, VEC3_SUB(B, A)))
+
+/*
+** ========================================================================== **
+** Vec2u
+*/
+
+# define VEC2U_ADD(A, B)	(_VEC2U_OP(A, +, B))
+# define VEC2U_SUB(A, B)	(_VEC2U_OP(A, -, B))
+
+# define _VEC2U_OP(A,OP,B)	(VEC2U((A).x OP (B).x, (A).y OP (B).y))
 
 #endif
