@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:04:15 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/02 17:57:32 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/25 01:44:37 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,5 @@ struct			s_ray_stats
 	uint32_t	intersect_search;
 	uint32_t	intersect_test;
 };
-
-extern struct s_ray_stats	g_ray_stats;
 
 #endif

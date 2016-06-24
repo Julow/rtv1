@@ -5,6 +5,8 @@ module ray_tracer:
 	public require ft::math
 	public require math_utils
 	public require scene
-	private require obj
-	private require kd_tree
+
 	private require ft::color_utils
+	private require kd_tree
+	private require obj
+	private require texture

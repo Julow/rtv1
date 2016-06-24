@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/09 18:53:32 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/25 00:43:50 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "obj.h"
 # include "scene.h"
 # include "scene_loader.h"
+# include "texture.h"
 
 typedef struct s_parse_scene	t_parse_scene;
 typedef struct s_scene_child	t_scene_child;
@@ -108,8 +109,8 @@ struct		s_param_def
 bool		parse_vec3(t_sub value, t_vec3 *dst);
 bool		parse_color(t_sub value, uint32_t *dst);
 bool		parse_colorf(t_sub value, t_vec3 *dst);
-bool		parse_texture(t_sub value, t_img const **dst);
-bool		parse_texture_g(t_sub value, t_img const **dst);
+bool		parse_texture(t_sub value, t_texture const **dst);
+bool		parse_texture_g(t_sub value, t_texture const **dst);
 bool		parse_float(t_sub value, float *dst);
 bool		parse_name(t_sub value, t_dstr *dst);
 

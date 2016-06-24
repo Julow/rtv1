@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:35:00 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/09 18:52:57 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/25 00:41:59 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "ft/math_vec3.h"
 
 # include "math_utils.h"
+# include "texture.h"
 
 typedef struct s_obj			t_obj;
 typedef struct s_material		t_material;
@@ -49,9 +50,9 @@ typedef bool					(*t_intersect_f)(t_obj const *obj,
 */
 struct			s_material
 {
-	t_img const		*texture;
-	t_img const		*specular_map;
-	t_img const		*normal_map;
+	t_texture const	*texture;
+	t_texture const	*specular_map;
+	t_texture const	*normal_map;
 	float			ambient;
 	float			reflection;
 	float			refract_index;

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 23:13:37 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/12 23:48:55 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/25 00:42:55 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ bool		parse_colorf(t_sub value, t_vec3 *dst)
 	return (true);
 }
 
-bool		parse_texture(t_sub value, t_img const **dst)
+bool		parse_texture(t_sub value, t_texture const **dst)
 {
 	return (BOOL_OF((*dst = load_texture(value, 0)) != NULL));
 }
 
-bool		parse_texture_g(t_sub value, t_img const **dst)
+bool		parse_texture_g(t_sub value, t_texture const **dst)
 {
 	return (BOOL_OF((*dst = load_texture(value, TEXTURE_GAMMA)) != NULL));
 }

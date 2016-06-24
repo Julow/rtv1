@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/19 10:57:46 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/09 16:33:40 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/25 01:44:58 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static bool		obj_intersect(t_nearest *dst, t_obj const *obj,
 	t_intersect		intersect;
 	t_vertex		tmp_ray;
 
-	g_ray_stats.intersect_test++;
 	tmp_ray = *ray;
 	ft_mat4apply_vec3(&obj->m_inv, &tmp_ray.pos, 1.f);
 	ft_mat4apply_vec3(&obj->m_inv, &tmp_ray.dir, 0.f);
@@ -41,7 +40,6 @@ t_obj const		*nearest_intersect(t_intersect *dst, t_scene const *scene,
 {
 	t_nearest		nearest;
 
-	g_ray_stats.intersect_search++;
 	ray.pos = VEC3_ADD(ray.pos, VEC3_MUL1(ray.dir, RAY_ERROR));
 	nearest.obj = NULL;
 	if (!kdtree_intersect(&scene->objs, (float*)&ray,

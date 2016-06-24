@@ -2,18 +2,20 @@ module scene_loader:
 	public include public/
 	private include ./
 
-	public require scene
 	public require ft::base
 	public require ft::vector
 	public require kd_tree
-	private require ft::in
+	public require scene
+
+	private require ft::color_utils
 	private require ft::dstr
+	private require ft::file_in
+	private require ft::in
 	private require ft::printf
+	private require ft::set
 	private require ft::xml
+	private require math_utils
 	private require obj
 	private require obj_types
-	private require ft::color_utils
-	private require math_utils
+	private require texture
 	private require texture_loader
-	private require ft::set
-	private require ft::file_in

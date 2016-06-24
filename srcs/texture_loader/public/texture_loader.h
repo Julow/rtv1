@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:34:50 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/01 21:09:51 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/25 01:36:27 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "ft/img.h"
 # include "ft/libft.h"
 
-typedef struct s_texture		t_texture;
+# include "texture.h"
 
 /*
 ** ========================================================================== **
@@ -30,11 +30,11 @@ typedef struct s_texture		t_texture;
 /*
 ** Return a texture or NULL on error
 */
-t_img const		*load_texture(t_sub file_name, uint32_t flags);
+t_texture const	*load_texture(t_sub file_name, uint32_t flags);
 
 /*
 ** Create a 1 pixel texture
 */
-t_img const		*load_texture1(uint32_t color, uint32_t flags);
+t_texture const	*load_texture1(uint32_t color, uint32_t flags);
 
 #endif

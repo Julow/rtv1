@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:40:13 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/12 23:48:47 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/25 01:40:38 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "ft/ft_printf.h"
 #include "ft/img_loader.h"
 
+#include "texture.h"
 #include "texture_loader.h"
 
 #include <stdlib.h>
@@ -38,21 +39,22 @@ static uint32_t	correct_gamma(uint32_t c)
 	return (color32_gamma(c, 2.2f));
 }
 
-t_img const		*load_texture(t_sub file_name, uint32_t flags)
+t_texture const	*load_texture(t_sub file_name, uint32_t flags)
 {
 	t_hmap *const	cache = texture_cache();
 	char			key[sizeof(uint32_t) + file_name.length];
-	t_hpair			tmp;
+	t_texture		*texture;
 
 	*(uint32_t*)key = flags;
 	ft_memcpy(key + sizeof(uint32_t), file_name.str, file_name.length);
-	if ((tmp = ft_hmapget(cache, SUBV(key))).key != NULL)
+	if ((texture = ft_hmapget(cache, SUBV(key)).value) != NULL)
 	{
 		ft_logf(LOG_DEBUG, "Cached texture: %ts", file_name);
-		return (tmp.value);
+		return (texture);
 	}
-	tmp = ft_hmapput(cache, SUBV(key), NULL, sizeof(t_img));
-	if (!ft_load_img(tmp.key + sizeof(uint32_t), tmp.value))
+	texture = ft_hmapput(cache, SUBV(key), NULL, sizeof(t_texture)).value;
+	texture->get = &texture_bilinear;
+	if (!ft_load_img(file_name, &texture->img))
 	{
 		ft_logf(LOG_VERBOSE, "Failed to load '%ts'", file_name);
 		ft_hmaprem(cache, SUBV(key), NULL);
@@ -60,24 +62,24 @@ t_img const		*load_texture(t_sub file_name, uint32_t flags)
 	}
 	ft_logf(LOG_VERBOSE, "Texture file '%ts' loaded", file_name);
 	if (flags & TEXTURE_GAMMA)
-		ft_img_map(tmp.value, &correct_gamma);
-	return (tmp.value);
+		ft_img_map(&texture->img, &correct_gamma);
+	return (texture);
 }
 
-t_img const		*load_texture1(uint32_t color, uint32_t flags)
+t_texture const	*load_texture1(uint32_t color, uint32_t flags)
 {
 	t_hmap *const	cache = texture_cache();
 	uint32_t		key[2];
-	t_img			*tmp;
+	t_texture		*tmp;
 
 	key[0] = flags;
 	key[1] = color;
 	if ((tmp = ft_hmapget(cache, SUBV(key)).value) != NULL)
 		return (tmp);
 	tmp = ft_hmapput(cache, SUBV(key), NULL,
-		sizeof(t_img) + sizeof(uint32_t)).value;
+		sizeof(t_texture) + sizeof(uint32_t)).value;
 	ft_logf(LOG_DEBUG, "Solid texture created: #%.8x", color);
-	*tmp = (t_img){ENDOF(tmp), 1, 1};
-	*tmp->data = (flags & TEXTURE_GAMMA) ? correct_gamma(color) : color;
+	*tmp = (t_texture){&texture_solid, (t_img){ENDOF(tmp), 1, 1}};
+	*tmp->img.data = (flags & TEXTURE_GAMMA) ? correct_gamma(color) : color;
 	return (tmp);
 }

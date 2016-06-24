@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/12 23:49:13 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/25 01:45:26 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,9 @@
 #include "ft/math_vec4.h"
 
 #include "internal.h"
+#include "texture.h"
 
 #include <math.h>
-
-struct s_ray_stats	g_ray_stats = {0, 0, 0, 0, 0};
-
-t_vec4			texture_nearest(t_img const *texture, t_vec2 uv)
-{
-	uv = VEC2(fmod(ABS(uv.x), 1.f) * texture->width,
-		fmod(ABS(uv.y), 1.f) * texture->height);
-	return (COLOR_32TOF(IMG_PIXEL(*texture, (uint32_t)uv.x, (uint32_t)uv.y)));
-}
-
-#define TEXTURE_F(T,P,X,Y)	(COLOR_32TOF(IMG_PIXEL(*(T), (P)[X].x, (P)[Y].y)))
-
-t_vec4			texture_bilinear(t_img const *texture, t_vec2 uv)
-{
-	t_vec2i			p[2];
-
-	uv = VEC2(fmod(ABS(uv.x), 1.f) * texture->width - 0.5f,
-		fmod(ABS(uv.y), 1.f) * texture->height - 0.5f);
-	p[0] = VEC2I(uv.x, uv.y);
-	uv = VEC2(uv.x - p[0].x, uv.y - p[0].y);
-	if (p[0].x < 0)
-		p[0].x = texture->width - 1;
-	if (p[0].y < 0)
-		p[0].y = texture->height - 1;
-	p[1] = VEC2I((p[0].x + 1) % texture->width, (p[0].y + 1) % texture->height);
-	return (VEC4_ADD(VEC4_MUL1(VEC4_ADD(
-			VEC4_MUL1(TEXTURE_F(texture, p, 0, 0), 1.f - uv.x),
-			VEC4_MUL1(TEXTURE_F(texture, p, 1, 0), uv.x)), 1.f - uv.y),
-		VEC4_MUL1(VEC4_ADD(VEC4_MUL1(TEXTURE_F(texture, p, 0, 1), 1.f - uv.x),
-			VEC4_MUL1(TEXTURE_F(texture, p, 1, 1), uv.x)), uv.y)));
-}
 
 /*
 ** light through objects:
@@ -67,14 +37,13 @@ static t_vec4	light_color(t_scene const *scene, t_light const *light,
 	t_intersect		intersect;
 	t_vec4			obj_color;
 
-	g_ray_stats.light_ray++;
 	ray = VERTEX(light->pos, VEC3_SUB(VEC3_0(), *light_dir));
 	color = light->color;
 	while ((obj = nearest_intersect(&intersect, scene, ray)) != NULL)
 	{
 		if (ft_vec3dist2(*intersect_pos, intersect.pos) <= RAY_ERROR)
 			break ;
-		obj_color = texture_bilinear(obj->material.texture, intersect.tex);
+		obj_color = TEXTURE_GET(obj->material.texture, intersect.tex);
 		color = VEC3_MUL(color, VEC3_SUB1(
 				VEC3_MUL1(obj_color, obj_color.w * (1 - obj_color.w)),
 				obj_color.w - 1));
@@ -129,9 +98,9 @@ t_vec4			ray_to_light(t_scene const *scene, t_material const *mat,
 		light_sum = VEC3_ADD(light_sum, VEC3_MUL1(tmp_color, b));
 	}
 	tmp_color = (mat->specular_map != NULL) ?
-		texture_bilinear(mat->specular_map, intersect->tex) : VEC4_1(1.f);
+		TEXTURE_GET(mat->specular_map, intersect->tex) : VEC4_1(1.f);
 	light_sum = VEC3_MUL(light_sum, VEC3_ADD1(VEC3_MUL1(tmp_color, specular_sum), 1.f));
-	tmp_color = texture_bilinear(mat->texture, intersect->tex);
+	tmp_color = TEXTURE_GET(mat->texture, intersect->tex);
 	light_sum = VEC3_MIN(VEC3_MUL(tmp_color, light_sum), VEC3_1(1.f));
 	return (VEC4(light_sum.x, light_sum.y, light_sum.z, tmp_color.w));
 }
@@ -203,7 +172,7 @@ static void		apply_normal_map(t_obj const *obj, t_intersect *intersect)
 	tbn.y = VEC3_CROSS(tbn.x, intersect->norm);
 	tbn.z = intersect->norm;
 	ft_mat3transpose(&tbn);
-	map_normal = texture_bilinear(obj->material.normal_map, intersect->tex);
+	map_normal = TEXTURE_GET(obj->material.normal_map, intersect->tex);
 	intersect->norm = ft_vec3norm(VEC3_SUB1(VEC3_MUL1(map_normal, 2.f), 1.f));
 	ft_mat3apply(&tbn, &intersect->norm);
 }
@@ -216,8 +185,7 @@ t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
 	t_vec4				color;
 
 	if ((obj = nearest_intersect(&intersect, scene, *ray)) == NULL)
-		return (g_ray_stats.sky_ray++, scene->sky_color);
-	g_ray_stats.render_ray++;
+		return (scene->sky_color);
 	intersect.norm = ft_vec3norm(intersect.norm);
 	if (obj->material.normal_map != NULL)
 		apply_normal_map(obj, &intersect);
