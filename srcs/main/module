@@ -1,15 +1,17 @@
 main module rtv1:
 	private include ./
 
-	require mlx
-	require mlx_win
-	require ft::printf
 	require ft::base
 	require ft::math
+	require ft::printf
+	require ft::thread_pool
 	require ft::vector
+	require math_utils
+	require mlx
+	require mlx_win
 	require obj
 	require obj_types
 	require scene
-	require math_utils
 	require scene_loader
+	require scene_render_manager
 	require scene_renderer

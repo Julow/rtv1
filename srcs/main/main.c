@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/23 16:43:51 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/24 18:31:37 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 #include "ft/ft_printf.h"
 #include "ft/ft_vector.h"
 #include "ft/libft.h"
+#include "ft/thread_pool.h"
 
 #include "math_utils.h"
 #include "mlx_win.h"
 #include "obj_types.h"
 #include "scene.h"
 #include "scene_loader.h"
+#include "scene_render_manager.h"
 #include "scene_renderer.h"
 
 #include <mlx.h>
@@ -43,6 +45,7 @@ typedef struct s_main		t_main;
 
 struct			s_main
 {
+	t_thread_pool	*thread_pool;
 	void			*mlx;
 	t_mlx_win		win;
 	t_vector		scenes;
@@ -110,14 +113,41 @@ static int		key_hook(int keycode, t_main *main)
 	return (0);
 }
 
-static void		render_scene(t_scene const *scene, uint32_t camera, t_img *dst)
+// TODO: make them configs
+#define CHUNK_SIZE		VEC2U(64, 75)
+#define THREAD_COUNT	4
+
+static uint32_t	scene_render_progress(t_scene_render_manager const *m)
 {
-	t_scene_renderer	renderer;
+	uint32_t const	max = m->renderer.dst->width * m->renderer.dst->height;
+	uint32_t		p;
+
+	p = m->progress.y * m->renderer.dst->width
+		+ m->progress.x * m->chunk_size.y;
+	return ((p >= max) ? 100 : p * 100 / max);
+}
+
+static void		render_current_scene(t_main *main)
+{
+	t_scene const		*scene = VECTOR_GET(main->scenes, main->current_scene);
+	uint32_t const		camera = main->current_camera;
+	t_scene_render_manager	renderer;
 
 	ft_logf(LOG_VERBOSE, "Rendering scene '%ts'", scene->name);
-	scene_renderer_init(&renderer, scene, camera, dst);
+	scene_render_manager(&renderer, CHUNK_SIZE, scene, camera, &main->win.img);
 	ft_cstart();
-	scene_renderer_render(&renderer, VEC2U1(0), VEC2U(dst->width, dst->height));
+
+	main->thread_pool->task_manager = V(&renderer);
+	ft_thread_pool_notify(main->thread_pool);
+
+	// ft_thread_pool_join(main->thread_pool);
+	while (ft_thread_pool_wait(main->thread_pool))
+	{
+		ft_printf("\r%-100.*c%!", scene_render_progress(&renderer), '#');
+	}
+	ft_printf("%n");
+
+	ft_thread_pool_lock(main->thread_pool, false);
 	ft_logf(LOG_INFO, "Scene '%ts': Camera #%u: Render time: %llu us",
 		scene->name, camera, ft_cend());
 }
@@ -126,8 +156,7 @@ static int		loop_hook(t_main *main)
 {
 	if (main->should_render)
 	{
-		render_scene(VECTOR_GET(main->scenes, main->current_scene),
-			main->current_camera, &main->win.img);
+		render_current_scene(main);
 		ft_mlx_update(&main->win);
 		main->should_render = false;
 	}
@@ -150,12 +179,15 @@ int				main(int argc, char **argv)
 	ft_logf_set_enabled(LOG_VERBOSE, true);
 	main = (t_main){
 		NULL,
+		NULL,
 		{},
 		VECTOR(t_scene),
 		-1,
 		-1,
 		false,
 	};
+	if ((main.thread_pool = ft_thread_pool_create(THREAD_COUNT)) == NULL)
+		return (ft_dprintf(2, "Failed to create threads"), 1);
 	if ((main.mlx = mlx_init()) == NULL || !ft_mlx_open(&main.win, main.mlx,
 			VEC2U(WIN_WIDTH, WIN_HEIGHT), SUBC(WIN_TITLE)))
 		return (1);
@@ -182,6 +214,7 @@ int				main(int argc, char **argv)
 	render(&main, 0, 0);
 
 	mlx_loop(main.mlx);
+
 	ASSERT(false);
 	main_destroy(&main);
 	return (0);

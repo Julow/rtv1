@@ -1,0 +1,8 @@
+module scene_render_manager:
+	public include public/
+
+	private include ./
+
+	public require ft::base
+	public require ft::thread_pool
+	public require scene_renderer
