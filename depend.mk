@@ -115,6 +115,7 @@ O_FILES += $(O_DIR)/libft/ft_base/ft_abs.o $(O_DIR)/libft/ft_base/ft_assert.o \
 	$(O_DIR)/srcs/scene_renderer/renderer.o \
 	$(O_DIR)/srcs/scene_renderer/renderer_init.o \
 	$(O_DIR)/srcs/texture/texture.o \
+	$(O_DIR)/srcs/texture_loader/correct_gamma.o \
 	$(O_DIR)/srcs/texture_loader/load_texture.o
 PUBLIC_LINKS += $(O_DIR)/_public/ft/ft_wchar.h $(O_DIR)/_public/ft/ft_colors.h \
 	$(O_DIR)/_public/ft/libft.h $(O_DIR)/_public/ft/color_utils.h \
@@ -140,7 +141,9 @@ PUBLIC_LINKS += $(O_DIR)/_public/ft/ft_wchar.h $(O_DIR)/_public/ft/ft_colors.h \
 rtv1: $(O_DIR)/libft/ft_base/ft_subnext.o $(O_DIR)/libft/ft_base/ft_memcpy.o \
 	$(O_DIR)/libft/ft_dstr/ft_dstrspan.o $(O_DIR)/libft/ft_base/ft_atoib.o \
 	$(O_DIR)/libft/ft_color_utils/color_blend.o $(O_DIR)/libft/ft_in/ft_read.o \
-	$(O_DIR)/libft/ft_out/ft_write.o $(O_DIR)/libft/ft_color_utils/color_hex.o \
+	$(O_DIR)/libft/ft_out/ft_write.o \
+	$(O_DIR)/srcs/texture_loader/correct_gamma.o \
+	$(O_DIR)/libft/ft_color_utils/color_hex.o \
 	$(O_DIR)/libft/ft_math/ft_mat4transpose.o \
 	$(O_DIR)/libft/ft_math/ft_mat4shear.o $(O_DIR)/libft/ft_math/ft_vec3mix.o \
 	$(O_DIR)/libft/ft_out/ft_write_char.o \
@@ -933,6 +936,11 @@ $(O_DIR)/srcs/texture/texture.o: srcs/texture/texture.c \
 	srcs/texture/public/texture.h
 
 # module texture_loader
+$(O_DIR)/srcs/texture_loader/correct_gamma.o: \
+	srcs/texture_loader/correct_gamma.c libft/ft_base/public/libft.h \
+	libft/ft_img/public/img.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec4.h srcs/texture/public/texture.h \
+	srcs/texture_loader/public/texture_loader.h
 $(O_DIR)/srcs/texture_loader/load_texture.o: \
 	srcs/texture_loader/load_texture.c libft/ft_base/public/libft.h \
 	libft/ft_color_utils/public/color_utils.h libft/ft_dstr/public/ft_dstr.h \

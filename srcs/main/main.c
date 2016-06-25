@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 11:36:52 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/24 21:02:42 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/25 22:16:27 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 
 typedef struct s_main		t_main;
 
-# define WIN_WIDTH		800
-# define WIN_HEIGHT		600
+# define WIN_WIDTH		1500
+# define WIN_HEIGHT		900
 
 # define WIN_TITLE		"rtv1"
 

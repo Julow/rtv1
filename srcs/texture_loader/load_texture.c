@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:40:13 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/25 01:40:38 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/25 23:56:31 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ static t_hmap	*texture_cache(void)
 	return (cache);
 }
 
-static uint32_t	correct_gamma(uint32_t c)
-{
-	return (color32_gamma(c, 2.2f));
-}
-
 t_texture const	*load_texture(t_sub file_name, uint32_t flags)
 {
 	t_hmap *const	cache = texture_cache();
@@ -60,9 +55,9 @@ t_texture const	*load_texture(t_sub file_name, uint32_t flags)
 		ft_hmaprem(cache, SUBV(key), NULL);
 		return (NULL);
 	}
-	ft_logf(LOG_VERBOSE, "Texture file '%ts' loaded", file_name);
 	if (flags & TEXTURE_GAMMA)
-		ft_img_map(&texture->img, &correct_gamma);
+		correct_gamma(&texture->img);
+	ft_logf(LOG_VERBOSE, "Texture file '%ts' loaded", file_name);
 	return (texture);
 }
 
@@ -80,6 +75,8 @@ t_texture const	*load_texture1(uint32_t color, uint32_t flags)
 		sizeof(t_texture) + sizeof(uint32_t)).value;
 	ft_logf(LOG_DEBUG, "Solid texture created: #%.8x", color);
 	*tmp = (t_texture){&texture_solid, (t_img){ENDOF(tmp), 1, 1}};
-	*tmp->img.data = (flags & TEXTURE_GAMMA) ? correct_gamma(color) : color;
+	*tmp->img.data = color;
+	if (flags & TEXTURE_GAMMA)
+		correct_gamma(&tmp->img);
 	return (tmp);
 }

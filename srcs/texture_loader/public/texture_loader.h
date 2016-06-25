@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:34:50 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/25 01:36:27 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/25 23:57:24 by juloo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,11 @@ t_texture const	*load_texture(t_sub file_name, uint32_t flags);
 ** Create a 1 pixel texture
 */
 t_texture const	*load_texture1(uint32_t color, uint32_t flags);
+
+/*
+** -
+*/
+// TODO: move
+void			correct_gamma(t_img *img);
 
 #endif
