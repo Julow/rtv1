@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/25 01:45:26 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/27 18:13:59 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,91 +19,6 @@
 #include "texture.h"
 
 #include <math.h>
-
-/*
-** light through objects:
-**  light_rgb =
-**  	LERP(obj_rgb * (1 - obj_a) * light_rgb * obj_a, light_rgb, obj_a)
-** -
-** TODO: attenuation (w)
-*/
-
-static t_vec4	light_color(t_scene const *scene, t_light const *light,
-					t_vec3 const *intersect_pos, t_vec3 const *light_dir)
-{
-	t_vertex		ray;
-	t_obj const		*obj;
-	t_vec3			color;
-	t_intersect		intersect;
-	t_vec4			obj_color;
-
-	ray = VERTEX(light->pos, VEC3_SUB(VEC3_0(), *light_dir));
-	color = light->color;
-	while ((obj = nearest_intersect(&intersect, scene, ray)) != NULL)
-	{
-		if (ft_vec3dist2(*intersect_pos, intersect.pos) <= RAY_ERROR)
-			break ;
-		obj_color = TEXTURE_GET(obj->material.texture, intersect.tex);
-		color = VEC3_MUL(color, VEC3_SUB1(
-				VEC3_MUL1(obj_color, obj_color.w * (1 - obj_color.w)),
-				obj_color.w - 1));
-		ray.pos = intersect.pos;
-	}
-	return (VEC4_3(color, light->brightness));
-}
-
-/*
-** light:
-**  light_dir = norm(light_pos - intrsc_pos)
-**  b = dot(intrsc_norm, light_dir) * light_brightness
-** attenuation:
-**  b *= att = 1.f - (dist^2 / max_dist^2)
-** spot light:
-**  b *= (dot(light_dir, -spot_dir) < spot_cutoff)
-** sum:
-**  light_sum += light_rgb * b
-** -
-** TODO: attenuation factor in material (remove t_light.max_dist)
-** TODO: check specular
-*/
-
-t_vec4			ray_to_light(t_scene const *scene, t_material const *mat,
-					t_vertex const *ray, t_intersect const *intersect)
-{
-	uint32_t		i;
-	t_light const	*light;
-	t_vec3			light_sum;
-	float			specular_sum;
-	t_vec4			tmp_color;
-	float			b;
-	float			tmp;
-	t_vec3			light_dir;
-
-	i = 0;
-	light_sum = VEC3_1(mat->ambient);
-	specular_sum = 0.f;
-	while (i < scene->lights.length)
-	{
-		light = VECTOR_GET(scene->lights, i++);
-		light_dir = VEC3_SUB(light->pos, intersect->pos);
-		tmp = ft_vec3length(light_dir);
-		light_dir = VEC3_DIV1(light_dir, tmp);
-		tmp_color = light_color(scene, light, &intersect->pos, &light_dir);
-		if ((tmp = 1.f - (tmp * tmp) / (light->max_dist * light->max_dist)) <= 0.f
-			|| (b = tmp_color.w * VEC3_DOT(intersect->norm, light_dir) * (tmp * tmp)) <= 0.f
-			|| VEC3_DOT(light_dir, VEC3_SUB(VEC3_0(), light->dir)) < light->cutoff)
-			continue ;
-		tmp = ft_vec3dot(intersect->norm, ft_vec3norm(VEC3_SUB(light_dir, ray->dir)));
-		specular_sum += (tmp <= 0.f) ? 0.f : powf(tmp, mat->specular_exp) * b;
-		light_sum = VEC3_ADD(light_sum, VEC3_MUL1(tmp_color, b));
-	}
-	tmp_color = (mat->specular_map != NULL) ?
-		TEXTURE_GET(mat->specular_map, intersect->tex) : VEC4_1(1.f);
-	light_sum = VEC3_MUL(light_sum, VEC3_ADD1(VEC3_MUL1(tmp_color, specular_sum), 1.f));
-	tmp_color = TEXTURE_GET(mat->texture, intersect->tex);
-	light_sum = VEC3_MIN(VEC3_MUL(tmp_color, light_sum), VEC3_1(1.f));
-	return (VEC4(light_sum.x, light_sum.y, light_sum.z, tmp_color.w));
-}
 
 /*
 ** TODO: pass from/to materials
@@ -130,34 +45,35 @@ static bool		refracted_ray(t_vertex const *ray, t_material const *material,
 	return (true);
 }
 
-static void		trace_reflection(t_scene const *scene, t_vertex const *ray,
+static void		trace_reflection(t_ray_tracer *t, t_vertex const *ray,
 					t_material const *material, t_intersect const *intersect,
-					uint32_t max_depth, t_vec3 *color)
+					t_vec3 *color)
 {
 	t_vertex		tmp;
+	t_vec3			res;
 
 	if (material->reflection < 0.001f)
 		return ;
 	tmp.pos = intersect->pos;
 	tmp.dir = ft_vec3norm(VEC3_ADD(ray->dir, VEC3_MUL1(intersect->norm,
 		-2.f * VEC3_DOT(intersect->norm, ray->dir))));
-	*color = ft_vec3mix(ray_trace(scene, &tmp, max_depth),
-		*color, material->reflection);
+	if (ray_trace(t, &tmp, &res))
+		*color = ft_vec3mix(res, *color, material->reflection);
 }
 
-static void		trace_refraction(t_scene const *scene, t_vertex const *ray,
+static void		trace_refraction(t_ray_tracer *t, t_vertex const *ray,
 					t_material const *material, t_intersect const *intersect,
-					uint32_t max_depth, t_vec4 *color)
+					t_vec3 *color, float w)
 {
 	t_vertex		tmp;
+	t_vec3			res;
 
-	if (color->w < 0.999f && refracted_ray(ray, material, intersect, &tmp.dir))
+	if (w < 0.999f && refracted_ray(ray, material, intersect, &tmp.dir))
 	{
 		tmp.pos = intersect->pos;
-		*(t_vec3*)color = ft_vec3mix(*(t_vec3*)color,
-			ray_trace(scene, &tmp, max_depth), color->w);
+		if (ray_trace(t, &tmp, &res))
+			*color = ft_vec3mix(*color, res, w); // TODO: VEC3_LERP macro
 	}
-	color->w = 1.f;
 }
 
 static void		apply_normal_map(t_obj const *obj, t_intersect *intersect)
@@ -177,25 +93,28 @@ static void		apply_normal_map(t_obj const *obj, t_intersect *intersect)
 	ft_mat3apply(&tbn, &intersect->norm);
 }
 
-t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
-					uint32_t max_depth)
+bool			ray_trace(t_ray_tracer *t, t_vertex const *ray,
+					t_vec3 *result)
 {
 	t_intersect			intersect;
 	t_obj const			*obj;
+	t_vec3				light;
 	t_vec4				color;
 
-	if ((obj = nearest_intersect(&intersect, scene, *ray)) == NULL)
-		return (scene->sky_color);
+	if ((obj = nearest_intersect(&intersect, t->scene, *ray)) == NULL)
+		return (false);
 	intersect.norm = ft_vec3norm(intersect.norm);
 	if (obj->material.normal_map != NULL)
 		apply_normal_map(obj, &intersect);
-	color = ray_to_light(scene, &obj->material, ray, &intersect);
-	if (max_depth-- > 0)
+	color = TEXTURE_GET(obj->material.texture, intersect.tex);
+	light = ray_to_light(t, &obj->material, ray, &intersect);
+	*result = VEC3_MUL(color, light);
+	if (t->depth > 0)
 	{
-		trace_refraction(scene, ray, &obj->material, &intersect,
-			max_depth, &color);
-		trace_reflection(scene, ray, &obj->material, &intersect,
-			max_depth, (t_vec3*)&color);
+		t->depth--;
+		trace_refraction(t, ray, &obj->material, &intersect, result, color.w);
+		trace_reflection(t, ray, &obj->material, &intersect, result);
+		t->depth++;
 	}
-	return (*(t_vec3*)&color);
+	return (true);
 }

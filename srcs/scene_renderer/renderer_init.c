@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 14:21:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/23 17:04:14 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/27 18:09:42 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ static void		load_view_plane(t_scene_renderer *r,
 void			scene_renderer_init(t_scene_renderer *r,
 					t_scene const *scene, uint32_t camera, t_img *dst)
 {
+	t_camera const *const	cam = VECTOR_GET(scene->cameras, camera);
+
 	r->scene = scene;
-	r->camera = VECTOR_GET(scene->cameras, camera);
+	r->camera = cam;
 	r->dst = dst;
-	load_view_plane(r, r->camera, VEC2U(dst->width, dst->height));
+	load_view_plane(r, cam, VEC2U(dst->width, dst->height));
 }

@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:04:15 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/25 01:44:37 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/27 18:08:46 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,42 @@
 # include "obj.h"
 # include "scene.h"
 
+typedef struct s_ray_tracer			t_ray_tracer;
+
 /*
 ** ========================================================================== **
 ** Ray tracer
 */
 
 /*
-** Throw a ray
-** Return the color
+** ray_tracer object
+** scene			=> scene being render
+** mat_stack		=> stack of material
+** depth			=> used to avoid endless recursion
 */
-t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
-					uint32_t max_depth);
+struct			s_ray_tracer
+{
+	t_scene const	*scene;
+	t_vector		mat_stack;
+	uint32_t		depth;
+};
+
+/*
+** Initialize a ray_tracer object
+*/
+void			ray_tracer_init(t_ray_tracer *dst, t_scene const *scene,
+					t_vertex const *camera, uint32_t max_depth);
+
+/*
+** Throw a ray and compute it's target's color
+** -
+** The result color is not normalized
+** -
+** Store the result into 'result'
+** Return false if the ray hit nothing, true otherwise
+*/
+bool			ray_trace(t_ray_tracer *t, t_vertex const *ray,
+					t_vec3 *result);
 
 /*
 ** Find the nearest intersect
@@ -38,17 +63,5 @@ t_vec3			ray_trace(t_scene const *scene, t_vertex const *ray,
 */
 t_obj const		*nearest_intersect(t_intersect *dst,
 					t_scene const *scene, t_vertex ray);
-
-/*
-** TMP
-*/
-struct			s_ray_stats
-{
-	uint32_t	light_ray;
-	uint32_t	render_ray;
-	uint32_t	sky_ray;
-	uint32_t	intersect_search;
-	uint32_t	intersect_test;
-};
 
 #endif

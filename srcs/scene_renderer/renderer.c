@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 14:23:17 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/23 18:02:43 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/27 18:07:59 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ void			scene_renderer_render(t_scene_renderer *renderer,
 	t_vec2u const	to = VEC2U_ADD(pt, size);
 	t_vec2u			i;
 	t_vertex		ray;
+	t_vec3			color;
+	t_ray_tracer	ray_tracer;
 
 	ray.pos = renderer->camera->pos;
+	ray.dir = renderer->camera->dir;
+	ray_tracer_init(&ray_tracer, renderer->scene, &ray, MAX_RAY_DEPTH);
 	i.y = pt.y;
 	while (i.y < to.y)
 	{
@@ -36,8 +40,10 @@ void			scene_renderer_render(t_scene_renderer *renderer,
 			ray.dir = ft_vec3norm(VEC3_ADD(
 					VEC3_ADD(renderer->view_top, VEC3_MUL1(renderer->view_dx, i.x)),
 					VEC3_MUL1(renderer->view_dy, i.y)));
+			if (!ray_trace(&ray_tracer, &ray, &color))
+				color = renderer->scene->sky_color; // lol
 			IMG_PIXEL(*renderer->dst, i.x, i.y) = color_fto24(colorf_gamma(
-					ray_trace(renderer->scene, &ray, MAX_RAY_DEPTH),
+					color,
 					1.f / 2.2f));
 			i.x++;
 		}
