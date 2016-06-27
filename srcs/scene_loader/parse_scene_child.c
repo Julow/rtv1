@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/24 19:36:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/05/09 18:51:15 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/27 19:31:14 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static t_vector const	g_light_params = VECTOR(t_param_def,
 	PARAM("dir", vec3, t_light, dir),
 	PARAM("brightness", float, t_light, brightness),
 	PARAM("color", colorf, t_light, color),
-	PARAM("max_dist", float, t_light, max_dist),
 	PARAM("cutoff", float, t_light, cutoff),
 );
 
@@ -47,6 +46,7 @@ bool		parse_scene_light(t_xml_parser *xml, t_parse_scene *scene)
 		return (ft_xml_error(xml, SUBC("Can't have child")));
 	light->dir = ft_vec3norm(light->dir);
 	light->cutoff = (1.f - light->cutoff) * 2.f - 1.f;
+	light->color = VEC3_MUL1(light->color, light->brightness);
 	return (BOOL_OF(xml->token == XML_TOKEN_END));
 }
 

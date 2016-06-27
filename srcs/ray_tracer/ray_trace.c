@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/27 18:13:59 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/27 19:14:14 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void		trace_reflection(t_ray_tracer *t, t_vertex const *ray,
 	tmp.dir = ft_vec3norm(VEC3_ADD(ray->dir, VEC3_MUL1(intersect->norm,
 		-2.f * VEC3_DOT(intersect->norm, ray->dir))));
 	if (ray_trace(t, &tmp, &res))
-		*color = ft_vec3mix(res, *color, material->reflection);
+		*color = VEC3_LERP(*color, res, material->reflection);
 }
 
 static void		trace_refraction(t_ray_tracer *t, t_vertex const *ray,
@@ -72,7 +72,7 @@ static void		trace_refraction(t_ray_tracer *t, t_vertex const *ray,
 	{
 		tmp.pos = intersect->pos;
 		if (ray_trace(t, &tmp, &res))
-			*color = ft_vec3mix(*color, res, w); // TODO: VEC3_LERP macro
+			*color = VEC3_LERP(res, *color, w);
 	}
 }
 

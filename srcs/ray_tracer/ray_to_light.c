@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/27 15:31:50 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/27 18:08:13 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/27 19:32:38 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,13 @@ static t_vec3	light_color(t_ray_tracer const *t, t_light const *light,
 ** -
 ** TODO: use alpha as attenuation factor (remove t_light.max_dist)
 ** TODO: (re)move specular
+** TODO: update this (max_dist is gone)
 */
 
 #define REINTERPRET_CAST(T, VAL)	({typeof(VAL) tmp = (VAL); *(T*)&tmp; })
+
+// MDR, JUST TO COMPILE
+#define MAX_DIST					100
 
 t_vec3			ray_to_light(t_ray_tracer const *t, t_material const *mat,
 					t_vertex const *ray, t_intersect const *intersect)
@@ -92,7 +96,7 @@ t_vec3			ray_to_light(t_ray_tracer const *t, t_material const *mat,
 		tmp = ft_vec3length(light_dir);
 		light_dir = VEC3_DIV1(light_dir, tmp);
 		tmp_color = light_color(t, light, &intersect->pos, &light_dir);
-		if ((tmp = 1.f - (tmp * tmp) / (light->max_dist * light->max_dist)) <= 0.f
+		if ((tmp = 1.f - (tmp * tmp) / (MAX_DIST * MAX_DIST)) <= 0.f
 			|| (b = VEC3_DOT(intersect->norm, light_dir) * (tmp * tmp)) <= 0.f
 			|| VEC3_DOT(light_dir, VEC3_SUB(VEC3_0(), light->dir)) < light->cutoff)
 			continue ;

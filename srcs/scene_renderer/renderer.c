@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 14:23:17 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/27 18:07:59 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/27 19:17:35 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ void			scene_renderer_render(t_scene_renderer *renderer,
 					VEC3_MUL1(renderer->view_dy, i.y)));
 			if (!ray_trace(&ray_tracer, &ray, &color))
 				color = renderer->scene->sky_color; // lol
-			IMG_PIXEL(*renderer->dst, i.x, i.y) = color_fto24(colorf_gamma(
-					color,
-					1.f / 2.2f));
+			IMG_PIXEL(*renderer->dst, i.x, i.y) =
+					color_fto24(colorf_gamma(color, 1.f / 2.2f));
 			i.x++;
 		}
 		i.y++;

@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/23 15:06:29 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/27 19:13:41 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,12 @@ struct			s_vertex
 # define VEC2U_SUB(A, B)	(_VEC2U_OP(A, -, B))
 
 # define _VEC2U_OP(A,OP,B)	(VEC2U((A).x OP (B).x, (A).y OP (B).y))
+
+/*
+** ========================================================================== **
+** Vec3
+*/
+
+# define VEC3_LERP(A, B, T)		(VEC3_ADD(VEC3_MUL1(A,1.f-(T)),VEC3_MUL1(B,T)))
 
 #endif

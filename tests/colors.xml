@@ -1,0 +1,13 @@
+<scene>
+
+	<plane rot="1, 0, 0" texture="tests/rainbow.tga" />
+
+	<plane pos="0, 0, -0.5" color="#000000" />
+
+	<light pos="2, 1, -1" brightness="0.2" />
+	<light pos="0, -1, -1" />
+
+	<camera pos="0, 0, -0.5" />
+	<!-- <camera pos="0, 2, -2" dir="0, -1, 1" /> -->
+
+</scene>
