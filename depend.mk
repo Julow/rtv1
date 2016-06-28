@@ -97,6 +97,7 @@ O_FILES += $(O_DIR)/libft/ft_base/ft_abs.o $(O_DIR)/libft/ft_base/ft_assert.o \
 	$(O_DIR)/libft/ft_xml/xml_utils.o $(O_DIR)/srcs/kd_tree/kdtree_build.o \
 	$(O_DIR)/srcs/kd_tree/kdtree_builder.o \
 	$(O_DIR)/srcs/kd_tree/kdtree_intersect.o \
+	$(O_DIR)/srcs/math_utils/aabb_intersect.o \
 	$(O_DIR)/srcs/math_utils/quaternions.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_close.o $(O_DIR)/srcs/mlx_win/ft_mlx_open.o \
 	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o $(O_DIR)/srcs/obj_types/cone.o \
@@ -207,10 +208,11 @@ rtv1: $(O_DIR)/srcs/ray_tracer/ray_to_light.o \
 	$(O_DIR)/libft/ft_hmap/ft_hmapkeys.o \
 	$(O_DIR)/srcs/kd_tree/kdtree_intersect.o \
 	$(O_DIR)/libft/ft_thread_pool/thread.o \
-	$(O_DIR)/libft/ft_printf/ft_vprintf.o $(O_DIR)/libft/ft_printf/ft_printf.o \
-	$(O_DIR)/libft/ft_base/ft_assert.o $(O_DIR)/libft/ft_set/iter.o \
-	$(O_DIR)/libft/ft_base/ft_sub.o $(O_DIR)/libft/ft_xml/xml_utils.o \
-	$(O_DIR)/libft/ft_base/ft_clock_stack.o \
+	$(O_DIR)/libft/ft_printf/ft_vprintf.o \
+	$(O_DIR)/srcs/math_utils/aabb_intersect.o \
+	$(O_DIR)/libft/ft_printf/ft_printf.o $(O_DIR)/libft/ft_base/ft_assert.o \
+	$(O_DIR)/libft/ft_set/iter.o $(O_DIR)/libft/ft_base/ft_sub.o \
+	$(O_DIR)/libft/ft_xml/xml_utils.o $(O_DIR)/libft/ft_base/ft_clock_stack.o \
 	$(O_DIR)/libft/ft_dstr/ft_dstrextend.o \
 	$(O_DIR)/srcs/ray_tracer/ray_trace.o $(O_DIR)/libft/ft_img/ft_img_map.o \
 	$(O_DIR)/libft/ft_set/first.o $(O_DIR)/srcs/scene_renderer/renderer_init.o \
@@ -683,6 +685,9 @@ $(O_DIR)/srcs/kd_tree/kdtree_build.o $(O_DIR)/srcs/kd_tree/kdtree_builder.o \
 $(O_DIR)/srcs/kd_tree/kdtree_intersect.o: INCLUDE_FLAGS += -Isrcs/kd_tree
 
 # module math_utils
+$(O_DIR)/srcs/math_utils/aabb_intersect.o: srcs/math_utils/aabb_intersect.c \
+	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
+	libft/ft_math/public/math_vec3.h srcs/math_utils/public/math_utils.h
 $(O_DIR)/srcs/math_utils/quaternions.o: srcs/math_utils/quaternions.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h srcs/math_utils/public/math_quaternions.h \

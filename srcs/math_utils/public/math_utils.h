@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/27 19:13:41 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/28 10:53:35 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,17 @@
 # include "ft/math_vec3.h"
 
 typedef struct s_vertex			t_vertex;
+typedef struct s_aabb			t_aabb;
+
+/*
+** ========================================================================== **
+** SWAP(A+, B+)			Swap values of A and B
+** ORDER(A+, B+)		A, B = MIN(A, B), MAX(A, B)
+*/
+
+// TODO: move to libft
+#define SWAP(A, B)		({ typeof(A) tmp = (A); (A) = (B); (B) = tmp; VOID; })
+#define ORDER(A, B)		(((A) > (B)) ? SWAP(A, B) : VOID)
 
 /*
 ** ========================================================================== **
@@ -51,5 +62,28 @@ struct			s_vertex
 */
 
 # define VEC3_LERP(A, B, T)		(VEC3_ADD(VEC3_MUL1(A,1.f-(T)),VEC3_MUL1(B,T)))
+
+/*
+** ========================================================================== **
+** Axis Aligned Bounding Box
+*/
+
+struct			s_aabb
+{
+	t_vec3			a;
+	t_vec3			b;
+};
+
+# define AABB(A, B)		((t_aabb){(A), (B)})
+
+/*
+** Check intersection ray/aabb
+** -
+** return false			-> no intersection
+** return true, t >= 0	-> intersection at ray->dir * t + ray->pos
+** return true, t < 0	-> ray->pos is inside the box
+*/
+
+bool			aabb_intersect(t_aabb const *b, t_vertex const *ray, float *t);
 
 #endif
