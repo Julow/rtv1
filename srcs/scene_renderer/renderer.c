@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 14:23:17 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/27 19:17:35 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/28 16:08:21 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 
 // TODO: make it a config
 #define MAX_RAY_DEPTH		10
+
+static t_vec3	normalize_color(t_vec3 color)
+{
+	float const		max = MAX(MAX(color.x, color.y), color.z);
+
+	if (max > 1.f) // TODO: do it after rendering
+		color = VEC3_DIV1(color, max);
+	return (colorf_gamma(color, 1.f / 2.2f));
+}
 
 void			scene_renderer_render(t_scene_renderer *renderer,
 					t_vec2u pt, t_vec2u size)
@@ -41,9 +50,9 @@ void			scene_renderer_render(t_scene_renderer *renderer,
 					VEC3_ADD(renderer->view_top, VEC3_MUL1(renderer->view_dx, i.x)),
 					VEC3_MUL1(renderer->view_dy, i.y)));
 			if (!ray_trace(&ray_tracer, &ray, &color))
-				color = renderer->scene->sky_color; // lol
-			IMG_PIXEL(*renderer->dst, i.x, i.y) =
-					color_fto24(colorf_gamma(color, 1.f / 2.2f));
+				color = renderer->scene->sky_color;
+			color = normalize_color(color);
+			IMG_PIXEL(*renderer->dst, i.x, i.y) = color_fto24(color);
 			i.x++;
 		}
 		i.y++;

@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:07:00 by juloo             #+#    #+#             */
-/*   Updated: 2016/06/18 21:51:56 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/28 14:46:58 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,12 @@ bool		load_scenes(char const *file, t_vector *dst)
 	}
 	xml_parser = XML_PARSER(V(in));
 	if (!(ret = parse_scenes(&xml_parser, dst)))
+	{
 		ft_dprintf(2, "%s[Error]%s %s:%u: %ts%n", C_RED, C_RESET,
 			file, xml_parser.line, ft_xml_value(&xml_parser));
-	// TODO: clear on error
+		// TODO: destroy scenes data on error
+	}
+	ft_xml_clear(&xml_parser);
 	ft_in_close(in);
 	return (ret);
 }
