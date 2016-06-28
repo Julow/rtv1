@@ -1,9 +1,13 @@
+# rtv1
 
+### Scene file
+
+```xml
 <!--
 	def:
 	<name>		any printable char
-	<vec3>		3 floats separated by ';', spaces are trim
-	<float>		float value, spaces are trim
+	<vec3>		3 floats separated by ',', spaces are trimed
+	<float>		float value, spaces are trimed
 	<color>		color value: #RRGGBB, '#' is optionnal
 	<texture>	path to a .tga image file
 	unspecified default values are "0"
@@ -20,7 +24,6 @@
 		dir="<vec3>" // default "0, 1, 0"
 		color="<color>" // default "#FFFFFF"
 		brightness="<float>" // default "1"
-		max_dist="<float>" // default "100"
 		cutoff="<float>" // default "1"
 	/>
 
@@ -46,3 +49,4 @@
 	/>
 
 </scene>
+```
