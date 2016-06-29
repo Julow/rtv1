@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 16:45:24 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/28 10:53:35 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/29 17:23:28 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,10 @@ typedef struct s_aabb			t_aabb;
 
 /*
 ** ========================================================================== **
-** SWAP(A+, B+)			Swap values of A and B
 ** ORDER(A+, B+)		A, B = MIN(A, B), MAX(A, B)
 */
 
-// TODO: move to libft
-#define SWAP(A, B)		({ typeof(A) tmp = (A); (A) = (B); (B) = tmp; VOID; })
-#define ORDER(A, B)		(((A) > (B)) ? SWAP(A, B) : VOID)
+# define ORDER(A, B)	(((A) > (B)) ? SWAP(A, B) : VOID)
 
 /*
 ** ========================================================================== **

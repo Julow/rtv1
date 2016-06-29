@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/14 11:34:50 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/25 23:57:24 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/29 15:40:44 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ t_texture const	*load_texture1(uint32_t color, uint32_t flags);
 
 /*
 ** -
+** TODO: move
 */
-// TODO: move
 void			correct_gamma(t_img *img);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 08:24:07 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/22 09:25:26 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/29 13:09:27 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ struct			s_kdtree_builder
 	t_vector		pts;
 };
 
-# define KDTREE_BUILDER(K)	((t_kdtree_builder){(K), 0, 0, VECTOR(void const*), VECTOR(t_vec2u), VECTOR(float)})
+# define KDTREE_BUILDER(K)	((t_kdtree_builder){(K), 0, 0, _KDTREE_BUILDER})
 
 /*
 ** Create a new data entry
@@ -58,5 +58,11 @@ t_kdtree		kdtree_build(t_kdtree_builder *b);
 ** Clear the kdtree builder
 */
 void			kdtree_builder_destroy(t_kdtree_builder *b);
+
+/*
+** -
+*/
+
+# define _KDTREE_BUILDER	VECTOR(void const*), VECTOR(t_vec2u), VECTOR(float)
 
 #endif

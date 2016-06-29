@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/27 15:31:50 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/28 16:03:30 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/29 17:20:18 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 **  light_rgb =
 **  	LERP(obj_rgb * (1 - obj_a) * light_rgb * obj_a, light_rgb, obj_a)
 ** -
-** TODO: using (1 - target_alpha) ^ distance_in_object to attenuate light rgb intensities
+** TODO: attenuation: (1 - target_alpha) ^ distance_in_object
 */
 
-static t_vec3	light_color(t_ray_tracer const *t, t_light const *light,
+static t_vec3	light_color(t_ray_tracer *t, t_light const *light,
 					t_vec3 const *intersect_pos, t_vec3 const *light_dir)
 {
 	t_vertex		ray;
@@ -66,7 +66,7 @@ static t_vec3	light_color(t_ray_tracer const *t, t_light const *light,
 
 #define REINTERPRET_CAST(T, VAL)	({typeof(VAL) tmp = (VAL); *(T*)&tmp; })
 
-t_vec3			ray_to_light(t_ray_tracer const *t, t_material const *mat,
+t_vec3			ray_to_light(t_ray_tracer *t, t_material const *mat,
 					t_vertex const *ray, t_intersect const *intersect)
 {
 	t_light const	*light;
@@ -79,19 +79,15 @@ t_vec3			ray_to_light(t_ray_tracer const *t, t_material const *mat,
 	light = VECTOR_IT(t->scene->lights);
 	while (VECTOR_NEXT(t->scene->lights, light))
 	{
-
 		light_dir = VEC3_SUB(light->pos, intersect->pos);
 		b = ft_vec3length(light_dir);
 		light_dir = VEC3_DIV1(light_dir, b);
-
 		if ((b = VEC3_DOT(intersect->norm, light_dir) * (b * b)) <= 0.f
-			|| VEC3_DOT(light_dir, VEC3_SUB(VEC3_0(), light->dir)) < light->cutoff)
+			|| VEC3_DOT(light_dir,
+					VEC3_SUB(VEC3_0(), light->dir)) < light->cutoff)
 			continue ;
-
 		tmp = light_color(t, light, &intersect->pos, &light_dir);
-
 		light_sum = VEC3_ADD(light_sum, VEC3_MUL1(tmp, b));
 	}
-
 	return (light_sum);
 }

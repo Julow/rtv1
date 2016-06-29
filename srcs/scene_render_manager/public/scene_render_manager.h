@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 13:09:18 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/24 17:48:53 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/29 17:18:44 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ typedef struct s_scene_render_manager	t_scene_render_manager;
 
 struct			s_scene_render_manager
 {
-	t_task_manager		_;
+	t_task_manager		task_manager;
 	t_scene_renderer	renderer;
 	t_vec2u				chunk_size;
 	t_vec2u				progress;
 };
 
-void			scene_render_manager(t_scene_render_manager *m, t_vec2u chunk_size,
-					t_scene const *scene, uint32_t camera, t_img *dst);
+void			scene_render_manager(t_scene_render_manager *m,
+					t_vec2u chunk_size, t_scene const *scene,
+					uint32_t camera, t_img *dst);
 
 #endif

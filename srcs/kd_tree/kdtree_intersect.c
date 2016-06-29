@@ -6,23 +6,15 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:33:07 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/25 15:34:41 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/29 15:37:43 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "kd_tree.h"
 #include "math_utils.h"
+#include "p_kdtree.h"
 
 #include <math.h>
-
-typedef struct s_kdtree_state		t_kdtree_state;
-
-struct			s_kdtree_state
-{
-	t_kdtree_child const	*node;
-	float					tmin;
-	float					tmax;
-};
 
 static bool		intersect_leaf(t_vector const *leaf, float const *ray,
 					t_callback intersect)
@@ -38,45 +30,50 @@ static bool		intersect_leaf(t_vector const *leaf, float const *ray,
 	return (ok);
 }
 
+static void		kdtree_intersect_next(t_kdtree_state *state, uint32_t *i,
+					t_kdtree const *tree, float const *ray)
+{
+	t_kdtree_node const		*n = &state[*i].node->v.split;
+	float					tmp;
+	float const				dir = ray[n->d + tree->k];
+	t_kdtree_child const	*first;
+	t_kdtree_child const	*second;
+
+	tmp = n->p - ray[n->d];
+	first = (tmp < 0.f) ? n->right : n->left;
+	second = (tmp < 0.f) ? n->left : n->right;
+	tmp = (dir == 0.f) ? -1.f : tmp / dir;
+	if (tmp >= state[*i].tmax || tmp < 0)
+		state[*i].node = first;
+	else if (tmp <= state[*i].tmin)
+		state[*i].node = second;
+	else
+	{
+		state[*i + 1] = (t_kdtree_state){first, state[*i].tmin, tmp};
+		state[*i] = (t_kdtree_state){second, tmp, state[*i].tmax};
+		(*i)++;
+	}
+}
+
 bool			kdtree_intersect(t_kdtree const *tree, float const *ray,
 					t_callback intersect)
 {
-	t_kdtree_state	back[tree->height];
-	t_kdtree_state	state;
-	uint32_t		back_i;
+	t_kdtree_state	state[tree->height + 1];
+	uint32_t		i;
 
-	state = (t_kdtree_state){tree->root, -INFINITY, INFINITY};
-	back_i = 0;
+	i = 0;
+	state[i] = (t_kdtree_state){tree->root, -INFINITY, INFINITY};
 	while (true)
-		if (state.node->type == KDTREE_LEAF)
+		if (state[i].node->type == KDTREE_LEAF)
 		{
-			if (intersect_leaf(&state.node->v.leaf, ray, intersect))
+			if (intersect_leaf(&state[i].node->v.leaf, ray, intersect))
 				return (true);
-			if (back_i == 0)
+			if (i == 0)
 				return (false);
-			state = back[--back_i];
+			i--;
 		}
 		else
 		{
-			t_kdtree_node const		*n = &state.node->v.split;
-			float					tmp;
-			float const				dir = ray[n->d + tree->k];
-			t_kdtree_child const	*first;
-			t_kdtree_child const	*second;
-
-			tmp = n->p - ray[n->d];
-			first = (tmp < 0.f) ? n->right : n->left;
-			second = (tmp < 0.f) ? n->left : n->right;
-			tmp = (dir == 0.f) ? -1.f : tmp / dir;
-			if (tmp >= state.tmax || tmp < 0)
-				state.node = first;
-			else if (tmp <= state.tmin)
-				state.node = second;
-			else
-			{
-				back[back_i++] = (t_kdtree_state){second, tmp, state.tmax};
-				state.node = first;
-				state.tmax = tmp;
-			}
+			kdtree_intersect_next(state, &i, tree, ray);
 		}
 }

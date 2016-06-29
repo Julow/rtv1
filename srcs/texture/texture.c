@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 00:45:21 by juloo             #+#    #+#             */
-/*   Updated: 2016/06/25 01:43:28 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/29 15:40:27 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ t_vec4			texture_nearest(t_texture const *texture, t_vec2 uv)
 {
 	uv = VEC2(fmod(ABS(uv.x), 1.f) * texture->img.width,
 		fmod(ABS(uv.y), 1.f) * texture->img.height);
-	return (COLOR_32TOF(IMG_PIXEL(texture->img, (uint32_t)uv.x, (uint32_t)uv.y)));
+	return (COLOR_32TOF(
+			IMG_PIXEL(texture->img, (uint32_t)uv.x, (uint32_t)uv.y)));
 }
 
-#define TEXTURE_F(T,P,X,Y)	(COLOR_32TOF(IMG_PIXEL((T)->img, (P)[X].x, (P)[Y].y)))
+#define TEXTURE_F(T,P,X,Y)	(COLOR_32TOF(IMG_PIXEL((T)->img,(P)[X].x,(P)[Y].y)))
 
 t_vec4			texture_bilinear(t_texture const *texture, t_vec2 uv)
 {

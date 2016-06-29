@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 23:56:22 by juloo             #+#    #+#             */
-/*   Updated: 2016/06/27 18:02:30 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/29 15:39:37 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ void			correct_gamma(t_img *img)
 					COLOR32_A(tmp),
 					g_gamma_table[COLOR32_R(tmp)],
 					g_gamma_table[COLOR32_G(tmp)],
-					g_gamma_table[COLOR32_B(tmp)]
-				);
+					g_gamma_table[COLOR32_B(tmp)]);
 			i.x++;
 		}
 		i.y++;

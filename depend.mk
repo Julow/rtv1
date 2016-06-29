@@ -89,6 +89,7 @@ O_FILES += $(O_DIR)/libft/ft_base/ft_abs.o $(O_DIR)/libft/ft_base/ft_assert.o \
 	$(O_DIR)/libft/ft_set/first.o $(O_DIR)/libft/ft_set/get.o \
 	$(O_DIR)/libft/ft_set/insert.o $(O_DIR)/libft/ft_set/iter.o \
 	$(O_DIR)/libft/ft_set/remove.o $(O_DIR)/libft/ft_set/utils.o \
+	$(O_DIR)/libft/ft_thread_pool/create.o \
 	$(O_DIR)/libft/ft_thread_pool/pool.o \
 	$(O_DIR)/libft/ft_thread_pool/thread.o \
 	$(O_DIR)/libft/ft_vector/ft_vclear.o $(O_DIR)/libft/ft_vector/ft_vpush.o \
@@ -177,8 +178,9 @@ rtv1: $(O_DIR)/srcs/ray_tracer/ray_to_light.o \
 	$(O_DIR)/libft/ft_base/ft_memswap.o \
 	$(O_DIR)/srcs/scene_loader/parse_param.o \
 	$(O_DIR)/libft/ft_file_in/file_in.o $(O_DIR)/libft/ft_hmap/ft_hmapnew.o \
-	$(O_DIR)/libft/ft_base/ft_rand.o $(O_DIR)/srcs/math_utils/quaternions.o \
-	$(O_DIR)/libft/ft_hmap/ft_hmapput.o $(O_DIR)/srcs/mlx_win/ft_mlx_update.o \
+	$(O_DIR)/libft/ft_thread_pool/create.o $(O_DIR)/libft/ft_base/ft_rand.o \
+	$(O_DIR)/srcs/math_utils/quaternions.o $(O_DIR)/libft/ft_hmap/ft_hmapput.o \
+	$(O_DIR)/srcs/mlx_win/ft_mlx_update.o \
 	$(O_DIR)/libft/ft_math/ft_mat3apply.o \
 	$(O_DIR)/libft/ft_math/ft_mat4perspective.o \
 	$(O_DIR)/libft/ft_vector/ft_vclear.o \
@@ -630,6 +632,9 @@ $(O_DIR)/libft/ft_set/remove.o $(O_DIR)/libft/ft_set/utils.o: INCLUDE_FLAGS += \
 	-Ilibft/ft_set
 
 # module ft::thread_pool
+$(O_DIR)/libft/ft_thread_pool/create.o: libft/ft_thread_pool/create.c \
+	libft/ft_base/public/libft.h libft/ft_thread_pool/p_thread_pool.h \
+	libft/ft_thread_pool/public/thread_pool.h
 $(O_DIR)/libft/ft_thread_pool/pool.o: libft/ft_thread_pool/pool.c \
 	libft/ft_base/public/libft.h libft/ft_thread_pool/p_thread_pool.h \
 	libft/ft_thread_pool/public/thread_pool.h
@@ -637,8 +642,9 @@ $(O_DIR)/libft/ft_thread_pool/thread.o: libft/ft_thread_pool/thread.c \
 	libft/ft_base/public/libft.h libft/ft_thread_pool/p_thread_pool.h \
 	libft/ft_thread_pool/public/thread_pool.h
 
-$(O_DIR)/libft/ft_thread_pool/pool.o $(O_DIR)/libft/ft_thread_pool/thread.o: \
-	INCLUDE_FLAGS += -Ilibft/ft_thread_pool
+$(O_DIR)/libft/ft_thread_pool/create.o $(O_DIR)/libft/ft_thread_pool/pool.o \
+$(O_DIR)/libft/ft_thread_pool/thread.o: INCLUDE_FLAGS += \
+	-Ilibft/ft_thread_pool
 
 # module ft::vector
 $(O_DIR)/libft/ft_vector/ft_vclear.o: libft/ft_vector/ft_vclear.c \
@@ -679,7 +685,8 @@ $(O_DIR)/srcs/kd_tree/kdtree_builder.o: srcs/kd_tree/kdtree_builder.c \
 $(O_DIR)/srcs/kd_tree/kdtree_intersect.o: srcs/kd_tree/kdtree_intersect.c \
 	libft/ft_base/public/libft.h libft/ft_math/public/math_vec2.h \
 	libft/ft_math/public/math_vec3.h libft/ft_vector/public/ft_vector.h \
-	srcs/kd_tree/public/kd_tree.h srcs/math_utils/public/math_utils.h
+	srcs/kd_tree/p_kdtree.h srcs/kd_tree/public/kd_tree.h \
+	srcs/math_utils/public/math_utils.h
 
 $(O_DIR)/srcs/kd_tree/kdtree_build.o $(O_DIR)/srcs/kd_tree/kdtree_builder.o \
 $(O_DIR)/srcs/kd_tree/kdtree_intersect.o: INCLUDE_FLAGS += -Isrcs/kd_tree

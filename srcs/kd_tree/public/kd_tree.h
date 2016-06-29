@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 14:14:55 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/03/18 17:30:29 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/29 13:07:31 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,24 @@ typedef struct s_kdtree_child	t_kdtree_child;
 
 struct			s_kdtree
 {
-	uint32_t		k;
-	uint32_t		height;
-	uint32_t		length;
-	t_kdtree_child	*root;
+	uint32_t			k;
+	uint32_t			height;
+	uint32_t			length;
+	t_kdtree_child		*root;
 };
 
 struct			s_kdtree_node
 {
-	uint32_t		d;
-	float			p;
-	t_kdtree_child	*left;
-	t_kdtree_child	*right;
+	uint32_t			d;
+	float				p;
+	t_kdtree_child		*left;
+	t_kdtree_child		*right;
+};
+
+union			u_kdtree_child
+{
+	t_kdtree_node	split;
+	t_vector		leaf;
 };
 
 struct			s_kdtree_child
@@ -46,11 +52,8 @@ struct			s_kdtree_child
 	enum {
 		KDTREE_SPLIT,
 		KDTREE_LEAF
-	}				type;
-	union {
-		t_kdtree_node	split;
-		t_vector		leaf;
-	}				v;
+	}						type;
+	union u_kdtree_child	v;
 };
 
 /*

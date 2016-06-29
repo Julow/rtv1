@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 17:06:01 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/27 19:14:14 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/29 17:19:17 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@
 /*
 ** TODO: pass from/to materials
 */
+
 static bool		refracted_ray(t_vertex const *ray, t_material const *material,
 					t_intersect const *intersect, t_vec3 *dst)
 {
-	float			index = 1.f / material->refract_index;
+	float const		index = 1.f / material->refract_index;
 	float			tmp;
 	float			cos_t;
 

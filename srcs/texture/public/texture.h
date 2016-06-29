@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 00:14:16 by juloo             #+#    #+#             */
-/*   Updated: 2016/06/25 01:31:15 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/29 15:43:01 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ typedef struct s_texture		t_texture;
 ** Texture
 */
 
-struct		s_texture
+struct			s_texture
 {
-	t_vec4		(*get)(t_texture const *texture, t_vec2 p);
-	t_img		img;
+	t_vec4			(*get)(t_texture const *texture, t_vec2 p);
+	t_img			img;
 };
 
 # define TEXTURE(F)			((t_texture){(F), IMG()})

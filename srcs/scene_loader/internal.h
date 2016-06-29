@@ -6,7 +6,7 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/20 21:08:01 by juloo             #+#    #+#             */
-/*   Updated: 2016/06/25 00:43:50 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/29 11:52:47 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ struct		s_parse_obj_t
 {
 	t_sub			name;
 	bool			(*parse_obj)(t_xml_parser *xml, t_parse_obj *p);
-	t_intersect_f	ray_intersect;
+	t_obj_type		obj_type;
 	uint32_t		extra_size;
 	t_vec3 const	*bounds;
 	uint32_t		bound_len;

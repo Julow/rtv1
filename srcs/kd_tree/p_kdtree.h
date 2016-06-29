@@ -1,41 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   internal.h                                         :+:      :+:    :+:   */
+/*   p_kdtree.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/18 17:07:09 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/29 12:02:24 by jaguillo         ###   ########.fr       */
+/*   Created: 2016/06/29 13:11:33 by jaguillo          #+#    #+#             */
+/*   Updated: 2016/06/29 13:12:13 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INTERNAL_H
-# define INTERNAL_H
+#ifndef P_KDTREE_H
+# define P_KDTREE_H
 
-# include "obj.h"
-# include "ray_tracer.h"
+# include "kd_tree.h"
+
+typedef struct s_kdtree_state		t_kdtree_state;
 
 /*
 ** ========================================================================== **
 */
 
-typedef struct s_nearest		t_nearest;
-
-struct			s_nearest
+/*
+** Object used to find intersections
+*/
+struct			s_kdtree_state
 {
-	t_intersect		intersect;
-	t_obj const		*obj;
+	t_kdtree_child const	*node;
+	float					tmin;
+	float					tmax;
 };
-
-/*
-** ========================================================================== **
-*/
-
-/*
-** Compute the light color/intensity at a given point
-*/
-t_vec3			ray_to_light(t_ray_tracer *scene, t_material const *mat,
-					t_vertex const *ray, t_intersect const *intersect);
 
 #endif

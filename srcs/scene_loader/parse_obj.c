@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 15:51:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/05/01 21:09:26 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/29 13:01:52 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,18 @@ static t_vec3 const		g_bounds_cube[] = {
 };
 
 static t_vector const	g_parse_objs = VECTOR(t_parse_obj_t,
-	{SUBC("sphere"), &parse_obj_default, &sphere_ray_intersect, 0,
-		g_bounds_cube, 8},
-	{SUBC("plane"), &parse_obj_default, &plane_ray_intersect, 0,
+	{SUBC("sphere"), &parse_obj_default,
+		{&sphere_ray_intersect}, 0, g_bounds_cube, 8},
+	{SUBC("plane"), &parse_obj_default, {&plane_ray_intersect}, 0,
 		(t_vec3[]){
 			{-0.5f, 0.f, -0.5f},
 			{-0.5f, 0.f, 0.5f},
 			{0.5f, 0.f, 0.5f},
 			{0.5f, 0.f, -0.5f},
 		}, 4},
-	{SUBC("cylinder"), &parse_obj_default, &cylinder_ray_intersect, 0,
-		g_bounds_cube, 8},
-	{SUBC("cone"), &parse_obj_default, &cone_ray_intersect, 0,
+	{SUBC("cylinder"), &parse_obj_default,
+		{&cylinder_ray_intersect}, 0, g_bounds_cube, 8},
+	{SUBC("cone"), &parse_obj_default, {&cone_ray_intersect}, 0,
 		(t_vec3[]){
 			{0.f, 0.f, 0.f},
 			{-1.f, 1.f, -1.f},
@@ -65,9 +65,9 @@ static t_vector const	g_parse_objs = VECTOR(t_parse_obj_t,
 			{1.f, -1.f, -1.f},
 			{-1.f, -1.f, -1.f},
 		}, 5},
-	{SUBC("or"), &parse_obj_csg, &or_ray_intersect, S(t_obj*, 2), NULL, 0},
-	{SUBC("not"), &parse_obj_csg, &not_ray_intersect, S(t_obj*, 2), NULL, 0},
-	{SUBC("and"), &parse_obj_csg, &and_ray_intersect, S(t_obj*, 2), NULL, 0},
+	{SUBC("or"), &parse_obj_csg, {&or_ray_intersect}, S(t_obj*, 2), NULL, 0},
+	{SUBC("not"), &parse_obj_csg, {&not_ray_intersect}, S(t_obj*, 2), NULL, 0},
+	{SUBC("and"), &parse_obj_csg, {&and_ray_intersect}, S(t_obj*, 2), NULL, 0},
 );
 
 static t_parse_obj_t const	*get_obj_t(t_sub obj_type)
@@ -86,7 +86,7 @@ static bool	push_obj(t_parse_obj *p, t_parse_obj_t const *obj_t)
 	t_vec3 *const	tmp = ft_vpush(p->pts, NULL, obj_t->bound_len * 3);
 	uint32_t		i;
 
-	p->obj->type->ray_intersect = obj_t->ray_intersect;
+	p->obj->type = &obj_t->obj_type;
 	p->obj->material = p->material;
 	p->rot = VEC3_MUL1(p->rot, M_PI/2.f);
 	p->obj->m = ft_mat4transform(p->pos, p->rot, p->shear, p->scale);
