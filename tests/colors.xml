@@ -1,6 +1,6 @@
 <scene>
 
-	<plane rot="1, 0, 0" texture="tests/rainbow.tga" />
+	<plane rot="1, 0, 0" color="map:tests/rainbow.tga" />
 
 	<plane pos="0, 0, -0.5" color="#000000" />
 

@@ -17,7 +17,7 @@ for i in range(500 if len(sys.argv) <= 1 else int(sys.argv[1])):
 
 print """
 	<plane pos="0, %f, %f" rot="1, 0, 0" scale="%f" reflection="0.7" color="#dddddd" />
-	<plane scale="%f" texture="tests/wall.tga" />
+	<plane scale="%f" color="map:tests/wall.tga" />
 
 	<light pos="0, 100, 0" />
 

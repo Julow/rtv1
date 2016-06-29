@@ -1,0 +1,10 @@
+<scene>
+
+	<plane pos="0, 0, 0" scale="50" color="#e3f3f0" />
+
+	<light pos="0, 5, 0" />
+	<sphere pos="0, 5, 0" color="#c8044377" />
+
+	<camera pos="0, 10, -5" dir="0, -1, 0.5" />
+
+</scene>

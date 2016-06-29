@@ -1,7 +1,7 @@
 <scene>
 
 	<cone rot="1, 0, 0" scale="5.5" color="#7fd6c43d" />
-	<plane pos="0, -5, 0" scale="20" texture="tests/wall.tga" specular_color="#000000" />
+	<plane pos="0, -5, 0" scale="20" color="map:tests/wall.tga" specular="#000000" />
 	<light pos="4, 0, -10" brightness="1" />
 
 	<camera pos="0, 0, -10" />

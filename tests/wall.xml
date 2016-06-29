@@ -1,7 +1,7 @@
 <scene>
 
-	<plane pos="0.5, 0, 0" rot="1, 0, 0" texture="tests/wall.tga" normal_map="tests/wall.norm.tga" />
-	<plane pos="-0.5, 0, 0" rot="1, 0, 0" texture="tests/wall.tga" />
+	<plane pos="0.5, 0, 0" rot="1, 0, 0" color="map:tests/wall.tga" normal="map:tests/wall.norm.tga" />
+	<plane pos="-0.5, 0, 0" rot="1, 0, 0" color="map:tests/wall.tga" />
 
 	<!-- <light pos="2, 1, 5" /> -->
 	<light pos="-5, 1, 5" />

@@ -6,14 +6,12 @@
 /*   By: juloo <juloo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 23:13:37 by juloo             #+#    #+#             */
-/*   Updated: 2016/06/25 00:42:55 by juloo            ###   ########.fr       */
+/*   Updated: 2016/06/29 19:10:02 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft/color_utils.h"
-
 #include "internal.h"
-#include "texture_loader.h"
 
 t_sub		ft_subtrim_is(t_sub sub, t_is is)
 {
@@ -55,29 +53,14 @@ bool		parse_vec3(t_sub value, t_vec3 *dst)
 	return (false);
 }
 
-bool		parse_color(t_sub value, uint32_t *dst)
-{
-	return (color_hex(ft_subtrim_is(value, IS_SPACE), dst));
-}
-
 bool		parse_colorf(t_sub value, t_vec3 *dst)
 {
 	uint32_t	c;
 
-	if (!parse_color(value, &c))
+	if (!color_hex(ft_subtrim_is(value, IS_SPACE), &c))
 		return (false);
 	*dst = color_24tof(c);
 	return (true);
-}
-
-bool		parse_texture(t_sub value, t_texture const **dst)
-{
-	return (BOOL_OF((*dst = load_texture(value, 0)) != NULL));
-}
-
-bool		parse_texture_g(t_sub value, t_texture const **dst)
-{
-	return (BOOL_OF((*dst = load_texture(value, TEXTURE_GAMMA)) != NULL));
 }
 
 bool		parse_float(t_sub value, float *dst)

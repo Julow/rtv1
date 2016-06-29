@@ -6,7 +6,7 @@
 /*   By: jaguillo <jaguillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 15:51:28 by jaguillo          #+#    #+#             */
-/*   Updated: 2016/06/29 13:01:52 by jaguillo         ###   ########.fr       */
+/*   Updated: 2016/06/29 19:12:31 by jaguillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@
 #include <stdlib.h>
 
 t_vector const			g_obj_params = VECTOR(t_param_def,
-	PARAM("texture", texture_g, t_parse_obj, material.texture),
-	PARAM("specular_map", texture, t_parse_obj, material.specular_map),
-	PARAM("normal_map", texture, t_parse_obj, material.normal_map),
-	PARAM("color", color, t_parse_obj, color),
-	PARAM("specular_color", color, t_parse_obj, specular_color),
+	PARAM("color", color_g, t_parse_obj, material.texture),
+	PARAM("specular", color_g, t_parse_obj, material.specular_map),
+	PARAM("normal", color, t_parse_obj, material.normal_map),
 	PARAM("ambient", float, t_parse_obj, material.ambient),
 	PARAM("reflection", float, t_parse_obj, material.reflection),
 	PARAM("refract_index", float, t_parse_obj, material.refract_index),
@@ -92,9 +90,9 @@ static bool	push_obj(t_parse_obj *p, t_parse_obj_t const *obj_t)
 	p->obj->m = ft_mat4transform(p->pos, p->rot, p->shear, p->scale);
 	p->obj->m_inv = ft_mat4transform_inv(p->pos, p->rot, p->shear, p->scale);
 	if (p->obj->material.texture == NULL)
-		p->obj->material.texture = load_texture1(p->color, TEXTURE_GAMMA);
+		p->obj->material.texture = load_texture1(DEFAULT_COLOR, TEXTURE_GAMMA);
 	if (p->obj->material.specular_map == NULL)
-		p->obj->material.specular_map = load_texture1(p->specular_color, 0);
+		p->obj->material.specular_map = load_texture1(DEFAULT_SPECULAR, 0);
 	ft_memcpy(tmp, obj_t->bounds, S(t_vec3, obj_t->bound_len));
 	i = 0;
 	while (i < obj_t->bound_len)
@@ -111,7 +109,7 @@ bool		parse_obj(t_xml_parser *xml, t_obj **obj, t_vector *pts)
 		return (ft_xml_error(xml, SUBC("Unknown object")));
 	*obj = MALLOC(sizeof(t_obj) + obj_t->extra_size);
 	ft_bzero(*obj, sizeof(t_obj) + obj_t->extra_size);
-	p = (t_parse_obj){DEF_MTL, 0, 0xFFFFFF, VEC3_0(), VEC3_0(),
+	p = (t_parse_obj){DEF_MTL, VEC3_0(), VEC3_0(),
 		VEC3_0(), VEC3_1(1.f), *obj, pts};
 	if (!obj_t->parse_obj(xml, &p))
 		return (free(*obj), false);

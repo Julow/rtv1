@@ -1,13 +1,13 @@
 <scene>
 
-	<plane pos="0,0.5,0" rot="0,0,0" texture="tests/box.tga" specular_map="tests/box_specular.tga" />
-	<plane pos="0,-0.5,0" rot="0,0,0" texture="tests/box.tga" specular_map="tests/box_specular.tga" />
+	<plane pos="0,0.5,0" rot="0,0,0" color="map:tests/box.tga" specular="map:tests/box_specular.tga" />
+	<plane pos="0,-0.5,0" rot="0,0,0" color="map:tests/box.tga" specular="map:tests/box_specular.tga" />
 
-	<plane pos="0.5,0,0" rot="0,0,1" texture="tests/box.tga" specular_map="tests/box_specular.tga" />
-	<plane pos="-0.5,0,0" rot="0,0,1" texture="tests/box.tga" specular_map="tests/box_specular.tga" />
+	<plane pos="0.5,0,0" rot="0,0,1" color="map:tests/box.tga" specular="map:tests/box_specular.tga" />
+	<plane pos="-0.5,0,0" rot="0,0,1" color="map:tests/box.tga" specular="map:tests/box_specular.tga" />
 
-	<plane pos="0,0,0.5" rot="1,0,0" texture="tests/box.tga" specular_map="tests/box_specular.tga" />
-	<plane pos="0,0,-0.5" rot="1,0,0" texture="tests/box.tga" specular_map="tests/box_specular.tga" />
+	<plane pos="0,0,0.5" rot="1,0,0" color="map:tests/box.tga" specular="map:tests/box_specular.tga" />
+	<plane pos="0,0,-0.5" rot="1,0,0" color="map:tests/box.tga" specular="map:tests/box_specular.tga" />
 
 	<light pos="2,3,2" />
 
